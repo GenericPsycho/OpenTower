@@ -1,7 +1,7 @@
 function scr_player_ratmountjump()
 {
 	move = key_left + key_right;
-	if sprite_index == spr_lonegustavo_dashjump
+	if sprite_index == spr_lonegustavo_dashjump || sprite_index == spr_lonepika_dashjump
 		image_speed = 0.6;
 	else
 		image_speed = 0.35;
@@ -28,9 +28,17 @@ function scr_player_ratmountjump()
 				fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 				state = states.bump;
 				if brick
+				{
 					sprite_index = spr_player_ratmountbump;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountbump;
+				}
 				else
+				{
 					sprite_index = spr_lonegustavo_bump;
+					if character == "E"
+						sprite_index = spr_lonepika_bump;
+				}
 				image_index = 0;
 				hsp = -xscale * 4;
 				vsp = -5;
@@ -104,6 +112,34 @@ function scr_player_ratmountjump()
 				else
 					jumpAnim = true;
 				break;
+			case spr_lonepika_jumpstart:
+				sprite_index = spr_lonepika_jump;
+				break;
+			case spr_lonepika_dashjump:
+				sprite_index = spr_lonepika_dashjump;
+				break;
+			case spr_playerK_ratmountgroundpound:
+				sprite_index = spr_playerK_ratmountgroundpoundfall;
+				break;
+			case spr_playerK_ratmountjump:
+				sprite_index = spr_playerK_ratmountfall;
+				break;
+			case spr_playerK_ratmountballoonend2:
+				sprite_index = spr_playerK_ratmountballoonend3;
+				break;
+			case spr_playerK_ratmountmushroombounce:
+				jumpAnim = true;
+				image_index = image_number - 1;
+				break;
+			case spr_playerK_ratmountballoonend1:
+				if vsp > 0
+				{
+					jumpAnim = true;
+					sprite_index = spr_playerK_ratmountballoonend2;
+				}
+				else
+					jumpAnim = true;
+				break;
 		}
 	}
 	if (scr_check_groundpound())
@@ -121,6 +157,8 @@ function scr_player_ratmountjump()
 		state = states.ratmountgroundpound;
 		image_index = 0;
 		sprite_index = spr_lonegustavo_groundpoundstart;
+		if character == "E"
+			sprite_index = spr_lonepika_groundpoundstart;
 	}
 	if (((input_buffer_slap > 0 && key_up) || key_shoot2) && brick)
 	{
@@ -146,6 +184,8 @@ function scr_player_ratmountjump()
 			xscale = move;
 		movespeed = xscale * 12;
 		sprite_index = spr_lonegustavo_punch;
+		if character == "E"
+			sprite_index = spr_lonepika_punch;
 	}
 	var bounce = true;
 	if (input_buffer_jump > 0 && can_jump && gusdashpadbuffer == 0 && !place_meeting(x, y + 5, obj_grindrail))
@@ -158,14 +198,30 @@ function scr_player_ratmountjump()
 		if brick
 		{
 			if ratmount_movespeed >= 12 && key_attack
+			{
 				sprite_index = spr_player_ratmountdashjump;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountdashjump;
+			}
 			else
+			{
 				sprite_index = spr_player_ratmountjump;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountjump;
+			}
 		}
 		else if ratmount_movespeed >= 12 && key_attack
+		{
 			sprite_index = spr_lonegustavo_dashjump;
+			if character == "E"
+				sprite_index = spr_lonepika_dashjump;
+		}
 		else
+		{
 			sprite_index = spr_player_ratmountgroundpound;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountgroundpound;
+		}
 		image_index = 0;
 		jumpAnim = true;
 		state = states.ratmountjump;
@@ -178,10 +234,12 @@ function scr_player_ratmountjump()
 		state = states.ratmountbounce;
 		instance_create(x, y, obj_highjumpcloud2);
 		sprite_index = spr_player_ratmountwalljump;
+		if character == "E"
+			sprite_index = spr_playerK_ratmountwalljump;
 		image_index = 0;
 		vsp = -16;
 	}
-	if grounded && vsp > 0 && sprite_index != spr_lonegustavo_kick
+	if grounded && vsp > 0 && (sprite_index != spr_lonegustavo_kick && sprite_index != spr_lonepika_kick)
 	{
 		doublejump = false;
 		create_particle(x, y, particle.landcloud, 0);
@@ -189,7 +247,11 @@ function scr_player_ratmountjump()
 		landAnim = true;
 		jumpstop = false;
 		if brick && !key_attack
+		{
 			sprite_index = spr_player_ratmountland;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountland;
+		}
 		else
 			landAnim = false;
 		image_index = 0;

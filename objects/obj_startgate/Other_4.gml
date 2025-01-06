@@ -79,13 +79,14 @@ toppin[2] = ini_read_real("Toppin", string(level) + "3", 0);
 toppin[3] = ini_read_real("Toppin", string(level) + "4", 0);
 toppin[4] = ini_read_real("Toppin", string(level) + "5", 0);
 rank = ini_read_string("Ranks", string(level), "d");
+rankplus = ini_read_string("RankPlus", string(level), 0);
 ini_close();
 var _toppinspr = [
-	[spr_toppinshroom, spr_toppinshroom_run, spr_toppinshroom_taunt, -75],
-	[spr_toppincheese, spr_toppincheese_run, spr_toppincheese_taunt, -35],
-	[spr_toppintomato, spr_toppintomato_run, spr_toppintomato_taunt, 0],
-	[spr_toppinsausage, spr_toppinsausage_run, spr_toppinsausage_taunt, 35],
-	[spr_toppinpineapple, spr_toppinpineapple_run, spr_toppinpineapple_taunt, 75]
+	[scr_get_toppin_sprite("shroom", "idle"), scr_get_toppin_sprite("shroom", "run"), scr_get_toppin_sprite("shroom", "taunt"), -75],
+	[scr_get_toppin_sprite("cheese", "idle"), scr_get_toppin_sprite("cheese", "run"), scr_get_toppin_sprite("cheese", "taunt"), -35],
+	[scr_get_toppin_sprite("tomato", "idle"), scr_get_toppin_sprite("tomato", "run"), scr_get_toppin_sprite("tomato", "taunt"), 0],
+	[scr_get_toppin_sprite("sausage", "idle"), scr_get_toppin_sprite("sausage", "run"), scr_get_toppin_sprite("sausage", "taunt"), 35],
+	[scr_get_toppin_sprite("pineapple", "idle"), scr_get_toppin_sprite("pineapple", "run"), scr_get_toppin_sprite("pineapple", "taunt"), 75]
 ];
 for (var i = 0; i < array_length(_toppinspr); i++)
 {

@@ -70,8 +70,10 @@ if (!pause && instance_exists(obj_player1) && alarm[3] == -1 && obj_player1.key_
 			other.savedpillarpause = fmod_event_instance_get_paused(pillarmusicID);
 			other.savedkidspartypause = fmod_event_instance_get_paused(kidspartychaseID);
 			other.savedpanicpause = fmod_event_instance_get_paused(panicmusicID);
+			other.savedescapepause = fmod_event_instance_get_paused(escapeID);
 			fmod_event_instance_set_paused(pillarmusicID, true);
 			fmod_event_instance_set_paused(panicmusicID, true);
+			fmod_event_instance_set_paused(escapeID, true);
 			fmod_event_instance_set_paused(kidspartychaseID, true);
 		}
 		if global.leveltosave != -4
@@ -285,6 +287,7 @@ if (pause && !instance_exists(obj_loadingscreen) && alarm[3] == -1)
 	{
 		fmod_event_instance_set_paused(pillarmusicID, true);
 		fmod_event_instance_set_paused(panicmusicID, true);
+		fmod_event_instance_set_paused(escapeID, true);
 		fmod_event_instance_set_paused(kidspartychaseID, true);
 	}
 }

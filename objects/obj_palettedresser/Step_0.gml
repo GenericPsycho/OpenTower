@@ -3,7 +3,7 @@ if obj_player1.ispeppino != ispeppino
 	ispeppino = obj_player1.ispeppino;
 	paletteselect = 0;
 	if obj_player1.ispeppino
-		palettes = player_palettes[0];
+		palettes = obj_player1.character == "E" ? player_palettes[2] : player_palettes[0];
 	else
 		palettes = player_palettes[1];
 	with obj_player1
@@ -22,7 +22,15 @@ if obj_player1.ispeppino != ispeppino
 			}
 		}
 	}
-	palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "title"));
+	if global.option_datoggle && obj_player1.character != "E"
+		palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "titleMOD"));
+	else
+	{
+		if palettes[paletteselect][0] == "john" && obj_player1.character == "E"
+			palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "Etitle"));
+		else
+			palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "title"));
+	}
 	palettedesc = lang_get_value_newline(concat("dresser_", palettes[paletteselect][0]));
 }
 showtext = place_meeting(x, y, obj_player);

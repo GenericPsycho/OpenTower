@@ -35,6 +35,8 @@ function scr_player_noisejetpack()
 		image_index = 0;
 		state = states.freefallprep;
 		vsp = (character == "P") ? -5 : -7;
+		if character == "E"
+			vsp = -5
 	}
 	if grounded && vsp > 0
 	{

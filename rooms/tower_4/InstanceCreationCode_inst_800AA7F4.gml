@@ -1,2 +1,1 @@
-text = lang_get_value_granny("garbage10")
-trace("garbage 10: ", text)
+text = lang_get_value_granny(global.option_datoggle ? "modgarbage10" : "garbage10")

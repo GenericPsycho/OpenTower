@@ -9,15 +9,25 @@ if (_first)
 {
 	bossspr = spr_vsfakepep2;
 	vstitle = spr_vstitle_fakepep2;
+	if obj_player1.character == "E"
+	{
+		bossspr = spr_vsditto2;
+		vstitle = spr_vstitle_ditto2;
+	}
 }
 else
 {
 	bossspr = spr_vsfakepep;
 	vstitle = spr_vstitle_fakepep;
+	if obj_player1.character == "E"
+	{
+		bossspr = spr_vsditto;
+		vstitle = spr_vstitle_ditto;
+	}
 }
 
 boss_hp = 10;
-boss_hpsprite = spr_bossfight_fakepephp;
+boss_hpsprite = obj_player1.character == "E" ? spr_bossfight_dittohp : spr_bossfight_fakepephp;
 boss_palette = spr_bossfight_fakepeppalette;
 boss_columnmax = 3;
 boss_hp_x += 50;

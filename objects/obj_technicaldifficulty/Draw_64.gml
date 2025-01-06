@@ -10,18 +10,26 @@ else
 	
 	var bg = spr_technicaldifficulty_bg;
 	if noise
-		bg = spr_technicaldifficulty_bgnoise;
+		{
+        if ( global.doisemode)
+            bg = spr_technicaldifficulty_bgdoise
+        else
+            bg = spr_technicaldifficulty_bgnoise
+    }
 	draw_sprite(bg, 0, cx, cy);
 	
 	lang_draw_sprite(spr_technicaldifficulty_text, 0, cx, cy);
 	
 	pattern_set(global.Base_Pattern_Color, sprite, 0, 1, 1, global.palettetexture);
-	if sprite != spr_technicaldifficulty4
+	if sprite != spr_technicaldifficulty4 && sprite != spr_technicaldifficulty4E
 		pal_swap_set(obj_player1.spr_palette, obj_player1.paletteselect, false);
 	else
-		pal_swap_set(spr_ratmountpalette, obj_player1.paletteselect, false);
+	{
+		pal_swap_set(global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG, obj_player1.paletteselect, false);
+		if obj_player1.character == "E"
+			pal_swap_set(spr_ratpikapalette, obj_player1.paletteselect, false);
+	}
 	draw_sprite(sprite, 0, cx + 300, cy + 352);
-	
 	pattern_reset();
 	reset_shader_fix();
 }

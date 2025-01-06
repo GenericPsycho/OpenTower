@@ -66,6 +66,9 @@ else
 	}
 }
 
+if global.extras_inflap != 0
+	array_push(text, [false, concat(lang_get_value("rank_laps"), global.lapcount, global.laprecord ? lang_get_value("rank_lapsrecord") : "")]);
+
 text_pos = 0;
 toppin_index = 0;
 toppin_state = states.jump;
@@ -74,3 +77,4 @@ brown = false;
 brownfade = 0;
 alarm[2] = 400;
 depth = -8;
+idiot = irandom(100)

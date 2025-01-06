@@ -29,7 +29,7 @@ if currentselect != -1
 }
 if tex != -4
 	pattern_set(global.Base_Pattern_Color, sprite_index, image_index, image_xscale, image_yscale, tex);
-pal_swap_set(spr_peppalette, pal, false);
+pal_swap_set((global.option_datoggle ? spr_peppalette : spr_peppaletteOG), pal, false);
 if !pep_debris
 	draw_sprite_ext(sprite_index, image_index, _x, _y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);
 if tex != -4
@@ -57,7 +57,7 @@ var deletefile_x = 779;
 var deletefile_y = 449;
 lang_draw_sprite(spr_towerstatusmenu, 0, status_x, status_y);
 
-var games = [pep_game, noise_game]
+var games = [pep_game, noise_game /* MOD */, eevee_game];
 for (i = 0; i < array_length(games); i++)
 {
 	if games[i] == noone
@@ -93,27 +93,58 @@ for (i = 0; i < array_length(games); i++)
 
 			var spr = spr_menu_finaljudgement;
 			if i == 1
+			{
 				spr = spr_menu_finaljudgementN;
+				if (global.gameN[currentselect].palette == "17.000000" && global.option_lang == "en")
+					spr = spr_menu_finaljudgementD
+			}
 			lang_draw_sprite_ext(spr, _i, percentstate_x, percentstate_y + 50, 1, 1, 0, c_white, game.alpha);
 		}
 	}
 }
 
 draw_set_alpha(extrauialpha);
-if noise_unlocked
+if currentselect != -1
 {
-	var icon = spr_mainmenu_pepicon;
+	var icon = spr_mainmenu_pepEicon;
+	if noise_unlocked
+	{
+		icon = spr_mainmenu_pepicon;
+		if (global.gameN[currentselect].palette == "17.000000" && global.option_lang == "en")
+            icon = spr_mainmenu_pepDicon
+	}
 	if shownoise
 	{
 		icon = spr_mainmenu_noiseicon;
+		if (global.gameN[currentselect].palette == "17.000000" && global.option_lang == "en")
+            icon = spr_mainmenu_doiseicon
 		if swap_unlocked
+		{
 			icon = spr_mainmenu_noiseswapicon;
+			if (global.gameN[currentselect].palette == "17.000000" && global.option_lang == "en")
+				icon = spr_mainmenu_doiseswapicon;
+		}
 		if showswap
+		{
 			icon = spr_mainmenu_swapicon;
+			if (global.gameN[currentselect].palette == "17.000000" && global.option_lang == "en")
+				icon = spr_mainmenu_swapDicon
+		}
+	}
+	if showeevee
+	{
+		icon = spr_mainmenu_pluicon;
+		if noise_unlocked
+		{
+			icon = spr_mainmenu_pluNicon;
+			if (global.gameN[currentselect].palette == "17.000000" && global.option_lang == "en")
+				icon = spr_mainmenu_pluDicon
+		}
+		if swap_unlocked
+			icon = spr_mainmenu_pluSicon;
 	}
 	draw_sprite(icon, game_icon_index, status_x - 100, status_y + 195 + game_icon_y);
 }
-
 lang_draw_sprite(spr_deletefile, 0, deletefile_x, deletefile_y);
 var dal = 1;
 if currentselect != -1
@@ -121,6 +152,11 @@ if currentselect != -1
 	var _game = global.game[currentselect];
 	if shownoise
 		_game = global.gameN[currentselect];
+
+	// MOD
+	if showeevee
+		_game = global.gameE[currentselect];
+
 	if !_game.started
 		dal = 0.5;
 }

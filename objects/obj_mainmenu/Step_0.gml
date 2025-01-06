@@ -1,8 +1,13 @@
+global.killedbypeddito = false;
+global.pedditoiscoming = false;
+global.iced = false;
+global.caught = false;
+
 scr_menu_getinput();
 index += 0.1;
 switch state
 {
-	case states.titlescreen:
+    case states.titlescreen:
 		currentselect = -1;
 		if (!instance_exists(obj_noiseunlocked))
 		{
@@ -75,17 +80,26 @@ switch state
 		else
 		{
 			move = key_left2 + key_right2;
-			if noise_unlocked
-			{
+			// if noise_unlocked
+			// {
 				var p = 5;
 				var _move_v = key_down2 - key_up2;
 				if _move_v != 0
 				{
 					var c = charselect;
 					charselect += _move_v;
+					/* OG
 					charselect = clamp(charselect, 0, 2);
 					if charselect == 2 && !swap_unlocked
 						charselect = 1;
+					*/
+					// MOD
+					charselect = clamp(charselect, 0, 3);
+					if charselect == 3 && !swap_unlocked
+						charselect = 2;
+					if charselect == 2 && !noise_unlocked
+						charselect = 1
+
 					if charselect != c
 					{
 						game_icon_y = p * _move_v;
@@ -96,7 +110,12 @@ switch state
 						else
 							fmod_event_one_shot("event:/sfx/ui/switchchardown");
 					}
-					var _noise = shownoise
+					var _noise = shownoise;
+
+					// MOD
+					var _eevee = showeevee;
+
+					/* OG
 					if charselect == 0
 					{
 						shownoise = false;
@@ -110,7 +129,60 @@ switch state
 						else
 							showswap = false;
 					}
-					if _noise != shownoise
+					*/
+					// MOD
+					if charselect == 0
+					{
+						shownoise = false;
+						showswap = false;
+						showeevee = false;
+						global.charsavefile = "";
+					}
+					else
+					{
+						if charselect == 1
+						{
+							if noise_unlocked
+							{
+								shownoise = true;
+								showeevee = false;
+								global.charsavefile = "N";
+							}
+							else
+							{
+								shownoise = false;
+								showeevee = true;
+								global.charsavefile = "E";
+							}
+							showswap = false;
+						}
+						if charselect == 2
+						{
+							if swap_unlocked
+							{
+								shownoise = true
+								showswap = true;
+								showeevee = false
+								global.charsavefile = "N";
+							}
+							else
+							{
+								shownoise = false
+								showswap = false;
+								showeevee = true;
+								global.charsavefile = "E";
+							}
+						}
+						if charselect == 3
+						{
+							shownoise = false;
+							showswap = false;
+							showeevee = true;
+							global.charsavefile = "E";
+						}
+					}
+
+					if _noise != shownoise /* MOD */ || _eevee != showeevee
 					{
 						with obj_menutv
 						{
@@ -123,7 +195,7 @@ switch state
 						}
 					}
 				}
-			}
+			// }
 			if ((sprite_index != spr_titlepep_punch && sprite_index != spr_titlepep_angry) || move != 0)
 			{
 				if move != 0
@@ -185,7 +257,7 @@ switch state
 							break;
 					}
 
-					image_index = savedindex;
+                image_index = savedindex;
 					image_speed = 0.35;
 				}
 			}
@@ -209,9 +281,9 @@ switch state
 					{
 						fmod_event_instance_stop(obj_music.music.event, true);
 						if !other.shownoise
-							fmod_event_one_shot("event:/sfx/ui/fileselect");
+							fmod_event_one_shot("event:/modded-sfx/ui/pressstart")
 						else
-							fmod_event_one_shot("event:/sfx/ui/fileselectN");
+							fmod_event_instance_play(other.biobondscream)
 						state = states.victory;
 						sprite_index = confirmspr;
 					}
@@ -259,7 +331,7 @@ switch state
 					}
 				}
 			}
-			else if (key_delete2 && (global.game[currentselect].started || global.gameN[currentselect].started))
+			else if (key_delete2 && (global.game[currentselect].started || global.gameN[currentselect].started /* MOD */ || global.gameE[currentselect].started))
 			{
 				deletebuffer = 0;
 				state = states.bombdelete;
@@ -282,6 +354,15 @@ switch state
 		}
 	
 	case states.bombdelete:
+
+		// MOD
+		var _ini = ".ini"
+		if shownoise
+			_ini = "N.ini";
+		else if showeevee
+			_ini = "E.ini";
+
+		
 		deleteselect += key_left2 + key_right2;
 		deleteselect = clamp(deleteselect, 0, 1);
 		if key_jump2
@@ -292,15 +373,27 @@ switch state
 		{
 			if deleteselect == 0
 			{
+				/* OG
 				var file = concat(get_save_folder(), "/saveData", currentselect + 1, !shownoise ? ".ini" : "N.ini");
+				*/
+				// MOD
+				var file = concat(get_save_folder(), "/saveData", currentselect + 1, _ini);
+
 				if file_exists(file)
 					file_delete(file);
 				if !shownoise
-					global.game[currentselect] = game_empty();
+				{
+					if showeevee
+						global.gameE[currentselect] = game_empty();
+					else
+						global.game[currentselect] = game_empty();
+				}
 				else
 					global.gameN[currentselect] = game_empty();
+
 				fmod_event_one_shot_3d("event:/sfx/misc/explosion", 480, 270);
 				fmod_event_one_shot_3d("event:/sfx/mort/mortdead", 480, 270);
+				other.biobondscream = other.saveselectN
 				with obj_menutv
 				{
 					if trigger == other.currentselect && sprite_index == selectedspr
@@ -334,26 +427,30 @@ if vsp < 20
 y += vsp;
 if y >= ystart && vsp > 0
 {
-	y = ystart;
+    y = ystart;
 	vsp = 0;
 }
 if quitbuffer > 0
 	quitbuffer--;
 if state == states.bombdelete && deletebuffer > 0
 {
-	if (!fmod_event_instance_is_playing(bombsnd))
+    if (!fmod_event_instance_is_playing(bombsnd))
 		fmod_event_instance_play(bombsnd);
 }
 else
-	fmod_event_instance_stop(bombsnd, false);
+   fmod_event_instance_stop(bombsnd, false);
 if optionbuffer > 0
 	optionbuffer--;
 if state != states.titlescreen && state != states.transition
 	extrauialpha = Approach(extrauialpha, 1, 0.1);
 if currentselect != -1
 {
-	pep_game = menu_get_game(currentselect, 1);
+    pep_game = menu_get_game(currentselect, 1);
 	noise_game = menu_get_game(currentselect, 0);
+
+	// MOD
+	eevee_game = menu_get_game(currentselect, 2);
+
 	if state != states.titlescreen && state != states.transition
 	{
 		var a = floor(abs(pep_percvisual - pep_game.percentage) / 10) + 1;
@@ -363,6 +460,11 @@ if currentselect != -1
 		var a = floor(abs(noise_percvisual - noise_game.percentage) / 10) + 1;
 		noise_percvisual = Approach(noise_percvisual, noise_game.percentage, a);
 		noise_game.percvisual = noise_percvisual;
+
+		// MOD
+		var a = floor(abs(eevee_percvisual - eevee_game.percentage) / 10) + 1;
+		eevee_percvisual = Approach(eevee_percvisual, eevee_game.percentage, a);
+		eevee_game.percvisual = eevee_percvisual;
 	}
 }
 var acc = 2;
@@ -372,32 +474,57 @@ if game_icon_y != 0
 if game_icon_buffer > 0
 	game_icon_buffer--;
 else
-	game_icon_y = 0;
+    game_icon_y = 0;
 if shownoise
 {
-	noise_alpha = Approach(noise_alpha, 1, acc);
+    noise_alpha = Approach(noise_alpha, 1, acc);
 	pep_alpha = Approach(pep_alpha, 0, acc);
+
+	// MOD
+	eevee_alpha = Approach(eevee_alpha, 0, acc);
 }
 else
+/* OG
 {
-	noise_alpha = Approach(noise_alpha, 0, acc);
+    noise_alpha = Approach(noise_alpha, 0, acc);
 	pep_alpha = Approach(pep_alpha, 1, acc);
 }
+*/
+
+//MOD
+{
+	if showeevee
+	{
+		noise_alpha = Approach(noise_alpha, 0, acc);
+		pep_alpha = Approach(pep_alpha, 0, acc);
+		eevee_alpha = Approach(eevee_alpha, 1, acc);
+	}
+	else
+	{
+		noise_alpha = Approach(noise_alpha, 0, acc);
+		pep_alpha = Approach(pep_alpha, 1, acc);
+		eevee_alpha = Approach(eevee_alpha, 0, acc);
+	}
+}
+
 if currentselect != -1
 {
-	pep_game.alpha = pep_alpha;
-	noise_game.alpha = noise_alpha;
+    pep_game.alpha = pep_alpha;
+    noise_game.alpha = noise_alpha;
+
+	// MOD
+	eevee_game.alpha = eevee_alpha;
 }
 with obj_menutv
 {
-	if trigger == other.currentselect
+    if trigger == other.currentselect
 		selected = true;
 	else
 		selected = false;
 }
 if gamepad_button_check_pressed(obj_inputAssigner.player_input_device[0], gp_shoulderrb)
 {
-	punch_x = x + irandom_range(-40, 40);
+    punch_x = x + irandom_range(-40, 40);
 	punch_y = y + irandom_range(-30, 30);
 	event_user(0);
 }

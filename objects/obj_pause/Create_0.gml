@@ -22,13 +22,13 @@ ds_map_set(pause_menu_map, "pause_resume", [0, function()
 }]);
 ds_map_set(pause_menu_map, "pause_achievements", [5, function()
 {
-	fmod_event_one_shot("event:/sfx/ui/select");
+	fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select");
 	with (instance_create(x, y, obj_achievement_pause))
 		depth = other.depth - 1;
 }]);
 ds_map_set(pause_menu_map, "pause_options", [1, function()
 {
-	fmod_event_one_shot("event:/sfx/ui/select");
+	fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select");
 	with (instance_create(x, y, obj_option))
 		depth = other.depth - 1;
 }]);
@@ -49,10 +49,11 @@ ds_map_set(pause_menu_map, "pause_restart", [2, function()
 			scr_pause_stop_sounds();
 			instance_destroy(obj_option);
 			instance_destroy(obj_keyconfig);
+			instance_destroy(obj_peddito);
 			pause = false;
 		}
 		else
-			fmod_event_one_shot("event:/sfx/ui/select");
+			fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select");
 	}
 }]);
 var exit_function = function()
@@ -134,6 +135,7 @@ savedsecretpause = false;
 savedmusicpause = false;
 savedpillarpause = false;
 savedpanicpause = false;
+savedescapepause = false;
 savedkidspartypause = false;
 fade = 0;
 fadein = false;

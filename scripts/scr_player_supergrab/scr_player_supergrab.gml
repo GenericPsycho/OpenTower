@@ -123,6 +123,8 @@ function scr_player_supergrab()
 						image_index = 1;
 						image_speed = 0;
 						randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_player_suplexmash5, spr_player_suplexmash6, spr_player_suplexmash7]);
+						if character == "E"
+							randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_playerE_suplexmash5, spr_playerE_suplexmash6, spr_playerE_suplexmash7]);
 						repeat (4 + irandom(6))
 						{
 							var _spd = 5 + irandom(6);
@@ -162,6 +164,8 @@ function scr_player_supergrab()
 							if baddiegrabbedID.elitehit <= 1 && baddiegrabbedID.object_index != obj_pizzafaceboss_p3
 								baddiegrabbedID.destroyable = true;
 							sprite_index = choose(spr_player_lungehit, spr_player_kungfu1, spr_player_kungfu2, spr_player_kungfu3);
+							if character == "E"
+								sprite_index = choose(spr_playerE_lungehit, spr_playerE_kungfu1, spr_playerE_kungfu2, spr_playerE_kungfu3);
 							image_index = 0;
 							supergrabstate = states.finishingblow;
 							shot = false;
@@ -277,7 +281,7 @@ function scr_player_supergrab()
 				}
 				if floor(image_index) == image_number - 1
 				{
-					if sprite_index == spr_player_lungehit
+					if sprite_index == spr_player_lungehit || sprite_index == spr_playerE_lungehit
 						image_index = image_number - 3;
 					else
 						image_index = image_number - 1;

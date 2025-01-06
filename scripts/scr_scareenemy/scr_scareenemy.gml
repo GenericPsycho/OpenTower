@@ -14,8 +14,15 @@ function scr_scareenemy()
 					if x != player.x
 						image_xscale = -sign(x - player.x);
 					scaredbuffer = 100;
-					if (irandom(100) <= 5)
-						fmod_event_one_shot_3d("event:/sfx/voice/enemyrarescream", x, y);
+					if (irandom(100) <= 5) && global.extras_scream == 0
+						fmod_event_one_shot_3d("event:/modded-sfx/voice/sillywillyscreamy", x, y)
+					else
+					{
+						if global.extras_scream == 1
+							fmod_event_one_shot_3d("event:/modded-sfx/voice/sillywillyscreamy", x, y)
+						else if global.extras_scream == 2
+							fmod_event_one_shot_3d("event:/modded-sfx/voice/sillywillyearrape", x, y)
+					}
 					if vsp < 0
 						vsp = 0;
 					if grounded

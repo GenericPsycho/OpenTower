@@ -7,9 +7,88 @@ function scr_is_p_rank()
 	else
 		return !global.combodropped && global.prank_enemykilled;
 }
+function scr_is_pplus_rank()
+{
+	var maxcombo = 0
+	var maxcombo_check = false;
+
+	switch global.leveltosave
+	{
+		case "entrance":
+			maxcombo = 99;
+			break;
+		case "medieval":
+			maxcombo = 117;
+			break;
+		case "ruin":
+			maxcombo = 95;
+			break;
+		case "dungeon":
+			maxcombo = 101;
+			break;
+		case "badland":
+			maxcombo = 90;
+			break;
+		case "graveyard":
+			maxcombo = 89;
+			break;
+		case "farm":
+			maxcombo = 120;
+			break;
+		case "saloon":
+			maxcombo = 114;
+			break;
+		case "plage":
+			maxcombo = 128;
+			break;
+		case "forest":
+			maxcombo = 147;
+			break;
+		case "space":
+			maxcombo = 104;
+			break;
+		case "minigolf":
+			maxcombo = 134;
+			break;
+		case "street":
+			maxcombo = 118;
+			break;
+		case "industrial":
+			maxcombo = 157;
+			break;
+		case "sewer":
+			maxcombo = 115;
+			break;
+		case "freezer":
+			maxcombo = 142;
+			break;
+		case "chateau":
+			maxcombo = 168;
+			break;
+		case "kidsparty":
+			maxcombo = 105;
+			break;
+		case "war":
+			maxcombo = 95;
+			break;
+	}
+
+	if global.combo >= maxcombo
+		maxcombo_check = true;
+
+	if global.leveltosave != "exit" && global.leveltosave != "secretworld"
+		return global.lap && global.secretfound >= 3 && global.treasure && !global.combodropped && global.prank_enemykilled && global.hurtcounter = 0 && maxcombo_check;
+	else if global.leveltosave == "exit"
+		return !global.combodropped && global.hurtcounter == 0;
+	else
+		return !global.combodropped && global.prank_enemykilled && global.hurtcounter == 0;
+}
 function scr_do_rank(showtoppins = true, boss = false)
 {
+	global.leavinglevel = true
 	fmod_event_instance_stop(global.snd_escaperumble, true);
+	with(obj_jesus)
+		jesuscheck = 0
 	var ex = x;
 	var ey = y;
 	var cx = camera_get_view_x(view_camera[0]) + SCREEN_X;
@@ -41,7 +120,12 @@ function scr_do_rank(showtoppins = true, boss = false)
 			var maxhats = 6 + global.srank;
 			var currhats = _extrahats + _hats;
 			if currhats >= maxhats && !global.bossplayerhurt
+			{
 				_rank = "p";
+				if (room != boss_pizzaface && room != boss_pizzafacefinale && room != boss_pizzafacehub) && global.jumped == 0
+					_rank = "pp"
+				
+			}
 			else if (currhats >= (maxhats - 2))
 				_rank = "s";
 			else if (currhats >= (maxhats - 4))
@@ -86,7 +170,7 @@ function scr_do_rank(showtoppins = true, boss = false)
 	if (!instance_exists(obj_endlevelfade))
 	{
 		with (instance_create(x, y, obj_endlevelfade))
-		{
+		{		
 			do_rank = true;
 			toppinvisible = showtoppins;
 			with obj_pizzaface
@@ -96,6 +180,7 @@ function scr_do_rank(showtoppins = true, boss = false)
 			}
 			if (room == tower_tutorial1 || room == tower_tutorial1N)
 			{
+				global.rank = "a"
 				do_rank = false;
 				targetRoom = tower_entrancehall;
 				targetDoor = "HUB";
@@ -115,11 +200,19 @@ function scr_do_rank(showtoppins = true, boss = false)
 					audio_stop_all();
 					stop_music();
 					fmod_event_instance_stop(global.snd_rank);
-					fmod_event_one_shot("event:/sfx/ending/towercollapsetrack");
+					fmod_event_one_shot("event:/modded-sfx/ending/towerescape")
 				}
 				else
 					toppinvisible = false;
 			}
+			if instance_exists(obj_peddito) && global.rank != "d"
+			{
+				obj_peddito.notdrank = true;
+				instance_destroy(obj_peddito);
+			}
+			else if !instance_exists(obj_peddito) && global.rank == "d" && (global.doisemode && !global.swapmode)
+				instance_create(-100, y, obj_peddito)
+			global.pedditoiscoming = false
 		}
 	}
 	obj_player1.state = states.door;

@@ -46,6 +46,7 @@ function stop_music()
 		}
 		fmod_event_instance_stop(pillarmusicID, true);
 		fmod_event_instance_stop(panicmusicID, true);
+		fmod_event_instance_stop(escapeID, true);
 	}
 }
 function hub_state(_room, _sound, _secretsound)

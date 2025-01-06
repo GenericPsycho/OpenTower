@@ -4,10 +4,14 @@ if sprite_index != sprite10391
 	{
 		image_xscale = other.image_xscale;
 		sprite_index = spr_peppinobullet_dead;
+		if obj_player1.character == "E"
+			sprite_index = spr_plumebullet_dead;
 		vsp = random_range(-3, -6);
 		hsp = -image_xscale * 4;
 		if other.sprite_index == spr_peppinobulletGIANT
 			sprite_index = spr_peppinobulletGIANT_dead;
+		if other.sprite_index == spr_plumebulletGIANT
+			sprite_index = spr_plumebulletGIANT_dead;
 	}
 }
 else

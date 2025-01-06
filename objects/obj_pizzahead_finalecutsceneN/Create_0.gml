@@ -23,7 +23,7 @@ pizzahead = instance_create(786, 369, obj_finaleN_prop);
 pizzahead.sprite_index = spr_johnresurrected_pizzahead;
 pizzahead.image_xscale = 1;
 pizzaheadshot = -4;
-pizzaheadshot_snd = fmod_event_create_instance("event:/sfx/playerN/finale_pizzahead");
+pizzaheadshot_snd = fmod_event_create_instance("event:/modded-sfx/playerNfix/finale_pizzahead");
 
 state = states.normal;
 buffer = 100;

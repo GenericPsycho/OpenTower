@@ -2,14 +2,36 @@ function scr_playerN_machcancelstart()
 {
 	hsp = 0;
 	vsp = 0;
+	if global.doisemode
+	{
+		hsp = xscale * movespeed
+	    move = key_right + key_left
+		movespeed = 0
+		with (create_blur_afterimage(x, y, sprite_index, image_index, xscale))
+			playerid = other.id
+		if (move != 0)
+			xscale = move
+		hsp = 0
+	}
 	movespeed = 0;
 	image_speed = 0.5;
 	if floor(image_index) == image_number - 1
 	{
-		state = states.machcancel;
-		sprite_index = spr_playerN_jetpackboost;
-		instance_create(x, y, obj_jumpdust);
-		movespeed = 15;
+		if global.doisemode && sprite_index != spr_playerN_trash
+		{
+			state = states.jetpack;
+			sprite_index = spr_playerN_jetpackboost;
+			with (instance_create(x, y, obj_jumpdust))
+				image_xscale = obj_player.xscale;
+			hsp = 15 * xscale;
+		}
+		else
+		{
+			state = states.machcancel;
+			sprite_index = spr_playerN_jetpackboost;
+			instance_create(x, y, obj_jumpdust);
+			movespeed = 15;
+		}
 	}
 }
 function scr_playerN_machcancel()
@@ -59,13 +81,25 @@ function scr_playerN_machcancel()
 		exit;
 	if (scr_check_groundpound2() && sprite_index != spr_playerN_divebombfall && !place_meeting(x, y, obj_ventilator) && !grounded)
 	{
-		sprite_index = spr_playerN_divebombfall;
-		state = states.machcancel;
-		vsp = 20;
-		input_buffer_slap = 0;
-		input_buffer_jump = 0;
-		image_index = 0;
-		exit;
+		if global.doisemode
+		{
+			sprite_index = spr_bodyslamstart
+		    image_index = 0
+	        state = states.freefall
+			movespeed = hsp * xscale
+		    vsp = -6
+	        exit;
+		}
+		else
+		{
+			sprite_index = spr_playerN_divebombfall;
+			state = states.machcancel;
+			vsp = 20;
+			input_buffer_slap = 0;
+			input_buffer_jump = 0;
+			image_index = 0;
+			exit;
+		}
 	}
 	if grounded && sprite_index == spr_playerN_divebombfall
 	{
@@ -89,7 +123,7 @@ function scr_playerN_machcancel()
 	}
 	if grounded && key_attack && vsp >= 0 && sprite_index == spr_playerN_wallbounce
 	{
-		fmod_event_one_shot_3d("event:/sfx/playerN/wallbounceland", x, y);
+		fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/wallbounceland", x, y);
 		input_buffer_slap = 0;
 		if move != 0
 			xscale = move;
@@ -109,7 +143,10 @@ function scr_playerN_machcancel()
 		with (instance_create(x, y, obj_crazyrunothereffect))
 			image_xscale = other.xscale;
 	}
-	noisedoublejump = true;
+	if !global.doisemode || (global.doisemode && !noisecrusher)
+        noisedoublejump = true
+    else
+        noisedoublejump = false
 	if (input_buffer_slap > 0 && key_up && (!global.pistol || !ispeppino))
 	{
 		input_buffer_slap = 0;
@@ -117,8 +154,10 @@ function scr_playerN_machcancel()
 		image_index = 0;
 		sprite_index = spr_breakdanceuppercut;
 		fmod_event_instance_play(snd_uppercut);
-		vsp = -21;
+		vsp = global.doisemode ? -14 : -21;
 		movespeed = hsp;
+		if key_attack && global.doisemode
+            movespeed = abs(hsp)
 		particle_set_scale(particle.highjumpcloud2, xscale, 1);
 		create_particle(x, y, particle.highjumpcloud2, 0);
 		repeat 4
@@ -179,8 +218,18 @@ function scr_noise_machcancel_grab()
 {
 	if ispeppino
 		exit;
-	image_speed = 0.5;
+	image_speed = global.doisemode ? 0.35 : 0.5;
 	move = key_left + key_right;
+	if (key_attack2 && (!key_up) && global.doisemode && sprite_index != spr_playerN_trash)
+    {
+        sprite_index = spr_playerN_jetpackstart
+        image_index = 0
+        image_speed = 0.45
+        fmod_event_one_shot_3d("event:/sfx/noise/jetpackstart", x, y)
+        state = states.machcancelstart
+        hsp = 0
+        vsp = 0
+    }
 	if input_buffer_slap > 0 && !key_up
 	{
 		if (!shotgunAnim || move != 0)
@@ -195,7 +244,7 @@ function scr_noise_machcancel_grab()
 			if vsp > -5
 				vsp = -5;
 			state = states.mach2;
-			movespeed = 12;
+			movespeed = global.doisemode ? 10 : 12;
 			sprite_index = spr_playerN_sidewayspin;
 			with (instance_create(x, y, obj_crazyrunothereffect))
 				image_xscale = other.xscale;

@@ -9,7 +9,7 @@ else if m.menu_id >= menus.video && m.menu_id <= menus.unused_1
 	j = 2;
 else if m.menu_id == menus.audio
 	j = 1;
-else if m.menu_id == menus.game
+else if m.menu_id == menus.game || m.menu_id == menus.extras1 || m.menu_id == menus.extras2
 	j = 3;
 
 for (var i = 0; i < array_length(bg_alpha); i++)
@@ -45,7 +45,7 @@ var os = optionselected;
 optionselected += move;
 optionselected = clamp(optionselected, 0, array_length(m.options) - 1);
 if os != optionselected
-	fmod_event_one_shot("event:/sfx/ui/step");
+	fmod_event_one_shot((global.solitude ? "event:/modded-sfx/ui/nostradoreterminalMove" : "event:/sfx/ui/step"));
 
 var option = m.options[optionselected];
 var move2 = key_left2 + key_right2;
@@ -55,7 +55,7 @@ switch option.type
 	case menutype.press:
 		if key_jump && option.func != -4
 		{
-			fmod_event_one_shot("event:/sfx/ui/select");
+			fmod_event_one_shot((global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select"));
 			option.func();
 		}
 		break;
@@ -63,7 +63,7 @@ switch option.type
 	case menutype.toggle:
 		if (key_jump || -key_left2 || key_right2)
 		{
-			fmod_event_one_shot("event:/sfx/ui/select");
+			fmod_event_one_shot((global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select"));
 			option.value = !option.value;
 			if option.on_changed != -4
 				option.on_changed(option.value);
@@ -78,7 +78,7 @@ switch option.type
 			option.value = array_length(option.values) - 1;
 		if move2 != 0
 		{
-			fmod_event_one_shot("event:/sfx/ui/step");
+			fmod_event_one_shot((global.solitude ? "event:/modded-sfx/ui/nostradoreterminalMove" : "event:/sfx/ui/step"));
 			if option.on_changed != -4
 				option.on_changed(option.values[option.value].value);
 		}
@@ -139,7 +139,7 @@ if slidebuffer > 0
 
 if ((key_back || key_slap2 || keyboard_check_pressed(vk_escape)) && !instance_exists(obj_keyconfig) && !instance_exists(obj_audioconfig))
 {
-	fmod_event_one_shot("event:/sfx/ui/back");
+	fmod_event_one_shot((global.solitude ? "event:/modded-sfx/ui/nostradoreterminalBack" : "event:/sfx/ui/back"));
 	if menu == menus.options
 	{
 		if (instance_exists(obj_mainmenuselect))

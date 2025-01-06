@@ -56,5 +56,42 @@ if sprite_index == spr_cheftaskdoor
 	}
 	ini_close();
 	if !_found
+	{
 		sprite_index = spr_cheftaskdoor_gold;
+		var lvl1 = ["entrance", "medieval", "ruin", "dungeon", "b_pepperman"];
+		var lvl2 = ["badland", "graveyard", "farm", "saloon", "b_vigilante"];
+		var lvl3 = ["plage", "forest", "space", "minigolf", "b_noise"];
+		var lvl4 = ["street", "sewer", "industrial", "freezer", "b_fakepep"];
+		var lvl5 = ["chateau", "kidsparty", "war", "exit"];
+		var lvl = lvl1;
+		switch(room)
+		{
+			case tower_1:
+				lvl = lvl1;
+				break;
+			case tower_2:
+				lvl = lvl2;
+				break;
+			case tower_3:
+				lvl = lvl3;
+				break;
+			case tower_4:
+				lvl = lvl4;
+				break;
+			case tower_5:
+				lvl = lvl5;
+				break;
+		}
+		var valuecount = 0;
+		for (var i = 0; i < array_length(lvl); i++)
+		{
+			ini_open_from_string(obj_savesystem.ini_str)
+			var pluscheck = ini_read_string("RankPlus", lvl[i], 0);
+			ini_close();
+			if (pluscheck == 1)
+				valuecount++;
+		}
+		if valuecount == array_length(lvl)
+			sprite_index = spr_cheftaskdoor_diamond;
+	}
 }

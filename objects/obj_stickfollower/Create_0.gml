@@ -1,6 +1,12 @@
 event_inherited();
 walkspr = spr_stick_towercollapse_walk;
 idlespr = spr_stick_towercollapse_idle;
+if obj_player1.character == "E"
+{
+	walkspr = spr_gholdengo_towercollapse_walk;
+	idlespr = spr_gholdengo_towercollapse_idle;
+	sprite_index = idlespr;
+}
 image_speed = 0.35;
 
 if (!obj_player1.ispeppino || global.swapmode)

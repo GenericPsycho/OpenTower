@@ -4,7 +4,11 @@ function scr_savescore(level)
 	{
 		global.rank = "s";
 		if (scr_is_p_rank())
+		{
 			global.rank = "p";
+			if scr_is_pplus_rank()
+				global.rank = "pp";
+		}
 		if global.snickchallenge == 1
 			global.SAGEsnicksrank = true;
 	}
@@ -24,6 +28,8 @@ function scr_savescore(level)
 		ini_write_real("Highscore", level, global.collect);
 	if (ini_read_real("Treasure", level, 0) == 0)
 		ini_write_real("Treasure", level, global.treasure);
+	if (ini_read_real("Laps", level, 0) < global.lapcount)
+		ini_write_real("Laps", level, global.lapcount);
 	var _enemies = ini_read_real("Game", "enemies", 0);
 	ini_write_real("Game", "enemies", _enemies + global.enemykilled);
 	var _damage = ini_read_real("Game", "damage", 0);
@@ -73,6 +79,8 @@ function scr_savescore(level)
 function scr_play_rank_music()
 {
 	var s = 4.5;
+	if global.rank == "pp"
+		s = 6.5;
 	if global.rank == "p"
 		s = 5.5;
 	if global.rank == "s"
@@ -92,16 +100,25 @@ function scr_play_rank_music()
 	}
 }
 function scr_write_rank(level)
-{
+{	
 	var _rank = ini_read_string("Ranks", level, "d");
 	var _map = ds_map_create();
+	var _writerank = global.rank;
 	ds_map_set(_map, "d", 0);
 	ds_map_set(_map, "c", 1);
 	ds_map_set(_map, "b", 2);
 	ds_map_set(_map, "a", 3);
 	ds_map_set(_map, "s", 4);
 	ds_map_set(_map, "p", 5);
+	ds_map_set(_map, "pp", 6);
 	if (ds_map_find_value(_map, global.rank) >= ds_map_find_value(_map, _rank))
-		ini_write_string("Ranks", level, global.rank);
+	{
+		if global.rank == "pp"
+		{
+			ini_write_string("RankPlus", level, 1)
+			_writerank = "p"
+		}
+		ini_write_string("Ranks", level, _writerank);
+	}
 	ds_map_destroy(_map);
 }

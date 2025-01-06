@@ -3,6 +3,7 @@ function scr_player_Sjumpprep()
 	switch character
 	{
 		case "P":
+		case "E":
 			if (sprite_index == spr_superjumppreplight || sprite_index == spr_superjumpright || sprite_index == spr_superjumpleft)
 				move = key_left + key_right;
 			else
@@ -59,7 +60,7 @@ function scr_player_Sjumpprep()
 			vsp = 0;
 			pogochargeactive = false;
 			pogocharge = 50;
-			if floor(image_index) == image_number - 1
+			if floor(image_index) == image_number - 1 && sprite_index != spr_playerN_trash
 			{
 				if sprite_index == spr_playerN_jetpackstart
 				{

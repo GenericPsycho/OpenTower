@@ -18,3 +18,6 @@ if room == tower_5
 			instance_create(x + 50, y + 96, obj_rubble);
 	}
 }
+showtext = false;
+alpha = 0;
+hallotoggle = "";

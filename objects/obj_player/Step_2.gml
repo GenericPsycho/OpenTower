@@ -12,3 +12,12 @@ if global.collect != global.lastcollect
 	if global.swapmode
 		global.collect_player[player_index] += diff;
 }
+if global.doisemode && !ispeppino
+{
+	if noisecrusher
+		noisedoublejump = 0
+	if (!noisecrusher)
+		noisedoublejump = 1
+	if (grounded && state != states.boxxedpepjump)
+		noisejetpack = 1000
+}

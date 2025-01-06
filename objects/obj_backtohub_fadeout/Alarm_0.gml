@@ -16,6 +16,13 @@ else
 	obj_player1.x = obj_player1.backtohubstartx;
 	obj_player1.y = obj_player1.backtohubstarty - (SCREEN_HEIGHT * 2);
 	obj_player1.state = states.backtohub;
-	obj_player1.sprite_index = obj_player1.spr_slipbanan1;
-	obj_player1.image_index = 10;
+	if global.doisemode && !global.swapmode && global.killedbypeddito
+		obj_player1.sprite_index = spr_doise_deadair
+	else if global.doisemode && !global.swapmode && global.iced
+		obj_player1.sprite_index = spr_doise_deadice
+	else
+	{
+		obj_player1.sprite_index = obj_player1.spr_slipbanan1;
+		obj_player1.image_index = 10;
+	}
 }

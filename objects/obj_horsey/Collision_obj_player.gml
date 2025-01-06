@@ -2,7 +2,7 @@ if ((sprite_index == spr_horsey_win || sprite_index == spr_horsey_lose) && !othe
 {
 	var t = other.id;
 	fmod_event_one_shot_3d("event:/sfx/enemies/kill", x, y);
-	fmod_event_one_shot_3d("event:/sfx/playerN/horseydead", x, y);
+	fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/horseydead", x, y);
 	notification_push(notifs.baddie_kill, [room, id, object_index]);
 	global.combotime = 60;
 	instance_create(x, y, obj_bangeffect);

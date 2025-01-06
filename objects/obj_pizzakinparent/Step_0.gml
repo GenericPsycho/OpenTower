@@ -22,7 +22,7 @@ if state != states.backbreaker
 		if (image_index > image_number - 1)
 		{
 			image_index = 0;
-			sprite_index = spr_toppinpineapple;
+			sprite_index = scr_get_toppin_sprite("pineapple", "idle");
 		}
 	}
 	if obj_player1.state == states.backbreaker

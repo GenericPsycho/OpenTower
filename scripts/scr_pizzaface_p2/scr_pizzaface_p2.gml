@@ -55,9 +55,20 @@ function scr_pizzaface_p2_update_sounds()
 			fmod_event_instance_play(snd_spin);
 		fmod_event_instance_set_3d_attributes(snd_spin, x, y);
 	}
+	else if ((sprite_index == spr_meowth_ratballstart && floor(image_index) >= 17) || sprite_index == spr_meowth_ratballend)
+	{
+		if (!fmod_event_instance_is_playing(snd_spin))
+			fmod_event_instance_play(snd_spin);
+		fmod_event_instance_set_3d_attributes(snd_spin, x, y);
+	}
 	else
 		fmod_event_instance_stop(snd_spin, true);
 	if (sprite_index == spr_pizzahead_giddy && !steppysnd && (floor(image_index) == 2 || floor(image_index) == 6))
+	{
+		steppysnd = true;
+		fmod_event_one_shot_3d("event:/sfx/pizzahead/step", x, y + 40);
+	}
+	else if (sprite_index == spr_meowth_giddy && !steppysnd && (floor(image_index) == 2 || floor(image_index) == 6))
 	{
 		steppysnd = true;
 		fmod_event_one_shot_3d("event:/sfx/pizzahead/step", x, y + 40);
@@ -70,9 +81,21 @@ function scr_pizzaface_p2_update_sounds()
 			fmod_event_instance_play(snd_grablevel);
 		fmod_event_instance_set_3d_attributes(snd_grablevel, x, y);
 	}
+	else if (sprite_index == spr_meowth_pullinglevel1 && floor(image_index) <= 21)
+	{
+		if (!fmod_event_instance_is_playing(snd_grablevel))
+			fmod_event_instance_play(snd_grablevel);
+		fmod_event_instance_set_3d_attributes(snd_grablevel, x, y);
+	}
 	else
 		fmod_event_instance_stop(snd_grablevel, true);
 	if (sprite_index == spr_pizzahead_grabitem && floor(image_index) >= 8)
+	{
+		if (!fmod_event_instance_is_playing(snd_fishing))
+			fmod_event_instance_play(snd_fishing);
+		fmod_event_instance_set_3d_attributes(snd_fishing, x, y);
+	}
+	else if (sprite_index == spr_meowth_grabitem && floor(image_index) >= 8)
 	{
 		if (!fmod_event_instance_is_playing(snd_fishing))
 			fmod_event_instance_play(snd_fishing);
@@ -97,11 +120,15 @@ function scr_pizzaface_p2_fall()
 	{
 		if floor(image_index) == image_number - 1
 		{
-			if sprite_index == spr_player_gnomecutscene2
+			if sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2
 				image_index = image_number - 1;
-			else if sprite_index == spr_player_gnomecutscene3
+			else if sprite_index == spr_player_gnomecutscene3 || sprite_index == spr_playerE_gnomecutscene3
+			{
 				sprite_index = spr_player_gnomecutscene4;
-			else if sprite_index == spr_pepbossintro2
+				if character == "E"
+					sprite_index = spr_playerE_gnomecutscene4
+			}
+			else if sprite_index == spr_pepbossintro2 || sprite_index == spr_plubossintro2
 				image_index = image_number - 2;
 			else if sprite_index == spr_noisebossintro1
 				image_index = image_number - 3;
@@ -121,7 +148,7 @@ function scr_pizzaface_p2_fall()
 			break;
 		
 		case states.fall:
-			sprite_index = spr_pizzahead_piledriver;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_piledriver : spr_pizzahead_piledriver;
 			if y < 200
 			{
 				y += 20;
@@ -138,25 +165,27 @@ function scr_pizzaface_p2_fall()
 				alarm[7] = 5;
 				layer_set_visible("Backgrounds_1", true);
 				layer_set_visible("Backgrounds_zigzag1", true);
-				layer_background_change(bg, bg_pizzaface_p2_sky);
+				layer_background_change(bg, obj_player1.character == "E" ? bg_meowth_p2_sky : bg_pizzaface_p2_sky);
 				fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 				substate = states.transition;
-				sprite_index = spr_pizzahead_intro4;
+				sprite_index = obj_player1.character == "E" ? spr_pizzahead_intro4E : spr_pizzahead_intro4;
 				image_index = 0;
 				with obj_bosscontroller
 				{
 					global.playerhit = 0;
 					player_hp = player_maxhp;
-					boss_hpsprite = spr_bossfight_pizzaheadHP;
+					boss_hpsprite = obj_player1.character == "E" ? spr_bossfight_meowthHP : spr_bossfight_pizzaheadHP;
 					boss_palette = spr_bossfight_pizzaheadpalette;
 				}
 				with obj_player1
 				{
 					sprite_index = spr_player_gnomecutscene3;
+					if character == "E"
+						sprite_index = spr_playerE_gnomecutscene3
 					if !ispeppino
 						sprite_index = spr_playerN_doiseintro2;
 					else
-						fmod_event_one_shot("event:/sfx/pep/screamboss");
+						fmod_event_one_shot("event:/modded-sfx/pep/screamer")
 					image_index = 0;
 				}
 				with obj_camera
@@ -187,6 +216,8 @@ function scr_pizzaface_p2_fall()
 					if ispeppino
 					{
 						sprite_index = spr_player_screamtransition;
+						if character == "E"
+							sprite_index = spr_playerE_screamtransition
 						image_index = 0;
 						image_speed = 0.35;
 					}
@@ -213,7 +244,7 @@ function scr_pizzaface_p2_normal()
 	}
 	if (instance_exists(obj_pistolpickup))
 	{
-		sprite_index = spr_pizzahead_idle;
+		sprite_index = obj_player1.character == "E" ? spr_meowth_idle : spr_pizzahead_idle;
 		hsp = 0;
 		vsp = 0;
 	}
@@ -235,24 +266,24 @@ function scr_pizzaface_p2_normal()
 			{
 				idle_buffer--;
 				hsp = 0;
-				sprite_index = spr_pizzahead_idle;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_idle : spr_pizzahead_idle;
 			}
 			else
 			{
-				sprite_index = spr_pizzahead_giddy;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_giddy : spr_pizzahead_giddy;
 				hsp = image_xscale * (10 + (wastedhits * 2));
 				if (grounded && vsp > 0 && place_meeting(x + (sign(hsp) * 64), y, obj_solid))
 				{
 					state = states.pizzahead_fishing;
 					hsp = 0;
-					sprite_index = spr_pizzahead_grabitem;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_grabitem : spr_pizzahead_grabitem;
 					image_index = 0;
 				}
 			}
 		}
 		else
 		{
-			sprite_index = spr_pizzahead_hurt;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_hurt : spr_pizzahead_hurt;
 			if grounded
 				hsp = Approach(hsp, 0, 0.25);
 			if grounded && vsp > 0 && flickertime > 0
@@ -275,7 +306,7 @@ function scr_pizzaface_p2_look()
 		fishcount--;
 		state = states.walk;
 		image_xscale *= -1;
-		sprite_index = spr_pizzahead_giddy;
+		sprite_index = obj_player1.character == "E" ? spr_meowth_giddy : spr_pizzahead_giddy;
 	}
 	else
 	{
@@ -291,7 +322,7 @@ function scr_pizzaface_p2_fishing()
 	{
 		leveldown = false;
 		state = states.pizzahead_pullinglevel;
-		sprite_index = spr_pizzahead_pullinglevel2;
+		sprite_index = obj_player1.character == "E" ? spr_meowth_pullinglevel2 : spr_pizzahead_pullinglevel2;
 		image_index = 0;
 	}
 	else if !global.pistol
@@ -303,7 +334,7 @@ function scr_pizzaface_p2_fishing()
 			vsp = 0;
 			state = states.shotgun;
 			substate = states.throwing;
-			sprite_index = spr_pizzahead_grabbox;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_grabbox : spr_pizzahead_grabbox;
 			image_index = 0;
 		}
 	}
@@ -319,7 +350,7 @@ function scr_pizzaface_p2_fishing()
 			hsp = 0;
 			vsp = 0;
 			substate = states.throwing;
-			sprite_index = spr_pizzahead_grabdynamite;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_grabdynamite : spr_pizzahead_grabdynamite;
 			image_index = 0;
 			miniguncount = 0;
 		}
@@ -342,7 +373,7 @@ function scr_pizzaface_p2_fishing()
 				case pizzaface_p2_attacks.pullinglevel:
 					state = states.pizzahead_pullinglevel;
 					substate = 0;
-					sprite_index = spr_pizzahead_pullinglevel1;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_pullinglevel1 : spr_pizzahead_pullinglevel1;
 					image_index = 0;
 					shot = false;
 					instance_create(x + (42 * image_xscale), y + 200, obj_pizzaheadswordstone);
@@ -357,19 +388,29 @@ function scr_pizzaface_p2_fishing()
 					brick = true;
 					state = states.throwing;
 					brickcount = 1;
-					sprite_index = spr_pizzahead_ratballstart;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_ratballstart : spr_pizzahead_ratballstart;
 					image_index = 0;
 					break;
 				
 				case pizzaface_p2_attacks.tv:
-					state = states.pizzahead_portraitthrow;
-					shot = false;
-					sprite_index = spr_pizzahead_grabTV;
-					image_index = 0;
+					if obj_player1.character == "E"
+					{
+						state = states.pizzahead_portraitthrow;
+						shot = false;
+						sprite_index = spr_meowth_grabTV;
+						image_index = 0;
+					}
+					else
+					{
+						state = states.pizzahead_portraitthrow;
+						shot = false;
+						sprite_index = spr_pizzahead_grabTV;
+						image_index = 0;
+					}
 					break;
 				
 				case pizzaface_p2_attacks.gun:
-					sprite_index = spr_pizzahead_grabgun;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_grabgun : spr_pizzahead_grabgun;
 					image_index = 0;
 					state = states.shotgun;
 					ammo = 20;
@@ -388,7 +429,7 @@ function scr_pizzaface_p2_fishing()
 					break;
 				
 				case pizzaface_p2_attacks.pinup:
-					sprite_index = spr_pizzahead_pinup;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_pinup : spr_pizzahead_pinup;
 					image_index = 0;
 					state = states.animation;
 					break;
@@ -403,13 +444,14 @@ function boss_pizzahead_pinup()
 	{
 		state = states.pizzahead_fishing;
 		hsp = 0;
-		sprite_index = spr_pizzahead_grabitem;
+		sprite_index = obj_player1.character == "E" ? spr_meowth_grabitem : spr_pizzahead_grabitem;
 		image_index = 12;
 	}
 }
 function boss_pizzahead_portraitthrow()
 {
-	if (floor(image_index) >= 44 && !shot)
+	var throwindex = obj_player1.character == "E" ? 2 : 44
+	if (floor(image_index) >= throwindex && !shot)
 	{
 		shot = true;
 		with (instance_create(x, y - 32, obj_pizzaheadportrait))
@@ -429,7 +471,7 @@ function boss_pizzahead_portraitthrow()
 }
 function boss_pizzahead_pullinglevel()
 {
-	if sprite_index == spr_pizzahead_pullinglevel2
+	if sprite_index == spr_pizzahead_pullinglevel2 || sprite_index == spr_meowth_pullinglevel2
 	{
 		var ix = floor(image_index);
 		with obj_pizzaheadswordstone
@@ -448,7 +490,7 @@ function boss_pizzahead_pullinglevel()
 				y = other.y + 159;
 		}
 	}
-	else if sprite_index == spr_pizzahead_pullinglevel1
+	else if sprite_index == spr_pizzahead_pullinglevel1 || sprite_index == spr_meowth_pullinglevel1
 	{
 		with obj_pizzaheadswordstone
 		{
@@ -495,9 +537,20 @@ function boss_pizzahead_pullinglevel()
 				vsp = -irandom_range(18, 26);
 		}
 	}
+	else if (floor(image_index) >= 22 && sprite_index == spr_meowth_pullinglevel1 && !shot)
+	{
+		shot = true;
+		repeat (7 + irandom(5))
+		{
+			var _x = irandom_range(100, room_width - 100);
+			_x = clamp(_x, 100, room_width - 100);
+			with (instance_create(_x, room_height + 100, obj_forknight_pizzahead))
+				vsp = -irandom_range(18, 26);
+		}
+	}
 	if floor(image_index) == image_number - 1
 	{
-		if sprite_index == spr_pizzahead_pullinglevel1
+		if sprite_index == spr_pizzahead_pullinglevel1 || sprite_index == spr_meowth_pullinglevel1
 		{
 			image_index = image_number - 1;
 			with obj_pizzaheadswordstone
@@ -506,15 +559,15 @@ function boss_pizzahead_pullinglevel()
 			{
 				state = states.pizzahead_pullinglevel;
 				fmod_event_one_shot("event:/sfx/pizzahead/medievalbringup");
-				sprite_index = spr_pizzahead_pullinglevel2;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_pullinglevel2 : spr_pizzahead_pullinglevel2;
 				image_index = 0;
 				with obj_pizzaheadswordstone
 					y = other.y + 33;
 			}
 		}
-		else if sprite_index == spr_pizzahead_pullinglevel2
+		else if sprite_index == spr_pizzahead_pullinglevel2 || sprite_index == spr_meowth_pullinglevel2
 		{
-			sprite_index = spr_pizzahead_giddy;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_giddy : spr_pizzahead_giddy;
 			state = states.walk;
 			image_xscale *= -1;
 			idle_buffer = 0;
@@ -534,15 +587,15 @@ function boss_pizzahead_throwing()
 	}
 	else
 	{
-		if sprite_index == spr_pizzahead_ratballstart
+		if sprite_index == spr_pizzahead_ratballstart || sprite_index == spr_meowth_ratballstart
 		{
 			if floor(image_index) == image_number - 1
 			{
-				sprite_index = spr_pizzahead_ratballidle;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_ratballidle : spr_pizzahead_ratballidle;
 				image_xscale *= -1;
 			}
 		}
-		else if sprite_index == spr_pizzahead_ratballthrow
+		else if sprite_index == spr_pizzahead_ratballthrow || sprite_index == spr_meowth_ratballthrow
 		{
 			if (floor(image_index) >= 18 && !shot)
 			{
@@ -562,19 +615,19 @@ function boss_pizzahead_throwing()
 				}
 			}
 			if floor(image_index) == image_number - 1
-				sprite_index = spr_pizzahead_ratballidle;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_ratballidle : spr_pizzahead_ratballidle;
 		}
-		else if sprite_index == spr_pizzahead_ratballcatch
+		else if sprite_index == spr_pizzahead_ratballcatch || sprite_index == spr_meowth_ratballcatch
 		{
 			if floor(image_index) == image_number - 1
-				sprite_index = spr_pizzahead_ratballidle;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_ratballidle : spr_pizzahead_ratballidle;
 		}
-		else if sprite_index == spr_pizzahead_ratballend
+		else if sprite_index == spr_pizzahead_ratballend || sprite_index == spr_meowth_ratballend
 		{
 			if floor(image_index) == image_number - 1
 				state = states.walk;
 		}
-		if sprite_index == spr_pizzahead_ratballidle
+		if sprite_index == spr_pizzahead_ratballidle || sprite_index == spr_meowth_ratballidle
 		{
 			if (!instance_exists(obj_pizzaheadbrickball))
 			{
@@ -582,12 +635,12 @@ function boss_pizzahead_throwing()
 				{
 					brickcount--;
 					shot = false;
-					sprite_index = spr_pizzahead_ratballthrow;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_ratballthrow : spr_pizzahead_ratballthrow;
 					image_index = 0;
 				}
 				else
 				{
-					sprite_index = spr_pizzahead_ratballend;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_ratballend : spr_pizzahead_ratballend;
 					image_index = 0;
 				}
 			}
@@ -599,10 +652,10 @@ function boss_pizzahead_shotgun()
 	switch substate
 	{
 		case states.mini:
-			if sprite_index == spr_pizzahead_grabgun
+			if sprite_index == spr_pizzahead_grabgun || sprite_index == spr_meowth_grabgun
 			{
 				if floor(image_index) == image_number - 1
-					sprite_index = spr_pizzahead_machinegun;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_machinegun : spr_pizzahead_machinegun;
 			}
 			else if attackbuffer > 0
 				attackbuffer--;
@@ -643,7 +696,7 @@ function boss_pizzahead_shotgun()
 					}
 					idle_buffer = 0;
 					substate = states.throwing;
-					sprite_index = spr_pizzahead_throwaway;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_throwaway : spr_pizzahead_throwaway;
 					image_index = 0;
 					miniguncount = 2;
 					fishcount = 0;
@@ -653,10 +706,10 @@ function boss_pizzahead_shotgun()
 		case states.throwing:
 			if floor(image_index) == image_number - 1
 			{
-				if sprite_index == spr_pizzahead_grabbox
+				if sprite_index == spr_pizzahead_grabbox || sprite_index == spr_meowth_grabbox
 				{
 					fmod_event_one_shot_3d("event:/sfx/pizzahead/throw", x, y);
-					sprite_index = spr_pizzahead_throwaway;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_throwaway : spr_pizzahead_throwaway;
 					image_index = 0;
 					idle_buffer = 0;
 					with (instance_create(x, y - 15, obj_pistolpickup))
@@ -665,11 +718,11 @@ function boss_pizzahead_shotgun()
 						vsp = -irandom_range(7, 14);
 					}
 				}
-				else if sprite_index == spr_pizzahead_grabdynamite
+				else if sprite_index == spr_pizzahead_grabdynamite || sprite_index == spr_meowth_grabdynamite
 				{
 					fmod_event_one_shot_3d("event:/sfx/pizzahead/throw", x, y);
 					idle_buffer = 0;
-					sprite_index = spr_pizzahead_throwaway;
+					sprite_index = obj_player1.character == "E" ? spr_meowth_throwaway : spr_pizzahead_throwaway;
 					image_index = 0;
 					repeat 5
 					{
@@ -686,7 +739,7 @@ function boss_pizzahead_shotgun()
 					if !global.pistol
 					{
 						image_xscale = saveddir;
-						sprite_index = spr_pizzahead_idle;
+						sprite_index = obj_player1.character == "E" ? spr_meowth_idle : spr_pizzahead_idle;
 					}
 					else
 					{
@@ -717,6 +770,8 @@ function boss_pizzahead_p2_phase1hurt()
 		state = states.actor;
 		pistolanim = -4;
 		sprite_index = spr_player_pistolshotend;
+		if character == "E"
+			sprite_index = spr_playerE_pistolshotend;
 		if !ispeppino
 			sprite_index = spr_playerN_bosstransition;
 	}

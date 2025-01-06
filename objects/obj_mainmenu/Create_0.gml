@@ -20,6 +20,8 @@ quitbuffer = 0;
 vsp = 0;
 shownoise = false;
 showswap = false;
+showeevee = false;
+
 charselect = 0;
 showbuffer_max = 300;
 john = true;
@@ -45,18 +47,26 @@ noise_game = -4;
 noise_percvisual = 0;
 noise_alpha = 0;
 noise_unlocked = false;
+eevee_game = -4;
+eevee_percvisual = 0;
+eevee_alpha = 0;
+charsavefile = "";
+
 pep_debris = false;
 swap_unlocked = false;
 game_icon_y = 0;
 game_icon_buffer = 0;
 game_icon_index = 0;
 punch_count = 0;
+saveselectN = fmod_event_create_instance("event:/modded-sfx/ui/presstortureN")
+saveselectD = fmod_event_create_instance("event:/modded-sfx/ui/presstortureD")
+biobondscream = saveselectN
 
 unlock_noise = function(show_screen)
 {
-	for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 3; i++)
 	{
-		if (global.game[i].judgement != "none" || global.gameN[i].judgement != "none")
+		if (global.game[i].judgement != "none" || global.gameN[i].judgement != "none" || global.gameE[i].judgement != "none")
 		{
 			show_screen = true;
 			break;
@@ -87,7 +97,7 @@ unlock_noise = function(show_screen)
 };
 unlock_swap = function(show_screen)
 {
-	for (var i = 0; i < 3; i++)
+    for (var i = 0; i < 3; i++)
 	{
 		if global.gameN[i].judgement != "none"
 		{
@@ -117,6 +127,8 @@ unlock_swap = function(show_screen)
 			ini_close();
 	}
 };
+if instance_exists(obj_peddito)
+    instance_destroy(obj_peddito)
 unlock_noise(false);
 ini_open_from_string(obj_savesystem.ini_str_options);
 swap_unlocked = ini_read_real("Game", "swapmode", 0) == 1;

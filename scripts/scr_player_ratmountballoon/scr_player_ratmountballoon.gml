@@ -1,6 +1,8 @@
 function scr_player_ratmountballoon()
 {
 	sprite_index = spr_player_ratmountballoon;
+	if character == "E"
+		sprite_index = spr_playerK_ratmountballoon;
 	hsp = movespeed;
 	move = key_left + key_right;
 	if vsp < 2
@@ -27,6 +29,8 @@ function scr_player_ratmountballoon()
 		create_particle(x, y, particle.ratmountballooncloud, 0);
 		state = states.ratmountjump;
 		sprite_index = spr_player_ratmountballoonend1;
+		if character == "E"
+			sprite_index = spr_playerK_ratmountballoonend1;
 		image_index = 0;
 		jumpAnim = true;
 		vsp = -20;

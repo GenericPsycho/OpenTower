@@ -72,7 +72,7 @@ switch state
 		scr_enemy_pummel();
 		break;
 }
-boss_update_pizzaheadKO(spr_bossfight_fakepephp, spr_bossfight_fakepeppalette);
+boss_update_pizzaheadKO(obj_player1.character == "E" ? spr_bossfight_dittohp : spr_bossfight_fakepephp, spr_bossfight_fakepeppalette);
 if phase == 2 && state != states.stun && state != states.deformed
 {
 	if deformed_cooldown > 0
@@ -172,7 +172,10 @@ if wastedhits >= 6 && !pizzahead
 			var bg2 = layer_background_get_id(lay2);
 			alarm[7] = 5;
 			layer_set_visible(lay3, true);
-			layer_background_change(bg2, bg_fakepeppino_phase2)
+			if obj_player1.character == "E"
+				layer_background_change(bg2, bg_ditto_phase2)
+			else
+				layer_background_change(bg2, bg_fakepeppino_phase2)
 			scr_sleep(25);
 		}
 	}
@@ -233,7 +236,7 @@ if !invincible && !flash && alarm[5] < 0
 	alarm[5] = 0.15 * room_speed;
 else if invincible && state != states.staggered && flashbuffer <= 0
 	flash = false;
-if ((state == states.grabdash || (state == states.mach2 && attackspeed >= 10) || (state == states.throwing && sprite_index == spr_fakepeppino_flailing && attackspeed > 4) || state == states.freefall) && alarm[4] < 0)
+if ((state == states.grabdash || (state == states.mach2 && attackspeed >= 10) || (state == states.throwing && (sprite_index == spr_fakepeppino_flailing || sprite_index == spr_ditto_flailing) && attackspeed > 4) || state == states.freefall) && alarm[4] < 0)
 	alarm[4] = 10;
 mask_index = spr_player_mask;
 if state != states.stun

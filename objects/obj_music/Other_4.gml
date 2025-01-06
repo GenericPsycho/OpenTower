@@ -58,6 +58,9 @@ if (!instance_exists(obj_randomsecret))
 			trace("Pausing panic music: room_start");
 			savedpanicpos = fmod_event_instance_get_timeline_pos(panicmusicID);
 			fmod_event_instance_set_paused(panicmusicID, true);
+			
+			savedescapepos = fmod_event_instance_get_timeline_pos(escapeID)
+			fmod_event_instance_set_paused(escapeID, true);
 		}
 	}
 	else if secretend
@@ -73,6 +76,9 @@ if (!instance_exists(obj_randomsecret))
 		{
 			fmod_event_instance_set_timeline_pos(panicmusicID, savedpanicpos);
 			fmod_event_instance_set_paused(panicmusicID, false);
+			
+			fmod_event_instance_set_timeline_pos(escapeID, savedescapepos);
+			fmod_event_instance_set_paused(escapeID, false);
 			trace("Resuming panic music: room_start");
 		}
 	}

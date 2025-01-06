@@ -8,6 +8,13 @@ sprite_index = spr_peppinoswitch1;
 switchstart = spr_peppinoswitch1;
 switchend = spr_peppinoswitch2;
 spr_sign = spr_gustavosign;
+if obj_player1.character == "E"
+{
+	sprite_index = spr_plumeswitch1;
+	switchstart = spr_plumeswitch1;
+	switchend = spr_plumeswitch2;
+	spr_sign = spr_pikasign;
+}
 collisioned = false;
 if !obj_player1.ispeppino
 {

@@ -8,7 +8,7 @@ if other.thrown
 		create_particle(x, y, particle.genericpoofeffect);
 		state = states.stun;
 		stunned = 1000;
-		sprite_index = spr_fakepeppino_vulnerable;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_vulnerable : spr_fakepeppino_vulnerable;
 		image_index = 0;
 	}
 	instance_destroy(other);

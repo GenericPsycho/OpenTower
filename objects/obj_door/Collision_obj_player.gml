@@ -40,7 +40,11 @@ if (!place_meeting(x, y, obj_doorblocked))
 			if object_index == obj_player1
 			{
 				if obj_player1.isgustavo
+				{
 					obj_player1.sprite_index = spr_ratmount_enterdoor;
+					if obj_player1.character == "E"
+						obj_player1.sprite_index = spr_ratpika_enterdoor;
+				}
 				else
 					obj_player1.sprite_index = obj_player1.spr_lookdoor;
 			}

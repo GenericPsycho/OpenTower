@@ -1,12 +1,16 @@
 var bg_spr = spr_finalrankBG;
 if !ispeppino
+{
 	bg_spr = spr_finalrankBG_N;
+	if ( global.doisemode)
+        bg_spr = spr_finalrankBG_D
+}
 draw_sprite_tiled(bg_spr, bg_index, bg_x, bg_y);
 
 scr_draw_endingrank();
 if sprite_index == spr_finaljudgement
 	lang_draw_sprite(spr_finaljudgement_text, 0, 0, 0);
-else if sprite_index == spr_finaljudgementN
+else if sprite_index == spr_finaljudgementN || sprite_index == spr_finaljudgementD
 	lang_draw_sprite(spr_finaljudgementN_text, 0, 0, 0);
 
 if brown

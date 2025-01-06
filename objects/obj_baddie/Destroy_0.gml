@@ -13,7 +13,7 @@ if (ds_list_find_index(global.baddieroom, id) == -1 && (!elite || elitehit <= 0)
 			if other.object_index == obj_swapplayergrabbable
 			{
 				oldpalettetexture = other.patterntexture;
-				if other.spr_dead == spr_player_ratmountgameover && !other.gusrat
+				if (other.spr_dead == spr_player_ratmountgameover || other.spr_dead == spr_playerK_ratmountgameover) && !other.gusrat
 					create_debris(x, y, spr_ratblock_dead);
 			}
 			if !usepalette
@@ -36,6 +36,8 @@ if (ds_list_find_index(global.baddieroom, id) == -1 && (!elite || elitehit <= 0)
 			image_speed = 0.35;
 			depth = other.depth;
 			sprite_index = spr_pepclone_death;
+			if obj_player1.character == "E"
+				sprite_index = spr_pluclone_death;
 			image_xscale = other.image_xscale;
 		}
 	}
@@ -84,6 +86,11 @@ if (ds_list_find_index(global.baddieroom, id) == -1 && (!elite || elitehit <= 0)
 		ini_write_real("Game", "snotty", true);
 		obj_savesystem.ini_str = ini_close();
 		gamesave_async_save();
+		with (obj_player1)
+		{
+			if global.option_datoggle
+				fmod_event_one_shot("event:/modded-sfx/misc/goddammit")
+		}
 	}
 	notification_push(notifs.baddie_kill, [room, id, object_index]);
 }
@@ -92,6 +99,7 @@ if (ds_list_find_index(global.baddieroom, id) == -1 && important == 0)
 	if global.prank_cankillenemy && !global.prank_enemykilled
 	{
 		global.prank_enemykilled = true;
+		global.deduction = true
 		trace("P Rank started!");
 	}
 	if (!instance_exists(obj_bosscontroller))

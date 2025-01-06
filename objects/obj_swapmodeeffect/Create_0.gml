@@ -39,10 +39,10 @@ noisecrusher = obj_player1.noisecrusher;
 
 var vx = camera_get_view_x(view_camera[0]) + (SCREEN_WIDTH / 2);
 var vy = camera_get_view_y(view_camera[0]) + (SCREEN_HEIGHT / 2);
-var snd = fmod_event_create_instance("event:/sfx/voice/swap");
+var snd = fmod_event_create_instance("event:/modded-sfx/voice/switch")
 var s = 0;
 if isgustavo
-	spr_palette = spr_ratmountpalette;
+	spr_palette = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
 if !ispeppino
 {
 	s = 1;
@@ -54,7 +54,7 @@ else if isgustavo
 	playersprite = spr_player_ratmountattack;
 }
 if room == boss_pizzaface && !ispeppino && instance_exists(obj_pizzaface_thunderdark)
-	spr_palette = spr_noisepalette_rage;
+	spr_palette = global.option_datoggle ? spr_noisepalette_rage : spr_noisepalette_rageOG;
 
 fmod_event_instance_set_parameter(snd, "state", s, true);
 fmod_event_instance_play(snd);

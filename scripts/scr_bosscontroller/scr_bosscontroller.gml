@@ -19,7 +19,7 @@ function scr_bosscontroller_particle_hp(sprite, image, x, y, hsp, spr_palette, p
 		return q;
 	}
 }
-function scr_bosscontroller_particle_anim(sprite, image, x, y, imagespeed, spr_palette = spr_peppalette, paletteselect = 0)
+function scr_bosscontroller_particle_anim(sprite, image, x, y, imagespeed, spr_palette = obj_player1.character == "E" ? spr_plupalette : ((global.option_datoggle ? spr_peppalette : spr_peppaletteOG)), paletteselect = 0)
 {
 	with obj_bosscontroller
 	{
@@ -134,9 +134,9 @@ function scr_bosscontroller_normal()
 				var bpal = boss_palette;
 				var bpalsel = pos[2];
 				var btex = -4;
-				if boss_hpsprite == spr_bossfight_fakepephp
+				if boss_hpsprite == spr_bossfight_fakepephp || boss_hpsprite == spr_bossfight_dittohp
 				{
-					bpal = spr_peppalette;
+					bpal = obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG);
 					bpalsel = obj_player1.paletteselect;
 					if !obj_player1.ispeppino
 						bpalsel = 1;
@@ -173,7 +173,7 @@ function scr_bosscontroller_normal()
 				fmod_event_instance_play(global.snd_bossbeaten);
 				global.pistol = false;
 				pistolanim = -4;
-				sprite_index = spr_player_levelcomplete;
+				sprite_index = obj_player1.character == "E" ? spr_playerE_levelcomplete : spr_player_levelcomplete;
 				if !ispeppino
 					sprite_index = spr_playerN_levelcomplete;
 				image_speed = 0.35;

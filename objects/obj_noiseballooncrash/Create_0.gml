@@ -6,3 +6,4 @@ layid = layer_get_id("Backgrounds_3");
 depth = layer_get_depth(layid);
 snd = fmod_event_create_instance("event:/sfx/noise/giantballoon1");
 fmod_event_instance_play(snd);
+sprite_index = obj_player1.character == "E" ? spr_wobbuffetballooncrash : spr_noiseballooncrash

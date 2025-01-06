@@ -11,7 +11,7 @@ if room == custom_lvl_room
 		cam_width = instance_place(x, y, par_camera_editor).width;
 		cam_height = instance_place(x, y, par_camera_editor).height;
 		with obj_camera
-			bound_camera = true;
+			bound_camera = 1;
 	}
 	else
 	{
@@ -20,7 +20,7 @@ if room == custom_lvl_room
 		cam_height = 0;
 		instance_activate_all();
 		with obj_camera
-			bound_camera = false;
+			bound_camera = 0;
 	}
 }
 scr_getinput();

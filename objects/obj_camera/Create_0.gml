@@ -27,6 +27,13 @@ offset_y = 0;
 offset_speed = 4;
 pizzascore_index = 0;
 pizzascore_number = sprite_get_number(spr_pizzascore);
+visuallap = 0;
+lap_state = 0;
+lap_posX = 0;
+lap_vsp = 0;
+lap_posY = 0;
+lapfill_index = 1;
+
 n = 0;
 image_speed = 0.35;
 alarm[1] = -1;

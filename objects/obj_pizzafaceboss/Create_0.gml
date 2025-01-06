@@ -7,7 +7,7 @@ attackbuffer = 120;
 floatdir = 1;
 facepart_count = 4;
 baddie_arr = [
-	[obj_cheeseslime, spr_slimestun],
+	[obj_cheeseslime, global.extras_sendoff ? spr_miniwoonstun : spr_slimestun],
 	[obj_forknight, spr_forknight_stun],
 	[obj_badrat, spr_badrat_stun],
 	[obj_banditochicken, spr_banditochicken_stun],
@@ -41,7 +41,7 @@ elitehit = 8;
 prevhp = elitehit;
 turned = false;
 wastedhits = 0;
-sprite_index = spr_pizzaface;
+sprite_index = global.extras_sendoff ? spr_woon : spr_pizzaface;
 state = states.arenaintro;
 introbuffer = 80;
 hitboxID = -4;
@@ -65,16 +65,16 @@ stomped = false;
 shot = false;
 reset = false;
 flash = false;
-landspr = spr_pizzaface;
-idlespr = spr_pizzaface;
-fallspr = spr_pizzaface;
+landspr = global.extras_sendoff ? spr_woon : spr_pizzaface;
+idlespr = global.extras_sendoff ? spr_woon : spr_pizzaface;
+fallspr = global.extras_sendoff ? spr_woon : spr_pizzaface;
 stunfallspr = spr_pizzaface_stun;
-walkspr = spr_pizzaface;
-turnspr = spr_pizzaface;
+walkspr = global.extras_sendoff ? spr_woon : spr_pizzaface;
+turnspr = global.extras_sendoff ? spr_woon : spr_pizzaface;
 recoveryspr = spr_pizzaface_stun;
 grabbedspr = spr_pizzaface_stun;
-scaredspr = spr_pizzaface;
-ragespr = spr_pizzaface;
+scaredspr = global.extras_sendoff ? spr_woon : spr_pizzaface;
+ragespr = global.extras_sendoff ? spr_woon : spr_pizzaface;
 hp = 1;
 slapped = false;
 grounded = true;

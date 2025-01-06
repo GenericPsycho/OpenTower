@@ -119,13 +119,16 @@ if state == states.stun && !savedthrown
 	invincible = false;
 if !invincible && alarm[5] < 0 && !flash
 	alarm[5] = 0.15 * room_speed;
-if ((state == states.grabdash || (state == states.mach2 && attackspeed >= 10) || (state == states.throwing && sprite_index == spr_fakepeppino_flailing)) && alarm[4] < 0)
+if ((state == states.grabdash || (state == states.mach2 && attackspeed >= 10) || (state == states.throwing && sprite_index == spr_fakepeppino_flailing) || (state == states.throwing && sprite_index == spr_ditto_flailing)) && alarm[4] < 0)
 {
 	alarm[4] = 10;
 	if state == states.freefall
 		alarm[4] = 5;
 }
-mask_index = spr_pizzahead_idle;
+if fmod_get_parameter("iseevee") != 0
+	mask_index = spr_meowth_idle
+else
+	mask_index = spr_pizzahead_idle;
 if state != states.stun
 	birdcreated = false;
 if flash == 1 && alarm[2] <= 0

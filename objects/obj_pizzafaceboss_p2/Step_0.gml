@@ -116,7 +116,7 @@ else
 	invincible = true;
 if state == states.pizzaface_ram && alarm[4] < 0
 	alarm[4] = 6;
-mask_index = spr_pizzahead_idle;
+mask_index = obj_player1.character == "E" ? spr_meowth_idle : spr_pizzahead_idle;
 if state == states.stun && thrown
 {
 	while (place_meeting(x, y, obj_solid))

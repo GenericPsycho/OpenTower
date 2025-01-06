@@ -21,7 +21,11 @@ if (((!instance_exists(obj_secretportalstart)) || obj_secretportalstart.drop) &&
 				sprite_index = spr_Timesup
 				image_index = 0
 				if isgustavo
+				{
 					sprite_index = spr_player_ratmounttimesup
+					if obj_player1.character == "E"
+						sprite_index = spr_playerK_ratmounttimesup
+				}
 				visible = true
 				image_blend = c_white
 				stop_music()

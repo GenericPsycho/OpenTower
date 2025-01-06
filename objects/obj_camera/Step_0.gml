@@ -47,6 +47,8 @@ else
 	visible = true;
 if ((instance_exists(obj_debugcontroller) && !obj_debugcontroller.showhud) || !global.option_hud)
 	visible = false;
+if room = tower_tutorial3N
+	visible = false;
 if global.combo > 0
 {
 	comboend = true;
@@ -73,7 +75,7 @@ if shoving == 1 && image_index >= 3 && bang == 0
 {
 	with (instance_create(x, y, obj_fallingHUDface))
 	{
-		if ((obj_player1.spotlight == 0 && obj_player1.character == "P") || (obj_player1.spotlight == 1 && obj_player2.character == "P"))
+		if ((obj_player1.spotlight == 0 && (obj_player1.character == "P")) || (obj_player1.spotlight == 1 && obj_player2.character == "P"))
 		{
 			sprite = spr_pepinoHUDscream;
 			hsp = random_range(-1, -5);
@@ -275,4 +277,45 @@ if (instance_exists(player) && !lock && player.state != states.timesup && player
 	}
 	offset_x = Approach(offset_x, 0, offset_speed);
 	offset_y = Approach(offset_y, 0, offset_speed);
+}
+
+if global.extras_inflap != 0 && global.lapcount > 0
+	visuallap = global.lapcount;
+lap_posX = Wave(-5, 5, 2, 20);
+if global.extras_inflap != 0 && global.lapcount != 0
+{
+	switch lap_state
+	{
+		case 0:
+			lap_posY += lap_vsp;
+			lap_vsp += 0.5;
+			if lap_posY > 20
+				lap_state++;
+			break;
+		case 1:
+			lap_posY = lerp(lap_posY, 0, 0.05);
+			if lap_posY < 1
+			{
+				lap_posY = 0;
+				lap_vsp = 0;
+				lap_state++;
+			}
+			break;
+		case 2:
+			lap_posY += lap_vsp;
+			if lap_vsp < 20
+				lap_vsp += 0.5;
+			if lap_posY > 0
+			{
+				lap_posY = 0;
+				lap_vsp = -1;
+			}
+			break;
+	}
+}
+else
+{
+	lap_posY = Approach(lap_posY, -500, 5);
+	lap_vsp = 0;
+	lap_state = 0;
 }

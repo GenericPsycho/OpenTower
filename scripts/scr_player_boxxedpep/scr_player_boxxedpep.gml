@@ -52,6 +52,8 @@ function scr_player_boxxedpep()
 		}
 		state = states.boxxedpepjump;
 		sprite_index = spr_boxxedpep_flap;
+		if character == "E"
+			sprite_index = spr_boxxedplu_flap;
 		if !ispeppino
 			sprite_index = spr_playerN_boxxedjetpack;
 		image_index = 0;
@@ -92,7 +94,7 @@ function scr_player_boxxedpep()
 		sprite_index = spr_boxxedpepidle;
 	if sprite_index != spr_boxxedpepintro
 	{
-		if sprite_index != spr_boxxedpep_flap
+		if sprite_index != spr_boxxedpep_flap && sprite_index != spr_boxxedplu_flap
 		{
 			if grounded
 			{
@@ -117,6 +119,8 @@ function scr_player_boxxedpep()
 		input_buffer_slap = 0;
 		state = states.boxxedpepspin;
 		sprite_index = spr_boxxedpep_spin;
+		if character == "E"
+			sprite_index = spr_boxxedplu_spin;
 		if !ispeppino
 			sprite_index = spr_playerN_boxxedhit;
 		boxxedspinbuffer = 25;

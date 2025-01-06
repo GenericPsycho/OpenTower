@@ -1,7 +1,7 @@
 depth = 0;
 image_speed = 0.35;
 usepalette = false;
-spr_palette = spr_noisepalette_rage;
+spr_palette = global.option_datoggle ? spr_noisepalette_rage : spr_noisepalette_rageOG;
 var _info = get_noise_palette_info();
 patterntexture = _info.patterntexture;
 paletteselect = _info.paletteselect;

@@ -36,7 +36,7 @@ ds_map_set(boss_hurtstates, states.handstandjump, 30);
 ds_map_set(boss_hurtstates, states.crouchslide, 30);
 ds_map_set(boss_hurtstates, states.skateboard, 60);
 ds_map_set(boss_hurtstates, states.pogo, 30);
-ds_map_set(boss_hurtstates, states.jetpack, 80);
+ds_map_set(boss_hurtstates, states.jetpack2, 80);
 ds_map_set(boss_hurtstates, states.jetpackspin, 80);
 
 phase = 1;
@@ -181,7 +181,7 @@ function player_hurt(damage, player)
 			inv_frames = true;
 			alarm[1] = 15;
 		}
-		if (hitstate == states.skateboard || hitstate == states.jetpack)
+		if (hitstate == states.skateboard || hitstate == states.jetpack2)
 		{
 			stunned = (hitstate == states.skateboard) ? 30 : 70;
 			with obj_camera

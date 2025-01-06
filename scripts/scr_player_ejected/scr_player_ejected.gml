@@ -1,6 +1,8 @@
 function scr_player_ejected()
 {
-	sprite_index = spr_deathend;
+	sprite_index = !global.swapmode && global.doisemode && !obj_player1.ispeppino ? spr_doise_deadair : spr_deathend;
+	if sprite_index == spr_doise_deadair
+		global.caught = true;
 	if vsp < 20
 		vsp += grav;
 	x += hsp;

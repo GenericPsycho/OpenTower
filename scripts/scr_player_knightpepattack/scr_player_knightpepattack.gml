@@ -16,6 +16,8 @@ function scr_player_knightpepattack()
 	{
 		movespeed = 0;
 		sprite_index = spr_knightpep_idle;
+		if character == "E"
+			sprite_index = spr_knightplu_idle;
 		state = states.knightpep;
 	}
 	if (scr_slope() && sprite_index != spr_knightpepthunder)

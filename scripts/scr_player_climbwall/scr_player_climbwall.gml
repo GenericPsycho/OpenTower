@@ -3,6 +3,7 @@ function scr_player_climbwall()
 	switch character
 	{
 		case "P":
+		case "E":
 			if windingAnim < 200
 				windingAnim++;
 			move = key_left + key_right;

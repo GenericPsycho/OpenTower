@@ -1,5 +1,7 @@
 function scr_hurtplayer(player)
 {
+	if global.killedbypeddito
+		exit;
 	var _obj = object_index;
 	var _other = id;
 	var _savedstate = player.state;
@@ -22,7 +24,7 @@ function scr_hurtplayer(player)
 		else if sprite_index == spr_jetpackstart2
 		{
 		}
-		else if ((state == states.backbreaker && (parrytimer > 0 || instance_exists(obj_parryhitbox) || sprite_index == spr_supertaunt1 || sprite_index == spr_supertaunt2 || sprite_index == spr_supertaunt3 || sprite_index == spr_supertaunt4 || sprite_index == spr_player_ratmountsupertaunt)) || state == states.chainsaw || state == states.phase1hurt || state == states.actor || instance_exists(obj_bossdark))
+		else if ((state == states.backbreaker && (parrytimer > 0 || instance_exists(obj_parryhitbox) || sprite_index == spr_supertaunt1 || sprite_index == spr_supertaunt2 || sprite_index == spr_supertaunt3 || sprite_index == spr_supertaunt4 || sprite_index == spr_player_ratmountsupertaunt || sprite_index == spr_playerK_ratmountsupertaunt)) || state == states.chainsaw || state == states.phase1hurt || state == states.actor || instance_exists(obj_bossdark))
 		{
 			if state == states.backbreaker
 				trace(parrytimer);
@@ -85,12 +87,13 @@ function scr_hurtplayer(player)
 				if x != other.x
 					xscale = sign(other.x - x);
 				if (irandom(100) <= 50)
-					fmod_event_one_shot_3d("event:/sfx/voice/gushurt", x, y);
+					//fmod_event_one_shot_3d("event:/modded-sfx/voice/gustavohurtsound", x, y)
+					fmod_event_one_shot_3d("event:/sfx/voice/gushurt", x, y)
 				state = states.ratmounthurt;
 				movespeed = 6;
 				vsp = -9;
 				flash = true;
-				fmod_event_one_shot_3d("event:/sfx/pep/hurt", x, y);
+				fmod_event_one_shot_3d("event:/modded-sfx/pep/hurtsound", x, y);
 				alarm[8] = 100;
 				alarm[5] = 2;
 				alarm[7] = 150;
@@ -110,6 +113,9 @@ function scr_hurtplayer(player)
 		{
 		}
 		else if ((state == states.knightpep || state == states.knightpepattack || state == states.knightpepslopes || state == states.knightpepbump) && cutscene == 0)
+		{
+		}
+		else if state == states.jetpack
 		{
 		}
 		else if state == states.ghost
@@ -158,7 +164,7 @@ function scr_hurtplayer(player)
 			alarm[8] = 60;
 			alarm[7] = 120;
 			hurted = true;
-			fmod_event_one_shot_3d("event:/sfx/pep/hurt", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/pep/hurtsound", x, y);
 		}
 		else if (state != states.hurt && state != states.ratmounthurt && state != states.grabbed && (hurted == 0 || state == states.cheesepep || state == states.cheesepepstickside || state == states.cheesepepstickup) && cutscene == 0)
 		{
@@ -221,7 +227,7 @@ function scr_hurtplayer(player)
 			if (state == states.trashroll || state == states.trashjump)
 				create_debris(x, y, spr_player_trashlid);
 			scr_sleep(100);
-			fmod_event_one_shot_3d("event:/sfx/pep/hurt", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/pep/hurtsound", x, y);
 			if (irandom(100) <= 50)
 				fmod_event_instance_play(snd_voicehurt);
 			instance_create(x, y, obj_bangeffect);
@@ -286,12 +292,24 @@ function scr_hurtplayer(player)
 			if !_swap
 			{
 				if !isgustavo
+				{
 					tv_do_expression(spr_tv_exprhurt);
+					if character == "E"
+						tv_do_expression(spr_tv_exprhurtE);
+				}
 				else
+				{
 					tv_do_expression(spr_tv_hurtG);
+					if character == "E"
+						tv_do_expression(spr_tv_hurtK);
+				}
 				
 				if ispeppino
+				{
 					hurtTV = choose(spr_tv_exprhurt1, spr_tv_exprhurt2, spr_tv_exprhurt3, spr_tv_exprhurt4, spr_tv_exprhurt5, spr_tv_exprhurt6, spr_tv_exprhurt7, spr_tv_exprhurt8, spr_tv_exprhurt9, spr_tv_exprhurt10);
+					if character == "E"
+						hurtTV = choose(spr_tv_exprhurt1E, spr_tv_exprhurt2E, spr_tv_exprhurt3E, spr_tv_exprhurt4, spr_tv_exprhurt5, spr_tv_exprhurt6, spr_tv_exprhurt7, spr_tv_exprhurt8, spr_tv_exprhurt9, spr_tv_exprhurt10);
+				}
 				else
 					hurtTV = choose(spr_tv_exprhurtN1, spr_tv_exprhurtN2, spr_tv_exprhurtN3, spr_tv_exprhurtN4, spr_tv_exprhurtN5, spr_tv_exprhurtN6, spr_tv_exprhurtN7, spr_tv_exprhurtN8, spr_tv_exprhurtN9, spr_tv_exprhurtN10);
 			}
@@ -303,47 +321,96 @@ function scr_hurtplayer(player)
 					var str2 = string_copy(str1, 0, string_length(str1) - 1);
 					trace(str2);
 					
-					if ((state == states.tv_expression || state == states.tv_whitenoise) && (sprite_index == spr_tv_exprhurt || sprite_index == spr_tv_exprhurtN || sprite_index == spr_tv_hurtG || str2 == "spr_tv_exprhurt" || str2 == "spr_tv_exprhurtN"))
+					if ((state == states.tv_expression || state == states.tv_whitenoise) && (sprite_index == spr_tv_exprhurt || sprite_index == spr_tv_exprhurtN || sprite_index == spr_tv_hurtG || sprite_index == spr_tv_exprhurtE || sprite_index == spr_tv_hurtK || str2 == "spr_tv_exprhurt" || str2 == "spr_tv_exprhurtN"))
 					{
 						sprite_index = other.ispeppino ? spr_tv_idleN : spr_tv_idle;
+						if other.ispeppino && other.character == "E"
+							sprite_index = spr_tv_idleE
 						if other.noisecrusher
+						{
 							sprite_index = spr_tv_idleG;
+							if other.character == "E"
+								sprite_index = spr_tv_idleK;
+						}
 						var _palinfo = other.ispeppino ? get_noise_palette_info() : get_pep_palette_info();
 						spr_palette = _palinfo.spr_palette;
 						if other.noisecrusher
-							spr_palette = spr_ratmountpalette;
+						{
+							spr_palette = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
+							if other.character == "E"
+								spr_palette = spr_ratpikapalette;
+						}
 						paletteselect = _palinfo.paletteselect;
 						patterntexture = _palinfo.patterntexture;
 					}
 				}
 				if noisecrusher
+				{
 					tv_do_expression(spr_tv_hurtG);
+					if character == "E"
+						tv_do_expression(spr_tv_hurtK);
+				}
 				else
+				{
 					tv_do_expression(!ispeppino ? spr_tv_exprhurt : spr_tv_exprhurtN, false, true);
+					if ispeppino && character == "E"
+						tv_do_expression(spr_tv_exprhurtE, false, true);
+				}
 				
 				if !ispeppino
+				{
 					hurtTV = choose(spr_tv_exprhurt1, spr_tv_exprhurt2, spr_tv_exprhurt3, spr_tv_exprhurt4, spr_tv_exprhurt5, spr_tv_exprhurt6, spr_tv_exprhurt7, spr_tv_exprhurt8, spr_tv_exprhurt9, spr_tv_exprhurt10);
+					if character == "E"
+						hurtTV = choose(spr_tv_exprhurt1E, spr_tv_exprhurt2E, spr_tv_exprhurt3E, spr_tv_exprhurt4, spr_tv_exprhurt5, spr_tv_exprhurt6, spr_tv_exprhurt7, spr_tv_exprhurt8, spr_tv_exprhurt9, spr_tv_exprhurt10);
+				}
 				else
 					hurtTV = choose(spr_tv_exprhurtN1, spr_tv_exprhurtN2, spr_tv_exprhurtN3, spr_tv_exprhurtN4, spr_tv_exprhurtN5, spr_tv_exprhurtN6, spr_tv_exprhurtN7, spr_tv_exprhurtN8, spr_tv_exprhurtN9, spr_tv_exprhurtN10);
 			}
 			if damage_n % 10 == 0
+			{
 				tv_do_expression(hurtTV);
+				with (obj_player1)
+                {
+                    if (ispeppino == 0 && global.doisemode && (!global.swapmode) && (!is_bossroom()))
+                    {
+                        with (obj_player)
+                        {
+                            if (!instance_exists(obj_peddito) && state != states.animatronic && state != states.backtohub)
+                                instance_create(0, y, obj_peddito)
+                        }
+                    }
+                }
+			}
 			
-			if obj_tv.expressionsprite != spr_tv_exprhurt && obj_tv.expressionsprite != spr_tv_hurtG && obj_tv.expressionsprite != spr_tv_exprhurtN
+			if obj_tv.expressionsprite != spr_tv_exprhurt && obj_tv.expressionsprite != spr_tv_hurtG && obj_tv.expressionsprite != spr_tv_exprhurtN && obj_tv.expressionsprite != spr_tv_exprhurtE && obj_tv.expressionsprite != spr_tv_hurtK
 			{
 				instance_destroy(obj_transfotip);
 				var txt = lang_get_value("peppinohurt");
+				if obj_player1.character == "E"
+					txt = lang_get_value("plumehurt");
 				if !_swap
 				{
 					if isgustavo
+					{
 						txt = lang_get_value("gustavohurt");
+						if obj_player1.character == "E"
+							txt = lang_get_value("pikahurt");
+					}
 					if !ispeppino
-						txt = lang_get_value("noisehurt");
+					{
+                        txt = lang_get_value("noisehurt")
+                        if global.doisemode
+                            txt = lang_get_value("doisehurt")
+                    }
 				}
 				else if noisecrusher
 					txt = lang_get_value("gustavohurt");
 				else if ispeppino
+				{
 					txt = lang_get_value("noisehurt");
+					if global.doisemode
+                            txt = lang_get_value("doisehurt")
+				}
 				txt = embed_value_string(txt, [damage_n]);
 				create_transformation_tip(txt);
 			}
@@ -364,7 +431,7 @@ function scr_hurtplayer(player)
 					global.collect = 0;
 				if global.collect != 0
 				{
-					if (character == "P" || character == "V")
+					if (character == "P" || character == "V" || character == "E")
 					{
 						repeat 10
 						{
@@ -404,6 +471,12 @@ function scr_hurtplayer(player)
 									pal = info.paletteselect;
 									tex = info.patterntexture;
 									hp_sprite = other.ispeppino ? spr_bossfight_noiseHP : spr_bossfight_playerhp;
+									if other.ispeppino && other.character == "E"
+									{
+										hp_sprite = spr_bossfight_plumehp
+										if obj_player1.paletteselect == 12
+											hp_sprite = spr_bossfight_plumehp_alt
+									}
 								}
 								scr_bosscontroller_particle_hp(hp_sprite, irandom(sprite_get_number(hp_sprite) - 1), pos[0], pos[1], 1, spr_pal, pal, tex);
 							}
@@ -416,6 +489,12 @@ function scr_hurtplayer(player)
 				{
 					var d = instance_find(obj_hpeffect, instance_number(obj_hpeffect) - 1);
 					scr_bosscontroller_particle_hp(spr_bossfight_playerhp, irandom(sprite_get_number(spr_bossfight_playerhp) - 1), d.x, d.y, (d.x > (room_width / 2)) ? -1 : 1, d.spr_palette, d.paletteselect, d.patterntexture);
+					if obj_player1.character == "E"
+					{
+						scr_bosscontroller_particle_hp(spr_bossfight_plumehp, irandom(sprite_get_number(spr_bossfight_plumehp) - 1), d.x, d.y, (d.x > (room_width / 2)) ? -1 : 1, d.spr_palette, d.paletteselect, d.patterntexture);
+						if obj_player.paletteselect == 12
+							scr_bosscontroller_particle_hp(spr_bossfight_plumehp_alt, irandom(sprite_get_number(spr_bossfight_plumehp_alt) - 1), d.x, d.y, (d.x > (room_width / 2)) ? -1 : 1, d.spr_palette, d.paletteselect, d.patterntexture);
+					}
 					instance_destroy(d);
 				}
 			}

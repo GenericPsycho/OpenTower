@@ -9,7 +9,7 @@ if pizzahead && elitehit <= 0 && destroyable
 		pizzahead = true;
 		flickertime = 0;
 		state = states.pizzaheadjump;
-		sprite_index = spr_fakepeppino_jump;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_jump : spr_fakepeppino_jump;
 		image_index = 0;
 		image_speed = 0.35;
 		hsp = 0;
@@ -44,10 +44,10 @@ if pizzahead && elitehit <= 0 && destroyable
 	}
 	with obj_bosscontroller
 	{
-		boss_hpsprite = spr_bossfight_fakepephp;
+		boss_hpsprite = obj_player1.character == "E" ? spr_bossfight_dittohp : spr_bossfight_fakepephp;
 		boss_palette = spr_bossfight_fakepeppalette
 	}
-	if doise
+	if (doise && !global.doisemode)
 	{
 		with (instance_create(x, y, obj_sausageman_dead))
 		{

@@ -29,6 +29,7 @@ function scr_getallrooms()
 		tower_tutorial10,
 		tower_tutorial1N,
 		tower_tutorial2N,
+		tower_tutorial2D,
 		tower_tutorial3N,
 		tower_1up,
 		tower_2up,

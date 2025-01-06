@@ -20,8 +20,21 @@ if showgranny
 		sprite_index = spr_tutorialgranny_talk;
 		if voicecooldown == 0
 		{
-			fmod_event_one_shot_3d("event:/sfx/voice/pizzagranny", x, y);
-			voicecooldown = 100;
+			if (text == lang_get_value_granny("modgarbage15"))
+            {
+                fmod_event_one_shot_3d("event:/modded-sfx/voice/ajajo", x, y)
+                voicecooldown = 25
+            }
+            else if (text == lang_get_value_granny("modgarbage15S"))
+            {
+                fmod_event_one_shot_3d("event:/modded-sfx/voice/ojaja", x, y)
+                voicecooldown = 25
+            }
+            else
+            {
+                fmod_event_one_shot_3d("event:/sfx/voice/pizzagranny", x, y)
+                voicecooldown = 100
+            }
 		}
 	}
 	else

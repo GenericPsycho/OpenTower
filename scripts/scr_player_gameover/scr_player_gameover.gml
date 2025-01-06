@@ -24,7 +24,9 @@ function scr_player_gameover()
 	{
 		alarm[10] = 5;
 		vsp = -10;
-		sprite_index = spr_deathend;
+		sprite_index = !global.swapmode && global.doisemode && !obj_player1.ispeppino ? spr_doise_deadair : spr_deathend;
+		if sprite_index == spr_doise_deadair
+			global.caught = true;
 	}
 	hurted = false;
 	inv_frames = false;

@@ -1,5 +1,7 @@
+/*
 if (global.panic == true && global.fill > 0 && !instance_exists(obj_ghostcollectibles) && !global.tutorial_room)
 	global.fill -= 0.2;
+*/
 if (global.fill <= 0 && global.panic == true && !global.tutorial_room && !instance_exists(obj_pizzaface))
 {
 	var s = string_letters(room_get_name(room));
@@ -22,7 +24,11 @@ if (global.fill <= 0 && global.panic == true && !global.tutorial_room && !instan
 			backtohubstartx = 206;
 			backtohubstarty = 690;
 			if isgustavo
+			{
 				sprite_index = spr_player_ratmounttimesup;
+				if character == "E"
+					sprite_index = spr_playerK_ratmounttimesup;
+			}
 			visible = true;
 			image_blend = c_white;
 			audio_stop_all();

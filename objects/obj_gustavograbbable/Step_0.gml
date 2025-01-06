@@ -10,6 +10,8 @@ switch state
 		break;
 	case states.walk:
 		sprite_index = spr_lonegustavo_grabbable;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_grabbable;
 		image_speed = 0.35;
 		hsp = 0;
 		var _boss = -4;
@@ -33,7 +35,11 @@ switch state
 	case states.stun:
 		scr_enemy_stun();
 		if sprite_index == spr_dead
+		{
 			sprite_index = spr_lonegustavo_dashjump;
+			if obj_player1.character == "E"
+				sprite_index = spr_lonepika_dashjump;
+		}
 		break;
 	case states.pizzagoblinthrow:
 		scr_pizzagoblin_throw();

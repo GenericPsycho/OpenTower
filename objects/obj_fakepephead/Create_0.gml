@@ -18,3 +18,4 @@ while (place_meeting(x, y, obj_solid))
 	else
 		x++;
 }
+sprite_index = obj_player1.character == "E" ? spr_eggprojectile : spr_headprojectile

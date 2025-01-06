@@ -12,11 +12,13 @@ function scr_switchgustavo(set_state = true, skip_gloves = false)
 				visible = true;
 				state = states.ratmount;
 				sprite_index = spr_player_ratmountidle;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountidle;
 				jumpAnim = false;
 			}
 			brick = true;
 			fmod_event_instance_release(snd_voiceok);
-			snd_voiceok = fmod_event_create_instance("event:/sfx/voice/gusok");
+			snd_voiceok = fmod_event_create_instance("event:/sfx/voice/gusok")
 		}
 		else
 		{
@@ -56,13 +58,15 @@ function scr_switchpeppino(set_state = true)
 			isgustavo = false;
 			brick = false;
 			fmod_event_instance_release(snd_voiceok);
-			snd_voiceok = fmod_event_create_instance("event:/sfx/voice/ok");
+			snd_voiceok = fmod_event_create_instance("event:/modded-sfx/voice/okydoky")
 			if set_state
 			{
 				visible = true;
 				state = states.normal;
 				jumpAnim = false;
 				sprite_index = spr_player_idle;
+				if character == "E"
+					sprite_index = spr_playerE_idle;
 			}
 		}
 		else

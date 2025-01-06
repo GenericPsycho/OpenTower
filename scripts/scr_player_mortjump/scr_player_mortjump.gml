@@ -22,8 +22,12 @@ function scr_player_mortjump()
 	if (place_meeting(x + sign(hsp), y, obj_solid) && !place_meeting(x + sign(hsp), y, obj_slope))
 	{
 		movespeed = 0;
-		if sprite_index == spr_player_barrelmove
+		if sprite_index == spr_player_barrelmove || sprite_index == spr_playerE_barrelmove
+		{
 			sprite_index = spr_player_barrelidle;
+			if character == "E"
+				sprite_index = spr_playerE_barrelidle;
+		}
 	}
 	if (floor(image_index) == image_number - 1)
 	{

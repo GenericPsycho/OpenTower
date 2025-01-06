@@ -51,6 +51,8 @@ function scr_player_boxxedpepjump()
 				fmod_event_one_shot_3d("event:/sfx/boxxed/flap", x, y);
 			jumpstop = false;
 			sprite_index = spr_boxxedpep_flap;
+			if character == "E"
+				sprite_index = spr_boxxedplu_flap;
 			image_index = 0;
 			repeat 7
 			{
@@ -67,7 +69,11 @@ function scr_player_boxxedpepjump()
 	}
 	else
 	{
-		noisejetpack = 1000;
+		if (noisejetpack > 0 && global.doisemode)
+		{
+            noisejetpack = noisejetpack - 1
+			trace(concat("FUEL LEFT : ", noisejetpack))
+		}
 		if key_jump3 && noisejetpack > 0
 		{
 			
@@ -109,13 +115,15 @@ function scr_player_boxxedpepjump()
 		if (sprite_index == spr_playerN_boxxedjetpackfall && floor(image_index) == image_number - 1)
 			sprite_index = spr_playerN_boxxedfall;
 	}
-	if (sprite_index == spr_boxxedpep_flap && floor(image_index) == image_number - 1)
+	if ((sprite_index == spr_boxxedpep_flap || sprite_index == spr_boxxedplu_flap) && floor(image_index) == image_number - 1)
 		sprite_index = spr_boxxedpepair;
 	if input_buffer_slap > 0
 	{
 		input_buffer_slap = 0;
 		state = states.boxxedpepspin;
 		sprite_index = spr_boxxedpep_spin;
+		if character == "E"
+			sprite_index = spr_boxxedplu_spin;
 		if !ispeppino
 			sprite_index = spr_playerN_boxxedhit;
 		image_index = 0;

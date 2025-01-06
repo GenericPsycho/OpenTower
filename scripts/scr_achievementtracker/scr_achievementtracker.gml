@@ -77,6 +77,10 @@ enum notifs
 	antigrav,
 	seen_ptg,
 	interact_granny,
+	
+	player_ismoving,
+	pizzaface_phase1end,
+	exitportal,
 }
 
 // functions
@@ -242,6 +246,8 @@ function palette_unlock(_achievement, _palettename, _paletteselect, _texture = n
 	ini_open_from_string(obj_savesystem.ini_str_options);
 	var _unlocked = ini_read_real("Palettes", _palettename, false);
 	ini_write_real("Palettes", _palettename, true);
+	if _palettename == "nge" || _palettename == "mn" || _palettename == "sg" || _palettename == "si"|| _palettename == "cocs" || _palettename == "vv" || _palettename == "stfg" || _palettename == "gp"
+		ini_write_real("GrannyQuest", _palettename, true)
 	obj_savesystem.ini_str_options = ini_close();
 	gamesave_async_save_options();
 	
@@ -255,10 +261,15 @@ function palette_unlock(_achievement, _palettename, _paletteselect, _texture = n
 			{
 				achievement_spr = noone;
 				sprite_index = spr_newclothes;
-				if !peppino
+				if obj_player1.character == "E"
+				{
+					sprite_index = spr_newclothesE;
+					spr_palette = spr_plupalette;
+				}
+				if !obj_player1.ispeppino
 				{
 					sprite_index = spr_newclothesN;
-					spr_palette = spr_noisepalette;
+					spr_palette = global.option_datoggle ? spr_noisepalette : spr_noisepaletteOG;
 				}
 				paletteselect = _paletteselect;
 				texture = _texture;

@@ -1,8 +1,9 @@
 state = states.titlescreen;
-stick = false;
+stick = 0;
 vsp = 0;
 depth = 0;
 var _palinfo = get_pep_palette_info();
 paletteselect = _palinfo.paletteselect;
-spr_palette = spr_ratmountpalette;
+spr_palette = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
 patterntexture = _palinfo.patterntexture;
+isnoisette = (!obj_player1.ispeppino || global.swapmode) ? true : false

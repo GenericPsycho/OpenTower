@@ -16,6 +16,8 @@ function scr_player_ratmountattack()
 		state = states.ratmountjump;
 		jumpstop = false;
 		sprite_index = spr_player_ratmountwalljump;
+		if obj_player1.character == "E"
+			sprite_index = spr_playerK_ratmountwalljump;
 	}
 	if floor(image_index) == image_number - 1
 		state = states.ratmount;

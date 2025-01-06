@@ -1,3 +1,4 @@
+spr_idle = spr_rattumbleblock_big
 spr_dead = spr_rattumbleblock_big_dead;
 depth = 2;
 anim = false;

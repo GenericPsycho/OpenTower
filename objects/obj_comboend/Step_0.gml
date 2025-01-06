@@ -21,4 +21,8 @@ title_index += 0.35;
 if title_index >= 2
 	title_index = frac(title_index);
 if (room == rank_room || room == timesuproom)
+{
+    if (global.rank != "d")
+        instance_destroy(obj_peddito)
 	instance_destroy();
+}

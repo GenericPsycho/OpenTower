@@ -72,7 +72,11 @@ if (_move && place_meeting(x, y, playerid) && !playerid.cutscene && playerid.sta
 		sprite_index = spr_Timesup;
 		image_index = 0;
 		if isgustavo
+		{
 			sprite_index = spr_player_ratmounttimesup;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerK_ratmounttimesup;
+		}
 		visible = true;
 		image_blend = c_white;
 		//audio_stop_all();

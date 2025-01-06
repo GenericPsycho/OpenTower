@@ -22,13 +22,13 @@ if !touched
 			if sprite_index != spr_fakepeppino_land
 			{
 				if x != xprevious
-					sprite_index = spr_fakepeppino_walk;
+					sprite_index = obj_player1.character == "E" ? spr_ditto_walk : spr_fakepeppino_walk;
 				else
-					sprite_index = spr_fakepeppino_idle;
+					sprite_index = obj_player1.character == "E" ? spr_ditto_idle : spr_fakepeppino_idle;
 			}
 			else if floor(image_index) == image_number - 1
-				sprite_index = spr_fakepeppino_idle;
-			if sprite_index == spr_fakepeppino_walk
+				sprite_index = obj_player1.character == "E" ? spr_ditto_idle : spr_fakepeppino_idle;
+			if sprite_index == spr_fakepeppino_walk || sprite_index == spr_ditto_walk
 			{
 				if (!steppy && (floor(image_index) == 2 || floor(image_index) == 7))
 				{
@@ -56,7 +56,7 @@ if !touched
 				}
 				else
 				{
-					sprite_index = spr_fakepeppino_fall;
+					sprite_index = obj_player1.character == "E" ? spr_ditto_fall : spr_fakepeppino_fall;
 					image_index = 0;
 				}
 			}
@@ -66,9 +66,9 @@ if !touched
 			if floor(image_index) == image_number - 1
 			{
 				if sprite_index == spr_fakepeppino_jumpstart
-					sprite_index = spr_fakepeppino_jump;
-				else if sprite_index == spr_fakepeppino_jump
-					sprite_index = spr_fakepeppino_fall;
+					sprite_index = obj_player1.character == "E" ? spr_ditto_jump : spr_fakepeppino_jump;
+				else if sprite_index == spr_fakepeppino_jump || sprite_index == spr_ditto_jump
+					sprite_index = obj_player1.character == "E" ? spr_ditto_fall : spr_fakepeppino_fall;
 			}
 			if grounded && vsp > 0
 			{

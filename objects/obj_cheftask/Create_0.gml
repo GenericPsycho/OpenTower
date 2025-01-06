@@ -5,7 +5,7 @@ achievement_index = 0;
 finish = false;
 movespeed = 5;
 paletteselect = 1;
-spr_palette = spr_peppalette;
+spr_palette = obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG);
 texture = -4;
 depth = -600;
 previousID = -4;

@@ -47,7 +47,22 @@ important = true;
 heavy = false;
 depth = 0;
 paletteselect = obj_player1.paletteselect;
-spr_palette = spr_peppalette;
+spr_palette = (global.option_datoggle ? spr_peppalette : spr_peppaletteOG);
+if obj_player1.character == "E"
+{
+	landspr = spr_lonepika_idle;
+	idlespr = spr_lonepika_grabbable;
+	fallspr = spr_lonepika_jump;
+	stunfallspr = spr_lonepika_stun;
+	walkspr = spr_lonepika_walk;
+	turnspr = spr_lonepika_idle;
+	recoveryspr = spr_lonepika_idle;
+	grabbedspr = spr_lonepika_grabbable;
+	scaredspr = spr_lonepika_grabbable;
+	ragespr = spr_lonepika_grabbable;
+	spr_dead = spr_lonepika_hurt;
+	spr_palette = spr_plupalette;
+}
 sprite_index = spr_slimemove;
 grabbedby = 0;
 stuntouchbuffer = 0;

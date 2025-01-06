@@ -13,6 +13,7 @@ function scr_ratblock_destroy()
 {
 	if (place_meeting(x, y, obj_canonexplosion))
 	{
+		global.bombed = true
 		with (instance_place(x, y, obj_canonexplosion))
 		{
 			instance_destroy(other);
@@ -46,6 +47,7 @@ function scr_ratblock_destroy()
 					case states.bombpep:
 						if sprite_index != spr_bombpepend && sprite_index != spr_bombpepintro
 						{
+							global.bombed = true
 							instance_create(x, y, obj_bombexplosion);
 							instance_destroy(other);
 							GamepadSetVibration(0, 1, 1, 0.9);

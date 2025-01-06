@@ -33,12 +33,12 @@ if !selecting
 {
 	if key_up2
 	{
-		fmod_event_one_shot("event:/sfx/ui/step");
+		fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalMove" : "event:/sfx/ui/step");
 		key_select--;
 	}
 	if key_down2
 	{
-		fmod_event_one_shot("event:/sfx/ui/step");
+		fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalMove" : "event:/sfx/ui/step");
 		key_select++;
 	}
 	if key_select != -1 && key_left2
@@ -69,7 +69,7 @@ if !selecting
 		}
 		if !_found
 		{
-			fmod_event_one_shot("event:/sfx/ui/select");
+			fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select");
 			ini_open_from_string(obj_savesystem.ini_str_options);
 			for (i = 0; i < array_length(input); i++)
 			{
@@ -83,13 +83,16 @@ if !selecting
 				obj_option.backbuffer = 2;
 			with (create_transformation_tip(lang_get_value("option_controls_saved")))
 			{
+				shader_set(global.Pal_Shader);
+				pal_swap_set(spr_bloodlinepalette, global.solitude ? 1 : 0, false);
 				depth = -700;
 				alarm[1] = 100;
+				shader_reset();
 			}
 			instance_destroy();
 		}
 		else
-			fmod_event_one_shot("event:/sfx/ui/select");
+			fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select");
 	}
 	else if key_select > -1
 	{

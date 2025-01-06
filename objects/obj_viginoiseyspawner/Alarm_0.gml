@@ -10,6 +10,8 @@ if (!instance_exists(obj_noisey) && obj_player1.ispeppino)
 				ID = other.id;
 		}
 		sprite_index = spr_player_ratmountgroundpound;
+		if obj_player1.character == "E"
+			sprite_index = spr_playerK_ratmountgroundpound;
 		image_index = 0;
 		state = states.pizzaheadjump;
 		hsp = 0;

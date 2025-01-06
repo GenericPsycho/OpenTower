@@ -11,9 +11,12 @@ switch state
 			pizzahead.image_xscale = -1;
 			pizzahead.sprite_index = spr_pizzahead_phase3_intro3;
 			pizzahead.image_index = 1;
-			fmod_event_one_shot("event:/sfx/playerN/finale_outbomb");
+			fmod_event_one_shot("event:/modded-sfx/playerN/bombsaway")
 			bomb = instance_create(noise.x, noise.y, obj_finaleN_prop);
-			bomb.sprite_index = spr_playerN_giantbomb;
+			if ( global.doisemode)
+                bomb.sprite_index = spr_playerN_giantrock;
+            else
+                bomb.sprite_index = spr_playerN_giantbomb;
 			bomb.depth = 10;
 			bomb.visible = false;
 			buffer = 100;
@@ -41,7 +44,7 @@ switch state
 		else
 		{
 			state++;
-			fmod_event_one_shot("event:/sfx/playerN/giantbombthrow");
+			fmod_event_one_shot("event:/modded-sfx/playerNfix/giantbombthrow");
 			noise.sprite_index = spr_playerN_finalattack3;
 			noise.image_index = 0;
 			if global.swapmode
@@ -132,7 +135,7 @@ switch state
 			buffer--;
 		else
 		{
-			fmod_event_one_shot("event:/sfx/playerN/finale_explosion");
+			fmod_event_one_shot("event:/modded-sfx/playerNfix/finale_explosion");
 			buffer = 120;
 			state++;
 			towershot.sprite_index = bg_towershotN;

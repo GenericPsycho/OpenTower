@@ -2,7 +2,7 @@ with obj_player1
 {
 	if character != "V"
 	{
-		if ((place_meeting(x + hsp, y, other) || place_meeting(x + xscale, y, other)) && (obj_player1.state == states.mach3 || obj_player1.state == states.mach3 || (obj_player1.ghostdash == 1 && obj_player1.ghostpepper >= 3) || obj_player1.ratmount_movespeed >= 12 || obj_player1.state == states.rocket || obj_player1.state == states.knightpepslopes || obj_player1.state == states.shoulderbash))
+		if ((place_meeting(x + hsp, y, other) || place_meeting(x + xscale, y, other)) && (obj_player1.state == states.mach3 || obj_player1.state == states.mach3 || (obj_player1.ghostdash == 1 && obj_player1.ghostpepper >= 3) || obj_player1.ratmount_movespeed >= 12 || obj_player1.state == states.rocket || obj_player1.state == states.knightpepslopes || obj_player1.state == states.shoulderbash || obj_player1.state == states.jetpack))
 		{
 			playerindex = 0;
 			instance_destroy(other);

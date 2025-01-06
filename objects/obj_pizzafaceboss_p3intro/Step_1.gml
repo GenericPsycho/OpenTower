@@ -27,7 +27,7 @@ switch introstate
 		else
 		{
 			keyshot = false;
-			sprite_index = spr_pizzahead_phase3_intro2;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_phase3_intro2 : spr_pizzahead_phase3_intro2;
 			image_index = 0;
 			introstate++;
 		}
@@ -39,15 +39,15 @@ switch introstate
 			keyshot = true;
 			fmod_event_one_shot("event:/sfx/pizzahead/recover");
 		}
-		if (floor(image_index) >= 50 && sprite_index != spr_player_gnomecutscene1)
+		if (floor(image_index) >= 50 && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1)
 			image_xscale = -1;
-		else if (floor(image_index) >= 2 && sprite_index != spr_player_gnomecutscene1)
+		else if (floor(image_index) >= 2 && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1)
 		{
 			with obj_player1
 			{
-				if sprite_index != spr_player_gnomecutscene2 && ispeppino
+				if sprite_index != spr_player_gnomecutscene2 && sprite_index != spr_playerE_gnomecutscene2 && ispeppino
 				{
-					sprite_index = spr_player_gnomecutscene2;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene2 : spr_player_gnomecutscene2;
 					image_index = 0;
 				}
 				else if (ispeppino && floor(image_index) == image_number - 1)
@@ -57,7 +57,7 @@ switch introstate
 		if (floor(image_index) >= 49)
 		{
 			introstate++;
-			sprite_index = spr_pizzahead_giddy;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_giddy : spr_pizzahead_giddy;
 			image_xscale = 1;
 		}
 		break;
@@ -72,7 +72,7 @@ switch introstate
 		if (place_meeting(x + 64, y, obj_solid))
 		{
 			hsp = 0;
-			sprite_index = spr_pizzahead_grabitem;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_grabitem : spr_pizzahead_grabitem;
 			image_index = 0;
 			introstate++;
 		}
@@ -81,12 +81,12 @@ switch introstate
 	case 4:
 		with obj_player1
 		{
-			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1
+			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1
 				image_index = image_number - 1;
 		}
 		if (floor(image_index) == image_number - 1)
 		{
-			sprite_index = spr_pizzahead_grabitemtransition;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_grabitemtransition : spr_pizzahead_grabitemtransition;
 			image_index = 0;
 			introstate++;
 			var b = proparr[prop];
@@ -101,7 +101,7 @@ switch introstate
 				mask_index = b[2];
 				savedvsp = -11;
 				savedhsp = b[3];
-				if b[0] == spr_fakepeppino_stun
+				if b[0] == spr_fakepeppino_stun || b[0] == spr_ditto_stun
 				{
 					usepalette = true;
 					if obj_player1.ispeppino
@@ -109,8 +109,13 @@ switch introstate
 						spr_palette = obj_player1.spr_palette;
 						paletteselect = obj_player1.paletteselect;
 					}
+					if !obj_player1.ispeppino && !global.swapmode && global.option_datoggle
+					{
+						with obj_music
+							fmod_event_instance_set_parameter(music.event, "state", 3, false);
+					}
 				}
-				else if b[0] == spr_playerN_hurt && !obj_player1.ispeppino
+				else if (b[0] == spr_playerN_hurt && (!obj_player1.ispeppino) && !global.doisemode)
 				{
 					usepalette = true;
 					spr_palette = spr_noiseboss_palette;
@@ -126,10 +131,10 @@ switch introstate
 	case 5:
 		with obj_player1
 		{
-			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1
+			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1
 				image_index = image_number - 1;
 		}
-		if sprite_index == spr_pizzahead_grabitemtransition
+		if sprite_index == spr_pizzahead_grabitemtransition || sprite_index == spr_meowth_grabitemtransition
 		{
 			var ix = floor(image_index);
 			with propID
@@ -156,7 +161,7 @@ switch introstate
 			if (floor(image_index) == image_number - 1)
 			{
 				fmod_event_one_shot_3d("event:/sfx/pizzahead/throw", x, y);
-				sprite_index = spr_pizzahead_throwaway;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_throwaway : spr_pizzahead_throwaway;
 				image_index = 0;
 				with propID
 				{
@@ -172,13 +177,13 @@ switch introstate
 		{
 			if (prop < array_length(proparr))
 			{
-				sprite_index = spr_pizzahead_grabitem;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_grabitem : spr_pizzahead_grabitem;
 				image_index = 0;
 				introstate = 4;
 			}
 			else
 			{
-				sprite_index = spr_pizzahead_idle;
+				sprite_index = obj_player1.character == "E" ? spr_meowth_idle : spr_pizzahead_idle;
 				image_xscale = -1;
 				introstate++;
 			}
@@ -188,7 +193,7 @@ switch introstate
 	case 6:
 		with obj_player1
 		{
-			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1
+			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1
 				image_index = image_number - 1;
 		}
 		var t = true;
@@ -200,7 +205,7 @@ switch introstate
 		if t
 		{
 			introstate++;
-			sprite_index = spr_pizzahead_phase3_intro2;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_phase3_intro2 : spr_pizzahead_phase3_intro2;
 			image_index = 50;
 			introbuffer = 50;
 		}
@@ -209,7 +214,7 @@ switch introstate
 	case 7:
 		with obj_player1
 		{
-			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1
+			if (ispeppino && floor(image_index) == image_number - 1) && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1
 				image_index = image_number - 1;
 		}
 		if (floor(image_index) == image_number - 1)
@@ -220,10 +225,10 @@ switch introstate
 		{
 			with obj_player1
 			{
-				sprite_index = spr_player_gnomecutscene3;
+				sprite_index = obj_player1.character == "E" ? spr_playerE_gnomecutscene3 : spr_player_gnomecutscene3;
 				if !ispeppino
 				{
-					fmod_event_one_shot_3d("event:/sfx/playerN/supernoiseeffect", x, y);
+					fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/supernoiseeffect", x, y)
 					sprite_index = spr_playerN_phase3intro1;
 				}
 				image_index = 0;
@@ -238,10 +243,12 @@ switch introstate
 		{
 			if (sprite_index == spr_player_gnomecutscene3 && floor(image_index) == image_number - 1)
 				sprite_index = spr_player_gnomecutscene4;
+			else if (sprite_index == spr_playerE_gnomecutscene3 && floor(image_index) == image_number - 1)
+				sprite_index = spr_playerE_gnomecutscene4;
 			if (sprite_index == spr_playerN_phase3intro1 && floor(image_index) == image_number - 1)
 				image_index = image_number - 3;
 		}
-		if (floor(image_index) == image_number - 1 && sprite_index != spr_player_gnomecutscene1)
+		if (floor(image_index) == image_number - 1 && sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_playerE_gnomecutscene1)
 			image_index = image_number - 1;
 		if introbuffer > 0
 			introbuffer--;
@@ -250,7 +257,7 @@ switch introstate
 			shot = false;
 			with obj_player1
 			{
-				sprite_index = spr_pizzahead_pepintro;
+				sprite_index = character == "E" ? spr_meowth_pluintro : spr_pizzahead_pepintro;
 				if !ispeppino
 					sprite_index = spr_playerN_phase3intro2;
 				image_index = 0;
@@ -264,7 +271,7 @@ switch introstate
 	case 9:
 		if floor(image_index) == image_number - 1
 		{
-			if sprite_index == spr_pizzahead_phase3_intro2
+			if sprite_index == spr_pizzahead_phase3_intro2 || sprite_index == spr_meowth_phase3_intro2
 				image_index = image_number - 1;
 			else
 				image_index = image_number - 3;
@@ -272,9 +279,9 @@ switch introstate
 		if ((obj_player1.image_index >= 20 || !obj_player1.ispeppino) && !shot)
 		{
 			if obj_player1.ispeppino
-				fmod_event_one_shot("event:/sfx/voice/peppinoangryscream2");
+				fmod_event_one_shot("event:/modded-sfx/voice/pepscream2");
 			shot = true;
-			sprite_index = spr_pizzahead_phase3_intro3;
+			sprite_index = obj_player1.character == "E" ? spr_meowth_phase3_intro3 : spr_pizzahead_phase3_intro3;
 			if !obj_player1.ispeppino
 			{
 				with obj_music
@@ -334,13 +341,13 @@ switch introstate
 			with obj_player1
 			{
 				if !ispeppino
-					fmod_event_one_shot("event:/sfx/playerN/supernoisescream");
+					fmod_event_one_shot_3d("event:/modded-sfx/playerN/superwoag", x, y);
 				with (instance_create(x, y, obj_parryeffect))
 					sprite_index = spr_crazyrunothereffect;
 				with (instance_create(x, y, obj_parryeffect))
 					sprite_index = spr_superdashcloud;
 				hsp = 14;
-				sprite_index = spr_player_lunge;
+				sprite_index = character == "E" ? spr_playerE_lunge : spr_player_lunge;
 				image_index = 7;
 				if !ispeppino
 				{
@@ -472,8 +479,13 @@ switch introstate
 		}
 		break;
 }
-mask_index = spr_pizzahead_idle;
+mask_index = obj_player1.character == "E" ? spr_meowth_idle : spr_pizzahead_idle;
 if (sprite_index == spr_pizzahead_giddy && !steppysnd && (floor(image_index) == 2 || floor(image_index) == 6))
+{
+	steppysnd = true;
+	fmod_event_one_shot_3d("event:/sfx/pizzahead/step", x, y + 40);
+}
+else if (sprite_index == spr_meowth_giddy && !steppysnd && (floor(image_index) == 2 || floor(image_index) == 6))
 {
 	steppysnd = true;
 	fmod_event_one_shot_3d("event:/sfx/pizzahead/step", x, y + 40);
@@ -486,9 +498,21 @@ if (sprite_index == spr_pizzahead_phase3_intro2 && floor(image_index) >= 50)
 		fmod_event_instance_play(snd_laugh);
 	fmod_event_instance_set_3d_attributes(snd_laugh, x, y);
 }
+else if (sprite_index == spr_meowth_phase3_intro2 && floor(image_index) >= 50)
+{
+	if (!fmod_event_instance_is_playing(snd_laugh))
+		fmod_event_instance_play(snd_laugh);
+	fmod_event_instance_set_3d_attributes(snd_laugh, x, y);
+}
 else
 	fmod_event_instance_stop(snd_laugh, true);
 if (sprite_index == spr_pizzahead_phase3_intro2 && floor(image_index) >= 15 && floor(image_index) <= 21)
+{
+	if (!fmod_event_instance_is_playing(snd_spin))
+		fmod_event_instance_play(snd_spin);
+	fmod_event_instance_set_3d_attributes(snd_spin, x, y);
+}
+else if (sprite_index == spr_meowth_phase3_intro2 && floor(image_index) >= 15 && floor(image_index) <= 21)
 {
 	if (!fmod_event_instance_is_playing(snd_spin))
 		fmod_event_instance_play(snd_spin);

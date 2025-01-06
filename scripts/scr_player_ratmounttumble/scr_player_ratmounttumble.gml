@@ -3,6 +3,8 @@ function scr_player_ratmounttumble()
 	hsp = xscale * movespeed;
 	move = key_left + key_right;
 	sprite_index = spr_player_ratmountwalljump;
+	if character == "E"
+		sprite_index = spr_playerK_ratmountwalljump;
 	image_speed = -abs(movespeed) / 15;
 	if !key_attack
 		movespeed = Approach(movespeed, 0, 1);
@@ -25,6 +27,8 @@ function scr_player_ratmounttumble()
 	{
 		state = states.ratmountgroundpound;
 		sprite_index = spr_lonegustavo_jumpstart;
+		if character == "E"
+			sprite_index = spr_lonepika_jumpstart;
 		image_index = 0;
 		image_speed = 0.35;
 		gustavokicktimer = 5;

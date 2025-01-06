@@ -1,3 +1,4 @@
+
 bossspr = spr_vspizzaface;
 boss_hp = 16;
 vstitle = spr_vstitle_pizzaface;

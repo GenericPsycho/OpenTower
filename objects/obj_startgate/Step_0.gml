@@ -1,3 +1,41 @@
+if !obj_player1.ispeppino && global.extras_betternoise && !global.swapmode
+{
+	titlecard_sprite = spr_titlecardsN;
+	if global.doisemode
+		titlecard_sprite = spr_titlecardsD;	
+}
+else if global.swapmode && global.extras_betternoise
+{
+	titlecard_sprite = spr_titlecardsS;
+	if global.doisemode
+		titlecard_sprite = spr_titlecardsSD;	
+}
+else
+	titlecard_sprite = spr_titlecards
+if obj_player1.character == "E"
+	titlecard_sprite = spr_titlecardsE;
+	
+if level == "forest"
+{
+	title_index = global.extras_lario ? 0 : 9
+	title_sprite = global.extras_lario ? spr_titlecards_titleLario : spr_titlecards_title
+}
+else if level == "farm"
+{
+	if global.swapmode
+	{
+		title_index = global.extras_betternoise ? 0 : 6
+		title_sprite = global.extras_betternoise ? spr_titlecards_titleS : spr_titlecards_title
+	}
+	else
+	{
+	    title_index = !obj_player1.ispeppino && global.extras_betternoise ? 0 : 6
+		title_sprite = !obj_player1.ispeppino && global.extras_betternoise ? spr_titlecards_titleN : spr_titlecards_title
+	}
+}
+else if level == "golf"
+	title_sprite = !obj_player1.ispeppino && global.extras_betternoise ? spr_titlecards_titleN : spr_titlecards_title2
+
 drawing = place_meeting(x, y, obj_player);
 image_index = 0;
 scr_hub_bg_step();
@@ -6,6 +44,8 @@ if (!pizza && (highscore > 0 || (boss && hats > 0)) && bbox_in_camera(view_camer
 	pizza = true;
 	if !boss
 	{
+		if level == "tutorial"
+			exit;
 		with (instance_create(x, y - SCREEN_HEIGHT, obj_startgate_pizza))
 		{
 			y_to = other.y - 125;
@@ -20,7 +60,7 @@ if (!pizza && (highscore > 0 || (boss && hats > 0)) && bbox_in_camera(view_camer
 			switch other.rank
 			{
 				case "p":
-					rank_index = 5;
+					rank_index = other.rankplus == 1 ? 6 : 5;
 					sprite_index = spr_gatepizza_5;
 					break;
 				case "s":
@@ -56,7 +96,7 @@ if (!pizza && (highscore > 0 || (boss && hats > 0)) && bbox_in_camera(view_camer
 			switch other.rank
 			{
 				case "p":
-					rank_index = 5;
+					rank_index = other.rankplus == 1 ? 6 : 5;
 					break;
 				case "s":
 					rank_index = 4;
@@ -90,3 +130,15 @@ if !drawing
 }
 else
 	bgalpha = Approach(bgalpha, 0, 0.1);
+
+ini_open_from_string(obj_savesystem.ini_str);
+lapsrecord = lang_get_value("gatelaprecord");
+currentrecord = ini_read_real("Laps", level, 0);
+ini_close()
+showtext = place_meeting(x, y, obj_player);
+if (instance_exists(obj_transfotip))
+	showtext = false;
+if showtext
+	alpha = Approach(alpha, 1, 0.1);
+else
+	alpha = Approach(alpha, 0, 0.1);

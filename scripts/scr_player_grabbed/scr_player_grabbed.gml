@@ -9,7 +9,7 @@ function scr_player_grabbed()
 		x = _obj_player.x;
 		y = _obj_player.y;
 	}
-	if (_obj_player.state == states.grabbing || _obj_player.state == states.grab || _obj_player.state == states.throwing || _obj_player.state == states.slam || _obj_player.state == states.tacklecharge)
+	if (_obj_player.state == states.grabbing || _obj_player.state == states.grab || _obj_player.state == states.throwing || _obj_player.state == states.jetpack || _obj_player.state == states.slam || _obj_player.state == states.tacklecharge)
 	{
 		x = _obj_player.x;
 		if _obj_player.sprite_index != _obj_player.spr_haulingstart
@@ -43,7 +43,7 @@ function scr_player_grabbed()
 				shake_mag_acc = 3 / room_speed;
 			}
 		}
-		if (!(state == states.grab || (state == states.mach3 && fightball == 1) || (state == states.ratmount || state == states.ratmountattack || state == states.ratmountjump || state == states.ratmountspit) || state == states.finishingblow || state == states.grabbing || state == states.throwing || state == states.slam || state == states.tacklecharge || state == states.punch || state == states.superslam || state == states.backkick || state == states.uppunch || state == states.shoulder))
+		if (!(state == states.grab || (state == states.mach3 && fightball == 1) || (state == states.ratmount || state == states.ratmountattack || state == states.ratmountjump || state == states.ratmountspit) || state == states.finishingblow || state == states.grabbing || state == states.throwing || state == states.jetpack || state == states.slam || state == states.tacklecharge || state == states.punch || state == states.superslam || state == states.backkick || state == states.uppunch || state == states.shoulder))
 		{
 			baddiegrabbedID = obj_null;
 			other.x = _obj_player.x;
@@ -108,7 +108,7 @@ function scr_player_grabbed()
 	}
 	if _obj_player.state == states.superslam && _obj_player.sprite_index == _obj_player.spr_piledriver
 	{
-		if _obj_player.character == "P" && _obj_player.ispeppino
+		if (_obj_player.character == "P" || _obj_player.character == "E") && _obj_player.ispeppino
 		{
 			if (floor(_obj_player.image_index) == 0)
 			{

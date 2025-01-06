@@ -14,7 +14,7 @@ with (obj_player1)
 		x = backtohubstartx
 		y = (backtohubstarty - (obj_screensizer.actual_height * 2))
 		state = states.backtohub
-		sprite_index = spr_slipbanan1
+		sprite_index = global.doisemode ? spr_doise_deadair : spr_slipbanan1
 		image_index = 10
 	}
 }

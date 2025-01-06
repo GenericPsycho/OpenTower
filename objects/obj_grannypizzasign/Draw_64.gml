@@ -24,7 +24,7 @@ for (var i = 0; i < array_length(levelarray); i++)
 		switch b.gotrank
 		{
 			case "p":
-				n = 6;
+				n = b.plusrank == 1 ? 7 : 6;
 				break;
 			case "s":
 				n = 5;

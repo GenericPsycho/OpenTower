@@ -5,6 +5,8 @@ function scr_player_ratmountladder()
 	if key_up
 	{
 		sprite_index = spr_lonegustavo_ladder;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_ladder;
 		vsp = -6;
 		if steppybuffer > 0
 			steppybuffer--;
@@ -19,12 +21,16 @@ function scr_player_ratmountladder()
 	else if key_down
 	{
 		sprite_index = spr_lonegustavo_ladderdown;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_ladderdown;
 		vsp = 10;
 		image_speed = -0.35;
 	}
 	else
 	{
 		sprite_index = spr_lonegustavo_ladder;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_ladder;
 		vsp = 0;
 		image_speed = 0;
 	}
@@ -33,6 +39,8 @@ function scr_player_ratmountladder()
 	{
 		state = states.ratmountjump;
 		sprite_index = spr_player_ratmountgroundpoundfall;
+		if obj_player1.character == "E"
+			sprite_index = spr_playerK_ratmountgroundpoundfall;
 		image_index = 0;
 		vsp = 0;
 	}
@@ -42,6 +50,8 @@ function scr_player_ratmountladder()
 		ladderbuffer = 20;
 		state = states.ratmountjump;
 		sprite_index = spr_player_ratmountgroundpound;
+		if obj_player1.character == "E"
+			sprite_index = spr_playerK_ratmountgroundpound;
 		if key_down
 			vsp = 5;
 		else
@@ -54,6 +64,8 @@ function scr_player_ratmountladder()
 	{
 		image_speed = 0.35;
 		sprite_index = spr_player_ratmountgroundpoundfall;
+		if obj_player1.character == "E"
+			sprite_index = spr_playerK_ratmountgroundpoundfall;
 		state = states.ratmountjump;
 		image_index = 0;
 	}

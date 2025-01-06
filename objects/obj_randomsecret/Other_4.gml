@@ -39,7 +39,7 @@ switch room
 		global.noisejetpack = true;
 		break
 	case freezer_secret3:
-		if !obj_player1.ispeppino
+		if !obj_player1.ispeppino && !global.doisemode
 			global.noisejetpack = true;
 		break;
 	case war_secret1:
@@ -93,6 +93,8 @@ switch startstate
 			{
 				tauntstoredstate = states.ratmount
 				tauntstoredsprite = spr_player_ratmountidle
+				if character == "E"
+					tauntstoredsprite = spr_playerK_ratmountidle
 			}
 			tauntstoredmovespeed = 0
 			tauntstoredhsp = 0

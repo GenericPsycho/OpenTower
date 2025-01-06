@@ -41,6 +41,8 @@ function scr_player_cheesepepstick()
 		dir = xscale;
 		state = states.cheesepepjump;
 		sprite_index = spr_cheesepep_walljump;
+		if character == "E"
+			sprite_index = spr_cheeseplu_walljump;
 		image_index = 0;
 		movespeed = xscale * 3;
 		if !key_down

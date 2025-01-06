@@ -6,18 +6,30 @@ if (!other.ispeppino && (other.instakillmove == true || other.state == states.ha
 	ds_list_add(global.baddieroom, id);
 	instance_create(x, y, obj_bangeffect);
 	instance_create(x, y, obj_genericpoofeffect);
-	with (instance_create(x, y, obj_sausageman_dead))
+	if !global.extras_sendoff
 	{
-		image_xscale = -t.xscale;
-		sprite_index = spr_pepperman_hurtplayer;
-		hsp = t.xscale * 10;
+		with (instance_create(x, y, obj_sausageman_dead))
+		{
+			image_xscale = -t.xscale;
+			sprite_index = spr_pepperman_hurtplayer;
+			hsp = t.xscale * 10;
+		}
+		with (instance_create(x, y, obj_sausageman_dead))
+		{
+			image_xscale = -t.xscale;
+			sprite_index = spr_peppermanglasses;
+			hsp = t.xscale * 7;
+			depth -= 1;
+		}
 	}
-	with (instance_create(x, y, obj_sausageman_dead))
+	else
 	{
-		image_xscale = -t.xscale;
-		sprite_index = spr_peppermanglasses;
-		hsp = t.xscale * 7;
-		depth -= 1;
+		with (instance_create(x, y, obj_sausageman_dead))
+		{
+			image_xscale = -t.xscale;
+			sprite_index = spr_maurice;
+			hsp = t.xscale * 10;
+		}
 	}
 	instance_destroy();
 }

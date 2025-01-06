@@ -84,7 +84,7 @@ if prevhp != elitehit
 				xscale = 1;
 				movespeed = 0;
 				image_index = 0;
-				sprite_index = spr_player_gnomecutscene1;
+				sprite_index = character == "E" ? spr_playerE_gnomecutscene1 : spr_player_gnomecutscene1;
 				if !ispeppino
 					sprite_index = spr_noisebossintro2;
 				image_speed = 0.35;
@@ -95,6 +95,7 @@ if prevhp != elitehit
 			x = room_width / 2;
 			y = obj_player1.y - 100;
 			sprite_index = spr_pizzahead_intro1;
+			notification_push(notifs.pizzaface_phase1end, [])
 			with obj_baddie
 			{
 				if object_index != obj_pizzafaceboss && object_index != obj_pizzafaceboss_p2
@@ -155,5 +156,5 @@ if boundbox == 0
 		other.boundbox = true;
 	}
 }
-mask_index = spr_pizzaface;
+mask_index = global.extras_sendoff ? spr_woon : spr_pizzaface;
 scr_pizzaface_update_sounds();

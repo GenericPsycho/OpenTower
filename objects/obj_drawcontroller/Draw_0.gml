@@ -71,9 +71,9 @@ if room == boss_fakepep
 			var palinfo = get_pep_palette_info();
 			pattern_set(global.Base_Pattern_Color, sprite_index, image_index, image_xscale, image_yscale, palinfo.patterntexture);
 			var ps = palinfo.paletteselect;
-			pal_swap_set(spr_peppalette, ps, false);
+			pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), ps, false);
 			draw_self();
-			pal_swap_set(spr_peppalette, 13, false);
+			pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 13, false);
 			draw_self();
 			pattern_reset();
 			draw_self();
@@ -120,7 +120,7 @@ for (i = 0; i < array_length(flash_arr); i++)
 	}
 }
 shader_set(global.Pal_Shader);
-pal_swap_set(spr_peppalette, 0, false);
+pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 0, false);
 with obj_pizzagoblinbomb
 {
 	if grabbable && grounded && vsp > 0

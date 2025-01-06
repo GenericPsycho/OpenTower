@@ -3,9 +3,17 @@ function scr_player_ratmountskid()
 	hsp = xscale * -movespeed;
 	movespeed = Approach(movespeed, 0, 0.8);
 	if brick
+	{
 		sprite_index = spr_ratmount_skid;
+		if obj_player1.character == "E"
+			sprite_index = spr_ratpika_skid;
+	}
 	else
+	{
 		sprite_index = spr_lonegustavo_skid;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_skid;
+	}
 	gustavodash = 0;
 	ratmount_movespeed = 8;
 	image_speed = 0.4;
@@ -20,11 +28,23 @@ function scr_player_ratmountskid()
 		create_particle(x, y, particle.highjumpcloud2, 0);
 		fmod_event_one_shot_3d("event:/sfx/pep/jump", x, y);
 		if brick
+		{
 			sprite_index = spr_player_ratmountjump;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerK_ratmountjump;
+		}
 		else if ratmount_movespeed >= 12
+		{
 			sprite_index = spr_lonegustavo_dashjump;
+			if obj_player1.character == "E"
+				sprite_index = spr_lonepika_dashjump;
+		}
 		else
+		{
 			sprite_index = spr_player_ratmountgroundpound;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerK_ratmountgroundpound;
+		}
 		image_index = 0;
 		if state != states.ratmount
 			xscale *= -1;
@@ -63,6 +83,8 @@ function scr_player_ratmountskid()
 			xscale = move;
 		movespeed = xscale * 12;
 		sprite_index = spr_lonegustavo_punch;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_punch;
 	}
 	if (!instance_exists(dashcloudid) && grounded)
 	{

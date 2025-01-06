@@ -144,16 +144,16 @@ function scr_vigilante_arenaintro()
 			if (other.sprite_index == spr_vigilante_intro1 || other.sprite_index == spr_vigilante_intro1N)
 			{
 				if ispeppino
-					sprite_index = spr_player_gnomecutscene1;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene1 : spr_player_gnomecutscene1;
 				else
 					sprite_index = spr_playerN_bosscutscene1;
 			}
 			if floor(image_index) == image_number - 1
 			{
-				if (sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerN_bosscutscene2 || sprite_index == spr_playerN_bosscutscene3)
+				if (sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerN_bosscutscene2 || sprite_index == spr_playerN_bosscutscene3 || sprite_index == spr_playerE_gnomecutscene2)
 					image_index = image_number - 1;
-				else if sprite_index == spr_player_gnomecutscene3
-					sprite_index = spr_player_gnomecutscene4;
+				else if sprite_index == spr_player_gnomecutscene3 || sprite_index == spr_playerE_gnomecutscene3
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene4 : spr_player_gnomecutscene4;
 				else if sprite_index == spr_noise_vulnerable1
 					sprite_index = spr_noise_vulnerable1loop;
 			}
@@ -170,17 +170,26 @@ function scr_vigilante_arenaintro()
 				{
 					if ispeppino
 					{
-						if sprite_index == spr_player_gnomecutscene2
+						if sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2
 						{
-							sprite_index = spr_player_gnomecutscene3;
+							sprite_index = character == "E" ? spr_playerE_gnomecutscene3 : spr_player_gnomecutscene3;
 							image_index = 0;
-							fmod_event_one_shot("event:/sfx/pep/screamboss");
+							fmod_event_one_shot("event:/modded-sfx/pep/screamer")
 						}
 					}
-					else
+					else	
 					{
-						sprite_index = spr_playerN_bosscutscene3;
-						image_index = 0;
+						if global.doisemode
+						{
+							fmod_event_one_shot_3d("event:/modded-sfx/voice/doisewoah", x, y)
+							sprite_index = spr_noise_vulnerable1
+							image_index = 0;
+						}
+						else
+						{
+							sprite_index = spr_playerN_bosscutscene3
+							image_index = 0;
+						}
 					}
 				}
 			}
@@ -194,7 +203,7 @@ function scr_vigilante_arenaintro()
 			{
 				if ispeppino
 				{
-					sprite_index = spr_player_gnomecutscene2;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene2 : spr_player_gnomecutscene2;
 					image_index = 0;
 				}
 				else
@@ -224,7 +233,7 @@ function scr_vigilante_arenaintro()
 			{
 				if ispeppino
 				{
-					sprite_index = spr_player_screamtransition;
+					sprite_index = character == "E" ? spr_playerE_screamtransition : spr_player_screamtransition;
 					image_index = 0;
 					image_speed = 0.35;
 				}
@@ -272,6 +281,8 @@ function scr_vigilante_phase1hurt()
 		state = states.actor;
 		pistolanim = -4;
 		sprite_index = spr_player_pistolshotend;
+		if character == "E"
+			sprite_index = spr_playerE_pistolshotend;
 		if !ispeppino
 			sprite_index = spr_playerN_bosstransition;
 		invtime = 30;
@@ -889,6 +900,8 @@ function scr_vigilante_duel()
 				with obj_player1
 				{
 					sprite_index = spr_peppino_duel;
+					if character == "E"
+						sprite_index = spr_plume_duel;
 					if !ispeppino
 						sprite_index = spr_noise_duel;
 					image_index = 0;
@@ -967,11 +980,15 @@ function scr_vigilante_duel()
 								hsp = -image_xscale * 8;
 								vsp = -15;
 								sprite_index = spr_player_outofpizza1;
+								if character == "E"
+									sprite_index = spr_playerE_outofpizza1;
 							}
 							x = obj_swapmodefollow.x;
 							y = obj_swapmodefollow.y;
 						}
 						sprite_index = spr_player_pistolshotend;
+						if character == "E"
+							sprite_index = spr_playerE_pistolshotend;
 						image_index = 2;
 						if !ispeppino
 						{

@@ -80,6 +80,12 @@ ds_map_set(global.steam_achievements, "pranks3", "ACH_PRANK_3");
 ds_map_set(global.steam_achievements, "pranks4", "ACH_PRANK_4");
 ds_map_set(global.steam_achievements, "pranks5", "ACH_PRANK_5");
 
+ds_map_set(global.steam_achievements, "pplusranks1", "ACH_PRANK_1");
+ds_map_set(global.steam_achievements, "pplusranks2", "ACH_PRANK_2");
+ds_map_set(global.steam_achievements, "pplusranks3", "ACH_PRANK_3");
+ds_map_set(global.steam_achievements, "pplusranks4", "ACH_PRANK_4");
+ds_map_set(global.steam_achievements, "pplusranks5", "ACH_PRANK_5");
+
 ds_map_set(global.steam_achievements, "halloween1", "ACH_HALLOWEEN_1");
 ds_map_set(global.steam_achievements, "halloween2", "ACH_HALLOWEEN_2");
 
@@ -120,8 +126,8 @@ add_achievement_notify("pal_unfunny", -4, function(data)
 	var type = data[0];
 	var arr = data[1];
 	if type == notifs.combo_end && arr[0] >= 75
-		palette_unlock(name, "unfunny", 3);
-}, false, "Palettes", "unfunny");
+		palette_unlock(name, obj_player1.character == "E" ? "reverseE" : "unfunny", 3);
+}, false, "Palettes", obj_player1.character == "E" ? "reverseE" : "unfunny");
 
 add_achievement_notify("pal_mooney", -4, function(data)
 {
@@ -131,8 +137,8 @@ add_achievement_notify("pal_mooney", -4, function(data)
 		exit;
 	var type = data[0];
 	if type == notifs.mrmooney_donated
-		palette_unlock(name, "mooney", 15);
-}, false, "Palettes", "mooney");
+		palette_unlock(name, obj_player1.character == "E" ? "vaporeon" : "mooney", 15);
+}, false, "Palettes", obj_player1.character == "E" ? "vaporeon" : "mooney");
 
 add_achievement_notify("pal_sage", -4, function(data)
 {
@@ -154,9 +160,9 @@ add_achievement_notify("pal_sage", -4, function(data)
 		}
 		ini_close();
 		if !_found && global.file_minutes < 60
-			palette_unlock(name, "sage", 5);
+			palette_unlock(name, obj_player1.character == "E" ? "glaceon" : "sage", 5);
 	}
-}, false, "Palettes", "sage");
+}, false, "Palettes", obj_player1.character == "E" ? "glaceon" : "sage");
 
 add_achievement_notify("pal_money", -4, function(data)
 {
@@ -180,9 +186,9 @@ add_achievement_notify("pal_money", -4, function(data)
 		_money -= ini_read_real("w2stick", "reduction", 0);
 		ini_close();
 		if _money >= 300
-			palette_unlock(name, "money", 4);
+			palette_unlock(name, obj_player1.character == "E" ? "leafeon" : "money", 4);
 	}
-}, false, "Palettes", "money");
+}, false, "Palettes", obj_player1.character == "E" ? "leafeon" :  "money");
 
 add_achievement_notify("pal_blood", -4, function(data)
 {
@@ -195,9 +201,9 @@ add_achievement_notify("pal_blood", -4, function(data)
 		var _count = ini_read_real("Game", "enemies", 0);
 		ini_close();
 		if _count >= 1000
-			palette_unlock(name, "blood", 6);
+			palette_unlock(name, obj_player1.character == "E" ? "jolteon" : "blood", 6);
 	}
-}, false, "Palettes", "blood");
+}, false, "Palettes", obj_player1.character == "E" ? "jolteon" : "blood");
 
 add_achievement_notify("pal_tv", -4, function(data)
 {
@@ -225,9 +231,9 @@ add_achievement_notify("pal_tv", -4, function(data)
 		ds_map_destroy(map);
 		ini_close();
 		if !_found
-			palette_unlock(name, "tv", 7);
+			palette_unlock(name, obj_player1.character == "E" ? "shiny" : "tv", 7);
 	}
-}, false, "Palettes", "tv");
+}, false, "Palettes", obj_player1.character == "E" ? "shiny" : "tv");
 
 add_achievement_notify("pal_dark", -4, function(data)
 {
@@ -247,9 +253,9 @@ add_achievement_notify("pal_dark", -4, function(data)
 		}
 		ini_close();
 		if !_found
-			palette_unlock(name, "dark", 8);
+			palette_unlock(name, obj_player1.character == "E" ? "umbreon" : "dark", 8);
 	}
-}, false, "Palettes", "dark");
+}, false, "Palettes", obj_player1.character == "E" ? "umbreon" : "dark");
 
 add_achievement_notify("pal_shitty", -4, function(data)
 {
@@ -257,8 +263,8 @@ add_achievement_notify("pal_shitty", -4, function(data)
 		exit;
 	var type = data[0];
 	if type == notifs.crawl_in_shit
-		palette_unlock(name, "shitty", 9);
-}, false, "Palettes", "shitty");
+		palette_unlock(name, obj_player1.character == "E" ? "flareon" : "shitty", 9);
+}, false, "Palettes", obj_player1.character == "E" ? "flareon" : "shitty");
 
 add_achievement_notify("pal_golden", -4, function(data)
 {
@@ -286,9 +292,9 @@ add_achievement_notify("pal_golden", -4, function(data)
 		ds_map_destroy(map);
 		ini_close();
 		if !_found
-			palette_unlock(name, "golden", 10);
+			palette_unlock(name, obj_player1.character == "E" ? "sylveon" : "golden", 10);
 	}
-}, false, "Palettes", "golden");
+}, false, "Palettes", obj_player1.character == "E" ? "sylveon" : "golden");
 
 add_achievement_notify("pal_garish", function()
 {
@@ -302,9 +308,9 @@ add_achievement_notify("pal_garish", function()
 	{
 		achievement_get_variable("garish_count").value += 1;
 		if (achievement_get_variable("garish_count").value >= 50)
-			palette_unlock(name, "garish", 11);
+			palette_unlock(name, obj_player1.character == "E" ? "espeon" : "garish", 11);
 	}
-}, false, "Palettes", "garish");
+}, false, "Palettes", obj_player1.character == "E" ? "espeon" : "garish");
 
 // PATTERNS
 add_achievement_notify("pal_funny", -4, function(data)
@@ -314,7 +320,7 @@ add_achievement_notify("pal_funny", -4, function(data)
 	var type = data[0];
 	var arr = data[1];
 	if type == notifs.combo_end && arr[0] >= 70 && arr[0] < 75
-		palette_unlock(name, "funny", 12, spr_peppattern1);
+		palette_unlock(name, "funny", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern1 : spr_peppattern1) : spr_peppattern1M);
 }, false, "Palettes", "funny");
 
 add_achievement_notify("pal_itchy", -4, function(data)
@@ -325,7 +331,7 @@ add_achievement_notify("pal_itchy", -4, function(data)
 	var arr = data[1];
 	
 	if global.leveltosave == "street" && type == notifs.hurt_player && arr[2] == obj_grandpa
-		palette_unlock(name, "itchy", 12, spr_peppattern2);
+		palette_unlock(name, "itchy", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern2 : spr_peppattern2) : spr_peppattern2M);
 }, false, "Palettes", "itchy");
 
 add_achievement_notify("pal_pizza", -4, function(data)
@@ -334,7 +340,7 @@ add_achievement_notify("pal_pizza", -4, function(data)
 		exit;
 	var type = data[0];
 	if type == notifs.firsttime_ending
-		palette_unlock(name, "pizza", 12, spr_peppattern3);
+		palette_unlock(name, "pizza", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern3 : spr_peppattern3) : spr_peppattern3M);
 }, false, "Palettes", "pizza");
 
 add_achievement_notify("pal_stripes", function()
@@ -349,7 +355,7 @@ add_achievement_notify("pal_stripes", function()
 	{
 		achievement_get_variable("stripes_count").value += 1;
 		if (achievement_get_variable("stripes_count").value >= 30)
-			palette_unlock(name, "stripes", 12, spr_peppattern4);
+			palette_unlock(name, "stripes", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern4 : spr_peppattern4) : spr_peppattern4M);
 	}
 }, false, "Palettes", "stripes");
 
@@ -380,7 +386,7 @@ add_achievement_notify("pal_goldemanne", -4, function(data)
 		}
 		ini_close();
 		if !_found
-			palette_unlock(name, "goldemanne", 12, spr_peppattern5);
+			palette_unlock(name, "goldemanne", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern5 : spr_peppattern5) : spr_peppattern5M);
 	}
 }, false, "Palettes", "goldemanne");
 
@@ -396,7 +402,7 @@ add_achievement_notify("pal_badbones", function()
 	{
 		achievement_get_variable("badbones_count").value += 1;
 		if (achievement_get_variable("badbones_count").value >= 50)
-			palette_unlock(name, "bones", 12, spr_peppattern6);
+			palette_unlock(name, "bones", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern6 : spr_peppattern6) : spr_peppattern6M);
 	}
 }, false, "Palettes", "bones");
 
@@ -414,7 +420,7 @@ add_achievement_notify("pal_pp", -4, function(data)
 		gamesave_async_save_options();
 		obj_savesystem.ini_str_options = ini_close();
 		if n >= 2
-			palette_unlock(name, "pp", 12, spr_peppattern7);
+			palette_unlock(name, "pp", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern7 : spr_peppattern7) : spr_peppattern7M);
 	}
 }, false, "Palettes", "pp");
 
@@ -430,7 +436,7 @@ add_achievement_notify("pal_war", -4, function(data)
 		var n = ini_read_real("Attempts", "war", 0);
 		ini_close();
 		if n <= 1
-			palette_unlock(name, "war", 12, spr_peppattern8);
+			palette_unlock(name, "war", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern8 : spr_peppattern8) : spr_peppattern8M);
 	}
 }, false, "Palettes", "war");
 
@@ -441,18 +447,27 @@ add_achievement_notify("pal_john", -4, function(data)
 	var type = data[0];
 	var arr = data[1];
 	if type == notifs.johnresurrection && global.file_minutes < 135
-		palette_unlock(name, "john", 12, spr_peppattern9);
+		palette_unlock(name, "john", 12, !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern9 : spr_peppattern9) : spr_peppattern9M);
 }, false, "Palettes", "john");
 
 // HALLOWEEN
 var pats = [
-	["candy", 5, spr_peppattern10],
-	["bloodstained", 10, spr_peppattern11],
-	["bat", 15, spr_peppattern12],
-	["pumpkin", 20, spr_peppattern13],
-	["fur", 25, spr_peppattern14],
-	["flesh", 30, spr_peppattern15]
+	["candy", 5, !global.option_datoggle ? spr_peppattern10 : spr_peppattern10M, 12],
+	["bloodstained", 10, !global.option_datoggle ? spr_peppattern11 : spr_peppattern11M, 12],
+	["bat", 15, !global.option_datoggle ? spr_peppattern12 : spr_peppattern12M, 12],
+	["pumpkin", 20, !global.option_datoggle ? spr_peppattern13 : spr_peppattern13M, 12],
+	["fur", 25, !global.option_datoggle ? spr_peppattern14 : spr_peppattern14M, 12],
+	["flesh", 30, !global.option_datoggle ? spr_peppattern15 : spr_peppattern15M, 12]
 ];
+if !obj_player1.ispeppino
+	pats = [
+		["candy", 5, !global.option_datoggle ? spr_peppattern10 : spr_peppattern10M, 21],
+		["bloodstained", 10, !global.option_datoggle ? spr_peppattern11 : spr_peppattern11M, 22],
+		["bat", 15, !global.option_datoggle ? spr_peppattern12 : spr_peppattern12M, 23],
+		["pumpkin", 20, !global.option_datoggle ? spr_peppattern13 : spr_peppattern13M, 24],
+		["fur", 25, !global.option_datoggle ? spr_peppattern14 : spr_peppattern14M, 25],
+		["flesh", 30, !global.option_datoggle ? spr_peppattern15 : spr_peppattern15M, 26]
+	];
 for (var i = 0; i < array_length(pats); i++)
 {
 	var pat = pats[i];
@@ -461,7 +476,7 @@ for (var i = 0; i < array_length(pats); i++)
 		var type = data[0];
 		var arr = data[1];
 		if type == notifs.pumpkin_collect && arr[0] >= pattern[1]
-			palette_unlock(name, pattern[0], 12, pattern[2]);
+			palette_unlock(name, pattern[0], pattern[3], pattern[2]);
 	}, false, "Palettes", pat[0]);
 	if (!is_undefined(p) && !p.unlocked)
 		p.pattern = pat;
@@ -627,7 +642,7 @@ add_achievement_notify("pal_racer", -4, function(data)
 		var noise_secs = (global.file_minutes * 60) + global.file_seconds;
 		var pep_secs = (game.minutes * 60) + game.seconds;
 		if game.judgement != "none" && noise_secs < pep_secs
-			palette_unlock(name, "racer", 28, spr_noisepattern1, false);
+			palette_unlock(name, "racer", 28, !global.option_datoggle ? spr_noisepattern1 : spr_noisepattern1M, false);
 	}
 }, false, "Palettes", "racer");
 
@@ -658,7 +673,7 @@ add_achievement_update("pal_comedian", 1, function()
 	{
 		count.value++;
 		if count.value >= 600
-			palette_unlock(name, "comedian", 27, spr_noisepattern2, false);
+			palette_unlock(name, "comedian", 27, !global.option_datoggle ? spr_noisepattern2 : spr_noisepattern2M, false);
 	}
 	else
 		count.value = 0;
@@ -677,7 +692,7 @@ add_achievement_notify("pal_banana", function()
 	{
 		count.value++;
 		if count.value >= 10
-			palette_unlock(name, "banana", 26, spr_noisepattern3, false);
+			palette_unlock(name, "banana", 26, !global.option_datoggle ? spr_noisepattern3 : spr_noisepattern3M, false);
 	}
 }, false, "Palettes", "banana");
 
@@ -686,7 +701,7 @@ add_achievement_update("pal_noiseTV", 1, -4, function()
 	if (!instance_exists(obj_tv) || obj_achievementtracker.ispeppino)
 		exit;
 	if obj_tv.idlespr == spr_tv_exprheatN
-		palette_unlock(name, "noiseTV", 25, spr_noisepattern4, false);
+		palette_unlock(name, "noiseTV", 25, !global.option_datoggle ? spr_noisepattern4 : spr_noisepattern4M, false);
 }, false, "Palettes", "noiseTV");
 
 add_achievement_notify("pal_madman", -4, function(data)
@@ -695,7 +710,7 @@ add_achievement_notify("pal_madman", -4, function(data)
 		exit;
 	var type = data[0];
 	if type == notifs.close_call
-		palette_unlock(name, "madman", 24, spr_noisepattern5, false);
+		palette_unlock(name, "madman", 24, !global.option_datoggle ? spr_noisepattern5 : spr_noisepattern5M, false);
 }, false, "Palettes", "madman");
 
 add_achievement_notify("pal_bubbly", function()
@@ -712,7 +727,7 @@ add_achievement_notify("pal_bubbly", function()
 	{
 		count.value++;
 		if count.value >= 21
-			palette_unlock(name, "bubbly", 23, spr_noisepattern6, false);
+			palette_unlock(name, "bubbly", 23, !global.option_datoggle ? spr_noisepattern6 : spr_noisepattern6M, false);
 	}
 }, false, "Palettes", "bubbly");
 
@@ -730,7 +745,7 @@ add_achievement_notify("pal_welldone", function()
 	{
 		count.value++;
 		if count.value >= 45
-			palette_unlock(name, "welldone", 22, spr_noisepattern7, false);
+			palette_unlock(name, "welldone", 22, !global.option_datoggle ? spr_noisepattern7 : spr_noisepattern7M, false);
 	}
 }, false, "Palettes", "welldone");
 
@@ -745,8 +760,8 @@ add_achievement_notify("pal_grannykisses", function()
 	achievement_add_variable("granny_hubtips7N", false, true, false);
 	achievement_add_variable("granny_hubtips8", false, true, false);
 	achievement_add_variable("granny_hubtips9", false, true, false);
-	achievement_add_variable("granny_garbage1N", false, true, false);
-	achievement_add_variable("granny_garbage2N", false, true, false);
+	achievement_add_variable(global.doisemode ? "granny_garbage1D" : "granny_garbage1N", false, true, false);
+	achievement_add_variable(global.doisemode ? "granny_garbage2D" : "granny_garbage2N", false, true, false);
 	achievement_add_variable("granny_garbage3", false, true, false);
 	achievement_add_variable("granny_garbage4", false, true, false);
 	achievement_add_variable("granny_garbage5N", false, true, false);
@@ -784,7 +799,7 @@ add_achievement_notify("pal_grannykisses", function()
 				}
 			}
 			if !found
-				palette_unlock(name, "grannykisses", 21, spr_noisepattern8, false);
+				palette_unlock(name, "grannykisses", 21, !global.option_datoggle ? spr_noisepattern8 : spr_noisepattern8M, false);
 		}
 	}
 }, false, "Palettes", "grannykisses");
@@ -834,7 +849,7 @@ add_achievement_notify("pal_towerguy", function()
 				}
 			}
 			if !found
-				palette_unlock(name, "towerguy", 20, spr_noisepattern9, false);
+				palette_unlock(name, "towerguy", 20, !global.option_datoggle ? spr_noisepattern9 : spr_noisepattern9M, false);
 		}
 	}
 }, false, "Palettes", "towerguy");
@@ -890,6 +905,272 @@ add_achievement_notify("halloween2", function()
 			break;
 	}
 });
+
+#endregion
+
+#region // DAMOD
+
+add_achievement_notify("getneo", function()
+{
+	achievement_add_variable("olive_count", 0, false, true);
+}, function(data)
+{
+	var type = data[0];
+	var arr = data[1];
+	var count = achievement_get_variable("olive_count");
+	if type == notifs.antigrav && arr[0] == "space"
+		count.value++;
+	else if type == notifs.end_level && arr[0] == "space" && count.value <= 2
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options)
+		var quest = ini_read_real("GrannyQuest", "nge", false)
+		ini_close()
+		if !quest
+		{
+			var charnum = obj_player1.ispeppino ?  12 : 35
+			palette_unlock(name, "nge", charnum, spr_dapattern1);
+		}
+	}
+}, false, "Palettes", "nge");
+
+add_achievement_notify("getness", function()
+{
+	achievement_add_variable("corpse_count", 0, false, true);
+}, function(data)
+{
+	var type = data[0];
+	var arr = data[1];
+	var count = achievement_get_variable("corpse_count");
+	if type == notifs.corpsesurf && global.leveltosave == "graveyard"
+		count.value++;
+	else if type == notifs.end_level && arr[0] == "graveyard" && count.value <= 0
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options)
+		var quest = ini_read_real("GrannyQuest", "nge", false)
+		ini_close()
+		if quest
+		{
+			var charnum = obj_player1.ispeppino ?  12 : 36
+			palette_unlock(name, "mn", charnum, spr_dapattern2);
+			
+		}
+		ini_close();
+	}
+}, false, "Palettes", "mn");
+
+add_achievement_update("getjared", 1, function()
+{
+	achievement_add_variable("dance_count", 0, false, false);
+}, function()
+{
+	var count = achievement_get_variable("dance_count");
+	if obj_player1.sprite_index == obj_player1.spr_breakdance && room == street_bacon
+	{
+		count.value++;
+		if count.value >= 300 && count.value <= 400
+		{
+			if count.value == 300 && obj_pigdark.sprite_index != bg_pigdarkthumb
+			{
+				with obj_pigdark
+				{
+					fmod_event_one_shot_3d("event:/sfx/voice/pig", room_width / 2, room_height / 2);
+					fmod_event_one_shot("event:/modded-sfx/ending/shootingstar");
+				}
+			}
+			obj_pigdark.sprite_index = bg_pigdarkthumb;
+			if count.value == 400
+				obj_pigdark.sprite_index = bg_pigdark;
+				
+			ini_open_from_string(obj_savesystem.ini_str_options)
+			var quest = ini_read_real("GrannyQuest", "mn", false)
+			ini_close()
+			if quest
+			{
+				var charnum = obj_player1.ispeppino ?  12 : 37
+				palette_unlock(name, "sg", charnum, spr_dapattern3);
+			}
+			ini_close();
+		}
+	}
+}, false, "Palettes", "sg");
+
+add_achievement_notify("getsora", function()
+{
+	achievement_add_variable("medieval_count", 0, false, true);
+}, function(data)
+{
+	var type = data[0];
+	var arr = data[1];
+	var count = achievement_get_variable("medieval_count");
+	if type == notifs.baddie_kill && arr[2] == obj_forknight
+		count.value++;
+	else if type == notifs.end_level && arr[0] == "medieval" && count.value <= 0
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options)
+		var quest = ini_read_real("GrannyQuest", "sg", false)
+		ini_close()
+		if quest
+		{
+			if global.extras_anchovies
+			{
+				global.triedtocheat = 1
+				ini_open_from_string(obj_savesystem.ini_str_options)
+				ini_write_real("GrannyQuest", "triedtocheat", global.triedtocheat)
+				ini_close()
+			}
+			else
+			{
+				var charnum = obj_player1.ispeppino ?  12 : 38;
+				palette_unlock(name, "si", charnum, spr_dapattern4);
+				global.triedtocheat = 0
+			}
+		}
+	}
+}, false, "Palettes", "si");
+
+add_achievement_notify("getcreator", function()
+{
+	achievement_add_variable("chateau_count", 0, false, true);
+}, function(data)
+{
+	var type = data[0];
+	var arr = data[1];
+	var count = achievement_get_variable("chateau_count");
+	if type == notifs.baddie_kill && arr[2] == obj_ghostknight
+		count.value++;
+	else if type == notifs.end_level && arr[0] == "chateau" && count.value <= 0
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options)
+		var quest = ini_read_real("GrannyQuest", "si", false)
+		ini_close()
+		if quest
+		{
+			if global.extras_anchovies
+			{
+				if global.triedtocheat == 0 || global.triedtocheat == 1
+					global.triedtocheat = 1.5
+				else
+					global.triedtocheat = 2
+				ini_open_from_string(obj_savesystem.ini_str_options)
+				ini_write_real("GrannyQuest", "triedtocheat", global.triedtocheat)
+				ini_close()
+			}
+			else
+			{
+				var charnum = obj_player1.ispeppino ?  12 : 39;
+				palette_unlock(name, "cocs", charnum, spr_dapattern5);
+				if global.triedtocheat == 1.5
+					global.triedtocheat = 1
+				ini_open_from_string(obj_savesystem.ini_str_options)
+				ini_write_real("GrannyQuest", "triedtocheat", global.triedtocheat)
+				ini_close()
+			}
+		}
+	}
+}, false, "Palettes", "cocs");
+
+add_achievement_notify("getvibian", function(data)
+{
+	achievement_add_variable("priest_count", 0, false, true);
+}, function(data)
+{
+	var type = data[0];
+	var arr = data[1];
+	if (global.leveltosave == "badland" && type == notifs.priest_collect && arr[2] == states.firemouth)
+		achievement_get_variable("priest_count").value += 1;
+	else if type == notifs.end_level && global.leveltosave == "badland" && achievement_get_variable("priest_count").value <= 1
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options)
+		var quest = ini_read_real("GrannyQuest", "cocs", false)
+		ini_close()
+		if quest
+		{
+			var charnum = obj_player1.ispeppino ? 12 : 40
+			palette_unlock(name, "vv", charnum, spr_dapattern6);
+		}
+	}
+}, false, "Palettes", "vv");
+
+add_achievement_notify("getsav", function()
+{
+	achievement_add_variable("move_count", 0, false, false);
+}, function(data)
+{
+	var type = data[0]
+	var count = achievement_get_variable("move_count");
+	if room == boss_pizzaface
+	{
+		if instance_exists(obj_pizzafaceboss)
+		{
+			if type == notifs.player_ismoving
+				count.value++;
+			if type == notifs.pizzaface_phase1end && count.value <= 1
+			{
+				ini_open_from_string(obj_savesystem.ini_str_options)
+				var quest = ini_read_real("GrannyQuest", "vv", false)
+				ini_close()
+				if quest
+				{
+					var charnum = obj_player1.ispeppino ? 12 : 41
+					palette_unlock(name, "stfg", charnum, spr_dapattern7);
+				}
+			}
+		}
+		if global.levelreset
+			count.value = 1;
+	}
+	else
+		count.value = 1
+}, false, "Palettes", "stfg");
+
+add_achievement_notify("getgeneric", function()
+{
+}, function(data)
+{
+	ini_open_from_string(obj_savesystem.ini_str)
+	var lvl = ["exit"];
+	var map = ds_map_create();
+	ds_map_set(map, "pp", 6);
+	ds_map_set(map, "p", 5);
+	ds_map_set(map, "s", 4);
+	ds_map_set(map, "a", 3);
+	ds_map_set(map, "b", 2);
+	ds_map_set(map, "c", 1);
+	ds_map_set(map, "d", 0);
+	for (var i = 0; i < array_length(lvl); i++)
+	{
+		var type = data[0]
+		var rank = ini_read_string("Ranks", lvl[i], "d");
+		if (ds_map_find_value(map, rank) >= ds_map_find_value(map, "s"))
+		{
+			if type == notifs.end_level && global.leveltosave == "exit" && global.lapcount >= 3 && global.highest_combo >= 100 && global.extras_jesus && global.extras_inflap != 0 && global.extras_scream != 0 && global.extras_randomrat != 0
+			{
+				ini_open_from_string(obj_savesystem.ini_str_options)
+				var quest = ini_read_real("GrannyQuest", "stfg", false)
+				ini_close()
+				if quest
+				{
+					var charnum = obj_player1.ispeppino ? 12 : 42
+					palette_unlock(name, "gp", charnum, spr_dapattern8);
+					ini_open_from_string(obj_savesystem.ini_str_options)
+					ini_write_real("GrannyQuest", "completed", true)
+					ini_close()
+				}
+			}
+		}
+	}
+	ds_map_destroy(map);
+	ini_close();
+}, false, "Palettes", "gp");
+
+/*
+add_achievement_notify("getunique", function()
+{
+}, function(data)
+{
+	
+}, false, "Palettes", "ue");
+*/
 
 #endregion
 

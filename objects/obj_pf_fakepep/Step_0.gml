@@ -107,7 +107,7 @@ switch state
 if prevhp != elitehit
 {
 	prevhp = elitehit;
-	sprite_index = spr_fakepeppino_deform;
+	sprite_index = obj_player1.character == "E" ? spr_ditto_deform : spr_fakepeppino_deform;
 	image_index = 0;
 	state = states.transition;
 	hsp = 0;

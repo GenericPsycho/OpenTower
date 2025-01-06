@@ -1,3 +1,6 @@
+if ((!global.swapmode) && global.doisemode)
+    instance_destroy()
+
 image_speed = 0.35;
 
 var _y = ystart;

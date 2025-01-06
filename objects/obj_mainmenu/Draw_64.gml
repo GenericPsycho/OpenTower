@@ -61,8 +61,8 @@ else if state == states.ending
 	draw_set_font(lang_get_font("bigfont"));
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
-	draw_sprite(spr_menu_byebye, index, (SCREEN_WIDTH / 2) + 210, SCREEN_HEIGHT / 2);
-	draw_sprite(spr_menu_byebye, index, (SCREEN_WIDTH / 2) - 210, SCREEN_HEIGHT / 2);
+	draw_sprite(showeevee ? spr_menu_byebyeE : spr_menu_byebye, index, (SCREEN_WIDTH / 2) + 210, SCREEN_HEIGHT / 2);
+	draw_sprite(showeevee ? spr_menu_byebyeE : spr_menu_byebye, index, (SCREEN_WIDTH / 2) - 210, SCREEN_HEIGHT / 2);
 	tdp_draw_text_color(SCREEN_WIDTH / 2, (SCREEN_HEIGHT / 2) - 30, lang_get_value("menu_exit"), c_white, c_white, c_white, c_white, 1);
 	c1 = (exitselect == 0) ? c_white : c_gray;
 	c2 = (exitselect == 1) ? c_white : c_gray;

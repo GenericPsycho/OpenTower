@@ -1,5 +1,5 @@
 draw_set_alpha(1);
-if (is_bossroom() || room == editor_room || instance_exists(obj_tutorialbook))
+if (is_bossroom() || room == editor_room || instance_exists(obj_tutorialbook) || room == tower_tutorial1 || room == tower_tutorial1N || room == forest_G1b || (!obj_player1.ispeppino && obj_player1.state == states.animatronic && global.doisemode && !global.swapmode))
 	exit;
 if global.kungfu
 {
@@ -24,6 +24,36 @@ if global.kungfu
 }
 if obj_player.state != states.dead
 {
+	var sw = sprite_get_width(spr_heatmeter_fill);
+	var sh = sprite_get_height(spr_heatmeter_fill);
+	var b = 0;
+	var hud_xx = 121 + irandom_range(-collect_shake, collect_shake);
+	var hud_yy = 90 + irandom_range(-collect_shake, collect_shake) + hud_posY;
+	
+	// lap
+	var _cx = hud_xx + lap_posX;
+	var _cy = hud_yy + 80 + hud_posY + lap_posY;
+	var _minX = _cx - 56;
+	var _maxX = _cx + 59;
+	
+	shader_set(global.Pal_Shader)
+	pal_swap_set(spr_tv_combofillpalette, (!global.combodropped && global.prank_enemykilled) ? (scr_is_pplus_rank() ? 3 : 2) : 1, false);
+	lang_draw_sprite(scr_is_pplus_rank() ? spr_lapdevilfill : spr_lapbubblefill, -1, _cx, _cy);
+	draw_set_font(global.lapfont);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_top);
+	var _tx = _cx + 43;
+	var _ty = _cy - 24;
+	var _str = string(visuallap);
+	var num = string_length(_str);
+	for (var i = num; i > 0; i--)
+	{
+		var char = string_char_at(_str, i);
+		draw_text(_tx, _ty, char);
+		_tx -= 10;
+		_ty -= 0;
+	}
+	
 	if obj_player.x < 250 && obj_player.y < 169
 		hud_posY = Approach(hud_posY, -300, 15);
 	else
@@ -43,11 +73,7 @@ if obj_player.state != states.dead
 		else
 			pizzascore_index = 0;
 	}
-	var sw = sprite_get_width(spr_heatmeter_fill);
-	var sh = sprite_get_height(spr_heatmeter_fill);
-	var b = 0;
-	var hud_xx = 121 + irandom_range(-collect_shake, collect_shake);
-	var hud_yy = 90 + irandom_range(-collect_shake, collect_shake) + hud_posY;
+	
 	draw_sprite_part(spr_heatmeter_fill, pizzascore_index, 0, 0, sw * b, sh, hud_xx - 95, hud_yy + 24);
 	shader_set(global.Pal_Shader);
 	pal_swap_set(spr_heatmeter_palette, global.stylethreshold, false);
@@ -64,11 +90,16 @@ if obj_player.state != states.dead
 		draw_sprite_ext(spr_pizzascore_olive, pizzascore_index, hud_xx, hud_yy, 1, 1, 0, c_white, alpha);
 	if _score >= global.srank
 		draw_sprite_ext(spr_pizzascore_shroom, pizzascore_index, hud_xx, hud_yy, 1, 1, 0, c_white, alpha);
+	
 	var rx = hud_xx + 142;
 	var ry = hud_yy - 22;
 	var rank_ix = 0;
 	if (_score >= global.srank && scr_is_p_rank())
+	{
 		rank_ix = 5;
+		if scr_is_pplus_rank()
+			rank_ix = 6;
+	}
 	else if _score >= global.srank
 		rank_ix = 4;
 	else if _score >= global.arank
@@ -83,8 +114,9 @@ if obj_player.state != states.dead
 		previousrank = rank_ix;
 		if rank_ix < previousrank
 			_snd = global.snd_rankdown;
+		var _rankjingle = rank_ix == 6 ? rank_ix - 1 : rank_ix;
 		fmod_event_instance_play(_snd);
-		fmod_event_instance_set_parameter(_snd, "state", rank_ix - 1, true);
+		fmod_event_instance_set_parameter(_snd, "state", _rankjingle - 1, true);
 		rank_scale = 3;
 	}
 	rank_scale = Approach(rank_scale, 1, 0.2);

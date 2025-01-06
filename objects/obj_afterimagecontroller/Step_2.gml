@@ -11,7 +11,7 @@ for (var i = 0; i < ds_list_size(global.afterimage_list); i++)
 		switch identifier
 		{
 			case afterimage.mach3effect:
-				if !(playerid.state == states.jump && playerid.sprite_index == spr_playerN_noisebombspinjump)
+				if !(playerid.state == states.jump && playerid.sprite_index == spr_playerN_noisebombspinjump && playerid.sprite_index == spr_playerN_jetpackboost)
 				&& playerid.pizzapepper == 0 && playerid.state != states.Sjump && playerid.state != states.ratmount
 				&& playerid.state != states.ratmountjump && (playerid.state != states.ghost || playerid.ghostpepper < 2 || !playerid.ghostdash)
 				&& playerid.sprite_index != playerid.spr_mach && playerid.sprite_index != playerid.spr_mach4

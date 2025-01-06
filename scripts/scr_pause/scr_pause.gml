@@ -135,6 +135,7 @@ function pause_unpause_music()
 		}
 		fmod_event_instance_set_paused(pillarmusicID, other.savedpillarpause);
 		fmod_event_instance_set_paused(panicmusicID, other.savedpanicpause);
+		fmod_event_instance_set_paused(escapeID, other.savedescapepause);
 		fmod_event_instance_set_paused(kidspartychaseID, other.savedkidspartypause);
 	}
 	fmod_event_instance_stop(pausemusicID, true);

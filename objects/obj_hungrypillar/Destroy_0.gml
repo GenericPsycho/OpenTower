@@ -28,64 +28,83 @@ if (ds_list_find_index(global.saveroom, id) == -1 && global.snickchallenge == 0)
 	{
 		case entrance_10:
 			global.fill = 1860;
+			global.escapetimer = 1860;
 			break;
 		case medieval_10:
 			global.fill = 2040;
+			global.escapetimer = 2040;
 			break;
 		case ruin_11:
 			global.fill = 2160;
+			global.escapetimer = 2160
 			break;
 		case dungeon_10:
 			global.fill = 2460;
+			global.escapetimer = 2460;
 			break;
 		case badland_9:
 			global.fill = 2556;
+			global.escapetimer = 2556;
 			break;
 		case graveyard_6:
 			global.fill = 2640;
+			global.escapetimer = 2640
 			break;
 		case farm_11:
 			global.fill = 1920;
+			global.escapetimer = 1920;
 			break;
 		case saloon_6:
 			global.fill = 2100;
+			global.escapetimer = 2100;
 			break;
 		case plage_cavern2:
 			global.fill = 2220;
+			global.escapetimer = 2220;
 			break;
 		case forest_john:
 			global.fill = 2520;
+			global.escapetimer = 2520;
 			break;
 		case space_9:
 			global.fill = 2220;
+			global.escapetimer = 2220;
 			break;
 		case minigolf_8:
 			global.fill = 3240;
+			global.escapetimer = 3240;
 			break;
 		case street_john:
 			global.fill = 2280;
+			global.escapetimer = 2280;
 			break;
 		case sewer_8:
 			global.fill = 3300;
 			var lay = layer_get_id("Backgrounds_scroll");
 			layer_set_visible(lay, true);
+			global.escapetimer = 3300;
 			break;
 		case industrial_5:
 			global.fill = 2760;
+			global.escapetimer = 2760;
 			break;
 		case freezer_escape1:
 			global.fill = 2640;
+			global.escapetimer = 2640;
 			break;
 		case chateau_9:
 			lay = layer_get_id("Backgrounds_stillH1");
 			layer_background_sprite(layer_background_get_id(lay), spr_chateaudarkbg_escape);
 			global.fill = 2520;
+			global.escapetimer = 2520
 			break;
 		case kidsparty_john:
 			global.fill = 2460;
+			global.escapetimer = 2460;
 			break;
 		case tower_finalhallway:
 			global.fill = 4056;
+			global.escapetimer = 4056;
 			break;
 	}
 	
@@ -135,6 +154,8 @@ if (ds_list_find_index(global.saveroom, id) == -1 && global.snickchallenge == 0)
 	fmod_event_one_shot_3d("event:/sfx/enemies/kill", x, y);
 	instance_create(x, y + 600, obj_itspizzatime);
 	global.panic = true;
+	if global.lapcount < 1
+		global.lapcount = 1;
 	
 	switch room // how do you fuck this up
 	{

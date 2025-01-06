@@ -1,3 +1,5 @@
+if global.lapcount > 3
+	instance_destroy()
 if down
 {
 	var ty = 24;

@@ -1,4 +1,4 @@
-if (sprite_index != spr_stick_helicopter && (sprite_index != spr_stick_leave || image_index < 3) && sprite_index != spr_noisettestick_helicopter)
+if (sprite_index != spr_stick_helicopter && sprite_index != spr_gholdengo_helicopter && ((sprite_index != spr_stick_leave && sprite_index != spr_gholdengo_leave) || image_index < 3) && sprite_index != spr_noisettestick_helicopter)
 {
 	fmod_event_instance_stop(global.snd_mrstickhat, true);
 	scr_collide();
@@ -14,7 +14,7 @@ switch state
 	case states.fall:
 		if !noisette
 		{
-			if sprite_index == spr_stick_helicopter
+			if sprite_index == spr_stick_helicopter || sprite_index == spr_gholdengo_helicopter
 			{
 				hsp = 0;
 				vsp = 0;
@@ -22,14 +22,18 @@ switch state
 				if (abs(y - obj_stick_target.y) <= 100)
 				{
 					sprite_index = spr_stick_fall;
+					if obj_player1.character == "E"
+						sprite_index = spr_gholdengo_fall;
 					image_index = 0;
 				}
 			}
-			else if sprite_index == spr_stick_fall
+			else if sprite_index == spr_stick_fall || sprite_index == spr_gholdengo_fall
 			{
 				if grounded && vsp > 0
 				{
 					sprite_index = spr_stick_land;
+					if obj_player1.character == "E"
+						sprite_index = spr_gholdengo_land
 					image_index = 0;
 				}
 			}
@@ -57,11 +61,19 @@ switch state
 			arrowID = scr_create_uparrowhitbox();
 		if !noisette
 		{
-			if sprite_index != spr_stick_idleanim1 && sprite_index != spr_stick_idleanim2 && sprite_index != spr_stick_idleanim3
+			if sprite_index != spr_stick_idleanim1 && sprite_index != spr_stick_idleanim2 && sprite_index != spr_stick_idleanim3 && sprite_index != spr_gholdengo_idleanim1 && sprite_index != spr_gholdengo_idleanim2 && sprite_index != spr_gholdengo_idleanim3
+			{
 				sprite_index = spr_stick_idle;
+				if obj_player1.character == "E"	
+					sprite_index = spr_gholdengo_idle;
+			}
 			else if floor(image_index) == image_number - 1
+			{
 				sprite_index = spr_stick_idle;
-			if sprite_index == spr_stick_idle
+				if obj_player1.character == "E"
+					sprite_index = spr_gholdengo_idle
+			}
+			if sprite_index == spr_stick_idle || sprite_index == spr_gholdengo_idle
 			{
 				idle++;
 				if obj_player1.x != x
@@ -72,6 +84,8 @@ switch state
 				if (!instance_exists(obj_titlecard))
 					fmod_event_one_shot_3d("event:/sfx/voice/mrstick", x, y);
 				sprite_index = choose(spr_stick_idleanim1, spr_stick_idleanim2, spr_stick_idleanim3);
+				if obj_player1.character == "E"
+					sprite_index = choose(spr_gholdengo_idleanim1, spr_gholdengo_idleanim2, spr_gholdengo_idleanim3);
 				image_index = 0;
 				idle = 0;
 			}
@@ -98,6 +112,8 @@ switch state
 			obj_savesystem.ini_str = ini_close();
 			state = states.jump;
 			sprite_index = spr_stick_takemoney1;
+			if obj_player1.character == "E"
+				sprite_index = spr_gholdengo_takemoney1;
 			image_index = 0;
 			shot = false;
 			drawing = false;
@@ -106,7 +122,7 @@ switch state
 				sprite_index = spr_noisettestick_takemoney1;
 				buffer = 80;
 				wet_buffer = 0;
-				fmod_event_one_shot_3d("event:/sfx/noisette/voice1", x, y);
+				fmod_event_one_shot_3d("event:/modded-sfx/noisette/woagwife1", x, y)
 			}
 			gamesave_async_save();
 			with obj_player
@@ -145,7 +161,10 @@ switch state
 					sprite_index = spr_noisettestick_takemoney2;
 					if obj_player1.ispeppino
 					{
-						fmod_event_one_shot_3d("event:/sfx/noisette/voice2", x, y);
+						if global.solitude != 0
+							fmod_event_one_shot_3d("event:/modded-sfx/noisette/woagncpd", x, y)
+						else
+							fmod_event_one_shot_3d("event:/modded-sfx/noisette/woagwife2", x, y)
 						sprite_index = spr_noisettestick_helicopterstart;
 						image_index = 0;
 						fmod_event_one_shot_3d("event:/sfx/pep/bumpwall", x, y);
@@ -184,7 +203,10 @@ switch state
 				buffer--;
 			else if shot
 			{
-				fmod_event_one_shot_3d("event:/sfx/noisette/voice2", x, y);
+				if global.solitude != 0
+					fmod_event_one_shot_3d("event:/modded-sfx/noisette/woagncpd", x, y)
+				else
+					fmod_event_one_shot_3d("event:/modded-sfx/noisette/woagwife2", x, y)
 				sprite_index = spr_noisettestick_helicopterstart;
 				image_index = 0;
 				fmod_event_one_shot_3d("event:/sfx/pep/bumpwall", x, y);
@@ -200,7 +222,7 @@ switch state
 			if (floor(image_index) == image_number - 1)
 				sprite_index = spr_noisettestick_helicopter;
 		}
-		else if sprite_index == spr_stick_takemoney1
+		else if sprite_index == spr_stick_takemoney1 || sprite_index == spr_gholdengo_takemoney1
 		{
 			if (floor(image_index) >= 16 && !shot)
 			{
@@ -216,27 +238,35 @@ switch state
 			{
 				image_xscale *= -1;
 				sprite_index = spr_stick_takemoney2;
+				if obj_player1.character == "E"
+					sprite_index = spr_gholdengo_takemoney2;
 				image_index = 0;
 				fmod_event_one_shot_3d("event:/sfx/voice/mrsticklaugh", x, y);
 			}
 		}
-		else if sprite_index == spr_stick_takemoney2
+		else if sprite_index == spr_stick_takemoney2 || sprite_index == spr_gholdengo_takemoney2
 		{
 			hsp = image_xscale * 4;
 			if (abs(x - xstart) >= 200 || (place_meeting(x + sign(hsp), y, obj_solid) && !place_meeting(x + sign(hsp), y, obj_slope)))
 			{
 				hsp = 0;
 				sprite_index = spr_stick_leave;
+				if obj_player1.character == "E"
+					sprite_index = spr_gholdengo_leave;
 				image_index = 0;
 			}
 		}
-		else if sprite_index == spr_stick_leave
+		else if sprite_index == spr_stick_leave || sprite_index == spr_gholdengo_leave
 		{
 			vsp = 0;
 			if (floor(image_index) >= 10)
 				y -= 4;
 			if (floor(image_index) == image_number - 1)
+			{
 				sprite_index = spr_stick_helicopter;
+				if obj_player1.character == "E"
+					sprite_index = spr_gholdengo_helicopter;
+			}
 		}
 		else
 		{

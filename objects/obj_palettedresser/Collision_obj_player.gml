@@ -8,7 +8,7 @@ if other.key_up2 && other.ispeppino == ispeppino
 			hsp = irandom_range(-5, 5);
 			vsp = -irandom_range(6, 11);
 			usepalette = true;
-			sprite_index = spr_palettedresserdebris;
+			sprite_index = obj_player1.character == "E" ?  spr_palettedresserdebrisE : spr_palettedresserdebris;
 			if !obj_player1.ispeppino
 				sprite_index = spr_palettedresserdebrisN;
 			spr_palette = obj_player1.spr_palette;
@@ -45,6 +45,14 @@ if other.key_up2 && other.ispeppino == ispeppino
 	ini_write_string("Game", "palettetexture_player2", scr_get_texture_name(other.player_patterntexture[1]));
 	obj_savesystem.ini_str = ini_close();
 	
-	palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "title"));
+	if global.option_datoggle && obj_player1.character != "E"
+		palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "titleMOD"));
+	else
+	{
+		if palettes[paletteselect][0] == "john" && obj_player1.character == "E"
+			palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "Etitle"));
+		else
+			palettetitle = lang_get_value(concat("dresser_", palettes[paletteselect][0], "title"));
+	}
 	palettedesc = lang_get_value_newline(concat("dresser_", palettes[paletteselect][0]));
 }

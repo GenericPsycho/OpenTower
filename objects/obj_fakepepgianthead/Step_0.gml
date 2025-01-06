@@ -43,7 +43,7 @@ switch state
 				target_x = -300;
 				movespeed = 0;
 				fmod_event_instance_stop(snd, true);
-				fmod_event_one_shot("event:/sfx/playerN/lionscream");
+				fmod_event_one_shot("event:/modded-sfx/playerN/noisehadenoughofyourshit");
 				with obj_player1
 				{
 					xscale = 1;

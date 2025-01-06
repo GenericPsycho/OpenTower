@@ -43,6 +43,8 @@ function scr_pistolshoot(required_state, allow_charge = false)
 			{
 				GamepadSetVibration(0, 1, 1, 0.8);
 				sprite_index = spr_peppinobulletGIANT;
+				if obj_player.character == "E"
+					sprite_index = spr_plumebulletGIANT;
 				x += 25;
 			}
 			else

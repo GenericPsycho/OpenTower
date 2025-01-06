@@ -30,7 +30,7 @@ if room == hub_loadingscreen && state != 2
 				{
 					with obj_player1
 					{
-						character = "P";
+						character = global.charsavefile == "E" ? "E" : "P";
 						ispeppino = true;
 						scr_characterspr();
 					}

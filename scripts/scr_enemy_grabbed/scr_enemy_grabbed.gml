@@ -6,7 +6,7 @@ function scr_enemy_grabbed()
 		image_xscale = -_obj_player.xscale;
 		stunned = 200;
 		_obj_player.baddiegrabbedID = id;
-		if (_obj_player.state == states.grabbing || _obj_player.state == states.grab || _obj_player.state == states.throwing || _obj_player.state == states.slam || _obj_player.state == states.tacklecharge)
+		if (_obj_player.state == states.grabbing || _obj_player.state == states.grab || _obj_player.state == states.throwing || _obj_player.state == states.jetpack || _obj_player.state == states.slam || _obj_player.state == states.tacklecharge)
 		{
 			x = _obj_player.x;
 			if _obj_player.sprite_index != _obj_player.spr_haulingstart
@@ -25,7 +25,7 @@ function scr_enemy_grabbed()
 		{
 			suplexhavetomash = other.hp - 1;
 			move = key_left2 + key_right2;
-			if (!(state == states.grab || state == states.chainsaw || state == states.pummel || state == states.finishingblow || state == states.grabbing || state == states.throwing || state == states.slam || state == states.tacklecharge || state == states.punch || state == states.superslam || state == states.backkick || state == states.uppunch || state == states.shoulder))
+			if (!(state == states.grab || state == states.chainsaw || state == states.pummel || state == states.finishingblow || state == states.grabbing || state == states.throwing || state == states.jetpack || state == states.slam || state == states.tacklecharge || state == states.punch || state == states.superslam || state == states.backkick || state == states.uppunch || state == states.shoulder))
 			{
 				other.x = x;
 				other.y = y;
@@ -213,7 +213,7 @@ function scr_enemy_grabbed()
 			vsp = hitvsp;
 			linethrown = true;
 		}
-		if _obj_player.state == states.throwing
+		if _obj_player.state == states.throwing || _obj_player.state == states.jetpack
 		{
 			global.hit += 1;
 			if other.object_index == obj_pizzaball
@@ -264,7 +264,7 @@ function scr_enemy_grabbed()
 		}
 		if (_obj_player.state == states.superslam || (_obj_player.state == states.chainsaw && sprite_index == spr_player_piledriver))
 		{
-			if _obj_player.character == "P" && _obj_player.ispeppino
+			if (_obj_player.character == "P" || _obj_player.character == "E") && _obj_player.ispeppino
 			{
 				if _obj_player.sprite_index != _obj_player.spr_piledriverland
 				{

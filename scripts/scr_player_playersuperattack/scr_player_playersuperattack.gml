@@ -33,6 +33,8 @@ function scr_player_playersuperattack()
 			{
 				superattackstate = states.punch;
 				randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_player_suplexmash5, spr_player_suplexmash6, spr_player_suplexmash7, spr_punch]);
+				if character == "E"
+					randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_playerE_suplexmash5, spr_playerE_suplexmash6, spr_playerE_suplexmash7, spr_punch]);
 				punchcount = 20;
 				image_index = 0;
 			}
@@ -53,6 +55,8 @@ function scr_player_playersuperattack()
 				{
 					punchcount--;
 					randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_player_suplexmash5, spr_player_suplexmash6, spr_player_suplexmash7, spr_punch]);
+					if character == "E"
+						randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_playerE_suplexmash5, spr_playerE_suplexmash6, spr_playerE_suplexmash7, spr_punch]);
 					image_index = 0;
 					fmod_event_one_shot_3d("event:/sfx/enemies/killingblow", x, y);
 					with bossID

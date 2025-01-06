@@ -21,14 +21,28 @@ switch state
 			if sprite_index != spr_noiseyexit_fall && sprite_index != spr_noisette_fall
 			{
 				sprite_index = spr_lonegustavo_groundpound;
+				if obj_player1.character == "E"
+					sprite_index = spr_lonepika_groundpound;
 				if room == space_11b
 					sprite_index = spr_gustavo_exitshuttle;
 				else if (string_letters(room_get_name(room)) == "freezer")
+				{
 					sprite_index = spr_gustavo_exitsignfreezer;
+					if obj_player1.character == "E"
+						sprite_index = spr_pika_exitsignfreezer;
+				}
 				else if (string_letters(room_get_name(room)) == "chateau")
+				{
 					sprite_index = spr_gustavorat_fall;
-				if stick
+					if obj_player1.character == "E"
+						sprite_index = spr_lonepika_groundpound;
+				}
+				if stick == 1
+				{
 					sprite_index = spr_stick_fall;
+					if obj_player1.character == "E"
+						sprite_index = spr_gholdengo_fall;
+				}
 			}
 		}
 		break;
@@ -74,15 +88,35 @@ switch state
 			if sprite_index != spr_noiseyexit_fall && sprite_index != spr_noisette_fall
 			{
 				if (string_letters(room_get_name(room)) == "freezer")
+				{
 					sprite_index = spr_gustavo_exitsignfreezer;
+					if obj_player1.character == "E"
+						sprite_index = spr_pika_exitsignfreezer;
+				}
 				else if (room == saloon_5 || room == saloon_4 || room == saloon_3 || room == saloon_2 || room == saloon_1)
+				{
 					sprite_index = spr_gustavo_exitsigndrunk;
+					if obj_player1.character == "E"
+						sprite_index = spr_pika_exitsigndrunk;
+				}
 				else if (string_letters(room_get_name(room)) == "chateau")
+				{
 					sprite_index = spr_gustavorat_exitsign;
+					if obj_player1.character == "E"
+						sprite_index = spr_pika_exitsign;
+				}
 				else
+				{
 					sprite_index = spr_gustavo_exitsign;
-				if stick
+					if obj_player1.character == "E"
+						sprite_index = spr_pika_exitsign;
+				}
+				if stick == 1
+				{
 					sprite_index = spr_stick_exit;
+					if obj_player1.character == "E"
+						sprite_index = spr_gholdengo_exit;
+				}
 			}
 			else if sprite_index == spr_noiseyexit_fall
 				sprite_index = spr_noiseyexit_idle;
@@ -95,8 +129,14 @@ switch state
 		if floor(image_index) == image_number - 1
 		{
 			sprite_index = spr_gustavo_exitsign;
-			if stick
+			if obj_player1.character == "E"
+				sprite_index = spr_pika_exitsign;
+			if stick == 1
+			{
 				sprite_index = spr_stick_exit;
+				if obj_player1.character == "E"
+					sprite_index = spr_gholdengo_exit;
+			}
 			state = states.normal;
 		}
 		break;

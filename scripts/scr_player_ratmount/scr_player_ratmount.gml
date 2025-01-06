@@ -35,9 +35,17 @@ function scr_player_ratmount()
 				fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 				state = states.bump;
 				if brick
+				{
 					sprite_index = spr_player_ratmountbump;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountbump;
+				}
 				else
+				{
 					sprite_index = spr_lonegustavo_bump;
+					if character == "E"
+						sprite_index = spr_lonepika_bump;
+				}
 				image_index = 0;
 				instance_create(x + (xscale * 15), y + 10, obj_bumpeffect);
 				hsp = -xscale * 4;
@@ -67,7 +75,7 @@ function scr_player_ratmount()
 			}
 		}
 	}
-	if move != xscale && move != 0 && gusdashpadbuffer <= 0 && sprite_index != spr_lonegustavo_kick
+	if move != xscale && move != 0 && gusdashpadbuffer <= 0 && sprite_index != spr_lonegustavo_kick && sprite_index != spr_lonepika_kick
 	{
 		xscale = move;
 		if (abs(movespeed) > 2 && abs(hsp) > 2 && grounded)
@@ -102,7 +110,7 @@ function scr_player_ratmount()
 		image_speed = abs(movespeed) / 12;
 	else
 		image_speed = 0.35;
-	if (sprite_index == spr_player_ratmountmach3 || sprite_index == spr_lonegustavo_mach3)
+	if (sprite_index == spr_player_ratmountmach3 || sprite_index == spr_lonegustavo_mach3 || sprite_index == spr_playerK_ratmountmach3 || sprite_index == spr_lonepika_mach3)
 		image_speed = 0.4;
 	var front = scr_solid(x + sign(hsp), y) && !place_meeting(x + sign(hsp), y, obj_slope);
 	if brick
@@ -112,18 +120,32 @@ function scr_player_ratmount()
 			if hsp != 0 && !front
 			{
 				if (ratmount_movespeed >= 12 || gusdashpadbuffer > 0)
+				{
 					sprite_index = spr_player_ratmountmach3;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountmach3;
+				}
 				else if key_attack
+				{
 					sprite_index = spr_player_ratmountattack;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountattack;
+				}
 				else
+				{
 					sprite_index = spr_player_ratmountmove;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountmove;
+				}
 			}
 			else
 			{
 				image_speed = 0.35;
-				if sprite_index != spr_player_ratmountidleanim
+				if sprite_index != spr_player_ratmountidleanim && sprite_index != spr_playerK_ratmountidleanim
 				{
 					sprite_index = spr_player_ratmountidle;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountidle;
 					if ratgrabbedID == noone
 					{
 						if idle < 400
@@ -131,6 +153,8 @@ function scr_player_ratmount()
 						if idle >= 150
 						{
 							sprite_index = spr_player_ratmountidleanim;
+							if character == "E"
+								sprite_index = spr_playerK_ratmountidleanim;
 							image_index = 0;
 						}
 					}
@@ -139,16 +163,22 @@ function scr_player_ratmount()
 				{
 					idle = 0;
 					sprite_index = spr_player_ratmountidle;
+					if character == "E"
+						sprite_index = spr_playerK_ratmountidle;
 				}
 			}
 		}
 		if floor(image_index) == image_number - 1
 		{
 			landAnim = false;
-			if sprite_index == spr_player_ratmountland
+			if sprite_index == spr_player_ratmountland || sprite_index == spr_playerK_ratmountland
+			{
 				sprite_index = spr_player_ratmountidle;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountidle;			
+			}
 		}
-		if sprite_index == spr_player_ratmountland
+		if sprite_index == spr_player_ratmountland || sprite_index == spr_playerK_ratmountland
 			image_speed = 0.35;
 	}
 	else
@@ -156,14 +186,30 @@ function scr_player_ratmount()
 		if hsp != 0 && !front
 		{
 			if (ratmount_movespeed >= 12 || gusdashpadbuffer > 0)
+			{
 				sprite_index = spr_lonegustavo_mach3;
+				if character == "E"
+					sprite_index = spr_lonepika_mach3;
+			}
 			else if key_attack
+			{
 				sprite_index = spr_lonegustavo_dash;
+				if character == "E"
+					sprite_index = spr_lonepika_dash;
+			}
 			else
+			{
 				sprite_index = spr_lonegustavo_walk;
+				if character == "E"
+					sprite_index = spr_lonepika_walk;
+			}
 		}
 		else
+		{
 			sprite_index = spr_lonegustavo_idle;
+			if character == "E"
+				sprite_index = spr_lonepika_idle;
+		}
 		image_speed = 0.35;
 	}
 	if hsp != 0 && grounded && vsp > 0 && !front
@@ -174,7 +220,7 @@ function scr_player_ratmount()
 		{
 			create_particle(x, y + 43, particle.cloudeffect, 0);
 			steppybuffer = 18;
-			if sprite_index != spr_player_ratmountattack
+			if sprite_index != spr_player_ratmountattack && sprite_index != spr_playerK_ratmountattack
 				fmod_event_one_shot_3d("event:/sfx/pep/step", x, y);
 		}
 	}
@@ -187,14 +233,30 @@ function scr_player_ratmount()
 		if brick
 		{
 			if ((ratmount_movespeed >= 12 && key_attack) || gusdashpadbuffer > 0)
+			{
 				sprite_index = spr_player_ratmountdashjump;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountdashjump;
+			}
 			else
+			{
 				sprite_index = spr_player_ratmountjump;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountjump;
+			}
 		}
 		else if ((ratmount_movespeed >= 12 && key_attack) || gusdashpadbuffer > 0)
+		{
 			sprite_index = spr_lonegustavo_dashjump;
+			if character == "E"
+				sprite_index = spr_lonepika_dashjump;
+		}
 		else
+		{
 			sprite_index = spr_player_ratmountgroundpound;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountgroundpound;
+		}
 		image_index = 0;
 		jumpAnim = true;
 		state = states.ratmountjump;
@@ -208,14 +270,30 @@ function scr_player_ratmount()
 		if ratmount_movespeed >= 12
 		{
 			if brick
+			{
 				sprite_index = spr_player_ratmountdashjump;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountdashjump;
+			}
 			else
+			{
 				sprite_index = spr_lonegustavo_dashjump;
+				if character == "E"
+					sprite_index = spr_lonepika_dashjump;
+			}
 		}
 		else if brick
+		{
 			sprite_index = spr_player_ratmountfall;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountfall;
+		}
 		else
+		{
 			sprite_index = spr_player_ratmountgroundpoundfall;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountgroundpoundfall;
+		}
 	}
 	if (key_attack && grounded && !place_meeting(x + xscale, y, obj_solid))
 	{
@@ -252,6 +330,8 @@ function scr_player_ratmount()
 			xscale = move;
 		movespeed = xscale * 12;
 		sprite_index = spr_lonegustavo_punch;
+		if character == "E"
+			sprite_index = spr_lonepika_punch;
 	}
 	if (!instance_exists(dashcloudid) && grounded && ratmount_movespeed >= 12)
 	{
@@ -294,6 +374,8 @@ function ratmount_dotaunt()
 			scr_create_parryhitbox();
 			fmod_event_one_shot_3d("event:/sfx/pep/taunt", x, y);
 			sprite_index = spr_player_ratmounttaunt;
+			if character == "E"
+				sprite_index = spr_playerK_ratmounttaunt;
 			image_index = irandom(sprite_get_number(sprite_index) - 1);
 			with (instance_create(x, y, obj_taunteffect))
 				player = other.id;
@@ -305,6 +387,8 @@ function ratmount_dotaunt()
 			obj_savesystem.ini_str = ini_close();
 			fmod_event_one_shot_3d("event:/sfx/pep/supertaunt", x, y);
 			sprite_index = spr_player_ratmountsupertaunt;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountsupertaunt;
 			image_index = 0;
 		}
 	}
@@ -322,6 +406,8 @@ function ratmount_kickbrick()
 	}
 	state = states.ratmountgroundpound;
 	sprite_index = spr_lonegustavo_kick;
+	if character == "E"
+		sprite_index = spr_lonepika_kick;
 	image_index = 0;
 	image_speed = 0.35;
 	gustavokicktimer = 5;

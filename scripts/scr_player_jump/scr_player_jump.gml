@@ -55,7 +55,7 @@ function state_player_jump()
 		ladderbuffer--;
 	if !jumpstop
 	{
-		if !key_jump2 && vsp < 0.5 && !stompAnim
+		if !key_jump2 && vsp < 0.5 && !stompAnim && sprite_index != spr_playerN_ratballoonbounce
 		{
 			vsp /= 20;
 			jumpstop = true;
@@ -134,13 +134,17 @@ function state_player_jump()
 			if shotgunAnim
 				sprite_index = spr_shotgunjump;
 			if global.pistol && ispeppino
+			{
 				sprite_index = spr_player_pistoljump1;
+				if character == "E"
+					sprite_index = spr_playerE_pistoljump1;
+			}
 			image_index = 0;
 		}
 		particle_set_scale(particle.highjumpcloud2, xscale, 1);
 		create_particle(x, y, particle.highjumpcloud2, 0);
 	}
-	if !can_jump && character == "P" && !ispeppino && key_up && noisedoublejump && input_buffer_jump > 0 && !key_down && !key_attack
+	if !can_jump && character == "P" && !ispeppino && key_up && ((noisedoublejump && !global.doisemode) || (noisecrusher && global.doisemode)) && input_buffer_jump > 0 && !key_down && !key_attack
 	{
 		freefallstart = 0;
 		railmomentum = false;
@@ -160,7 +164,11 @@ function state_player_jump()
 			if sprite_index != spr_shotgunshoot
 				image_index = 0;
 			if global.pistol && ispeppino
+			{
 				sprite_index = spr_player_pistolland;
+				if character == "E"
+					sprite_index = spr_playerE_pistolland;
+			}
 			input_buffer_secondjump = 0;
 			state = states.normal;
 			jumpAnim = true;
@@ -169,7 +177,7 @@ function state_player_jump()
 			create_particle(x, y, particle.landcloud, 0);
 		}
 	}
-	if vsp > 5 && sprite_index != spr_mortdoublejump
+	if vsp > 5 && sprite_index != spr_mortdoublejump && sprite_index != spr_playerN_ratballoonbounce
 		fallinganimation++;
 	if fallinganimation >= 40 && fallinganimation < 80
 		sprite_index = spr_facestomp;
@@ -195,6 +203,8 @@ function state_player_jump()
 					break;
 				case spr_player_pistolshot:
 					sprite_index = spr_player_pistoljump2;
+				case spr_playerE_pistolshot:
+					sprite_index = spr_playerE_pistoljump2;
 					break;
 				case spr_shotgunjump:
 					sprite_index = spr_shotgunfall;
@@ -208,10 +218,14 @@ function state_player_jump()
 				case spr_player_pistoljump1:
 					sprite_index = spr_player_pistoljump2;
 					break;
+				case spr_playerE_pistoljump1:
+					sprite_index = spr_playerE_pistoljump2;
+					break;
 				case spr_suplexcancel:
 					sprite_index = spr_fall;
 					break;
 				case spr_player_backflip:
+				case spr_playerE_backflip:
 					sprite_index = spr_fall;
 					break;
 				case spr_player_Sjumpstart:
@@ -219,6 +233,9 @@ function state_player_jump()
 					break;
 				case spr_player_shotgunjump1:
 					sprite_index = spr_player_shotgunjump2;
+					break;
+				case spr_playerE_shotgunjump1:
+					sprite_index = spr_playerE_shotgunjump2;
 					break;
 				case spr_shotgun_shootair:
 					sprite_index = spr_shotgunfall;
@@ -237,7 +254,7 @@ function state_player_jump()
 	}
 	else if (sprite_index == spr_stompprep && floor(image_index) == image_number - 1)
 		sprite_index = spr_stomp;
-	if (scr_check_groundpound() && !global.kungfu)
+	if (scr_check_groundpound() && !global.kungfu && sprite_index != spr_playerN_noisebombspinjump)
 	{
 		input_buffer_slap = 0;
 		if !shotgunAnim
@@ -275,7 +292,29 @@ function state_player_jump()
 			image_index = 0;
 		}
 	}
-	if sprite_index == spr_player_suplexcancel
+	if (sprite_index == spr_playerN_noisebombspinjump && global.doisemode)
+    {
+        if (punch_afterimage > 0)
+            punch_afterimage--
+        else
+        {
+            punch_afterimage = 2
+            with (create_blur_afterimage(x, y, sprite_index, image_index, xscale))
+                playerid = other.id
+        }
+		
+		if scr_check_groundpound() && !grounded
+		{
+			sprite_index = spr_playerN_jetpackboostdown;
+			image_index = 0;
+			state = states.freefall;
+			dir = xscale;
+			vsp = 20;
+			freefallsmash = 50
+			exit;
+		}
+    }
+	if sprite_index == spr_player_suplexcancel || sprite_index == spr_playerE_suplexcancel
 		image_speed = 0.4;
 	else
 		image_speed = 0.35;
@@ -322,7 +361,7 @@ function state_player_jump()
 		if ispeppino
 			vsp = -10;
 		else
-			vsp = -21;
+			vsp = global.doisemode ? -10 : -21;
 		
 		movespeed = hsp;
 		if key_attack && grounded // high jump going left
@@ -331,7 +370,7 @@ function state_player_jump()
 		particle_set_scale(particle.highjumpcloud2, xscale, 1);
 		create_particle(x, y, particle.highjumpcloud2, 0);
 		
-		if !ispeppino
+		if !ispeppino && !global.doisemode
 		{
 			repeat 4
 			{
@@ -402,6 +441,8 @@ function state_player_jump()
 					{
 						pistol = true;
 						sprite_index = spr_peppinobullet;
+						if character == "E"
+							sprite_index = spr_plumebullet;
 						image_xscale = other.xscale;
 					}
 				}
@@ -423,9 +464,11 @@ function state_player_jump()
 	switch character
 	{
 		case "P":
+		case "E":
 			if key_attack && grounded && fallinganimation < 40
 			{
 				sprite_index = spr_mach1;
+				notification_push(notifs.player_ismoving, [room])
 				image_index = 0;
 				state = states.mach2;
 				if movespeed < machspeed
@@ -483,7 +526,7 @@ function state_player_jump()
 			}
 			break;
 		case "N":
-			if (key_attack2 && (pogochargeactive || pizzapepper > 0))
+			if (key_attack2 && (pogochargeactive || pizzapepper > 0) && sprite_index != spr_playerN_trash)
 			{
 				if !key_up
 					sprite_index = spr_playerN_jetpackstart;
@@ -547,8 +590,12 @@ function state_pepperman_jump()
 	hsp = xscale * movespeed;
 	if (sprite_index == spr_jump && floor(image_index) == image_number - 1)
 		sprite_index = spr_fall;
-	if (sprite_index == spr_player_pistoljump1 && floor(image_index) == image_number - 1)
+	if ((sprite_index == spr_player_pistoljump1 || sprite_index == spr_playerE_pistoljump1) && floor(image_index) == image_number - 1)
+	{
 		sprite_index = spr_player_pistoljump2;
+		if character == "E"
+			sprite_index = spr_playerE_pistoljump2;
+	}
 	if !key_jump2 && jumpstop == 0 && vsp < 0.5
 	{
 		vsp /= 20;
@@ -559,7 +606,7 @@ function state_pepperman_jump()
 		state = states.normal;
 		instance_create(x, y - 5, obj_landcloud);
 	}
-	if (scr_check_groundpound() && !grounded)
+	if (scr_check_groundpound() && !grounded && sprite_index != spr_playerN_noisebombspinjump)
 	{
 		state = states.freefall;
 		freefallsmash = 12;

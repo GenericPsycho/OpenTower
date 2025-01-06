@@ -35,7 +35,11 @@ function scr_player_facestomp()
 		freefallstart = 0;
 	}
 	if facestompAnim == 0
+	{
 		sprite_index = spr_player_facestomp;
+		if character == "E"
+			sprite_index = spr_playerE_facestomp;
+	}
 	else if facestompAnim == 1
 	{
 		sprite_index = spr_player_facestomphit;

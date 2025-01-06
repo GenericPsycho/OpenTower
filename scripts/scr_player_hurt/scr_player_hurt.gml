@@ -1,5 +1,7 @@
 function scr_player_hurt()
 {
+	if global.killedbypeddito
+		exit;
 	if sprite_index == spr_hurtjump
 		hsp = xscale * movespeed;
 	if sprite_index == spr_hurt

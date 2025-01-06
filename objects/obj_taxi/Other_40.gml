@@ -14,20 +14,32 @@ if (move && !instance_exists(obj_taxitransition))
 		if other.police
 		{
 			sprite_index = spr_taxitransition_cop;
+			if obj_player1.character == "E"
+				sprite_index = spr_taxitransition_copE;
 			if obj_player1.ispeppino
 				fmod_event_one_shot("event:/sfx/voice/muffledscream");
 		}
 		else if obj_player1.isgustavo
+		{
 			sprite_index = spr_taxitransition_gus;
+			if obj_player1.character == "E"
+				sprite_index = spr_taxitransition_pika
+		}
 		else if global.panic
 		{
 			bgsprite = spr_taxitransition_bg2;
 			sprite_index = spr_taxitransition_pizzaface;
+			if obj_player1.character == "E"
+				sprite_index = spr_taxitransition_pizzafaceE;
 			if obj_player1.ispeppino
 				fmod_event_one_shot("event:/sfx/voice/muffledscream");
 		}
 		else
+		{
 			sprite_index = spr_taxitransition_pep;
+			if obj_player1.character == "E"
+				sprite_index = spr_taxitransition_plume
+		}
 		
 		if !obj_player1.ispeppino
 		{

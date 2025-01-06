@@ -1,6 +1,6 @@
 function scr_player_lungeattack()
 {
-	if sprite_index != spr_player_backflip
+	if sprite_index != spr_player_backflip && sprite_index != spr_playerE_backflip
 	{
 		image_speed = 0.35;
 		hsp = xscale * movespeed;
@@ -28,6 +28,8 @@ function scr_player_lungeattack()
 		image_index = 0;
 		flash = true;
 		sprite_index = spr_player_lunge;
+		if character == "E"
+			sprite_index = spr_playerE_lunge;
 	}
 	var cancelindex = 4;
 	if (floor(image_index) > image_number - 2 && !hit_connected)
@@ -45,6 +47,8 @@ function scr_player_lungeattack()
 				input_attack_buffer = 0;
 				state = states.lungeattack;
 				randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_player_suplexmash5, spr_player_suplexmash6, spr_player_suplexmash7, spr_punch]);
+				if character == "E"
+					randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_playerE_suplexmash5, spr_playerE_suplexmash6, spr_playerE_suplexmash7, spr_punch]);
 				image_index = 0;
 			}
 		}
@@ -75,6 +79,8 @@ function scr_player_lungeattack()
 				input_attack_buffer = 0;
 				state = states.lungeattack;
 				randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_player_suplexmash5, spr_player_suplexmash6, spr_player_suplexmash7, spr_punch]);
+				if character == "E"
+					randomize_animations([spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_playerE_suplexmash5, spr_playerE_suplexmash6, spr_playerE_suplexmash7, spr_punch]);
 				image_index = 0;
 			}
 		}
@@ -119,6 +125,8 @@ function DoFinisher()
 	{
 		state = states.punch;
 		sprite_index = spr_player_lungehit;
+		if character == "E"
+			sprite_index = spr_playerE_lungehit;
 		image_index = 0;
 		movespeed = 14;
 		with (instance_create(x, y, obj_superdashcloud))
@@ -129,6 +137,8 @@ function DoFinisher()
 	else if key_down
 	{
 		sprite_index = spr_player_breakdance;
+		if character == "E"
+			sprite_index = spr_playerE_breakdance;
 		image_index = 0;
 		machhitAnim = false;
 		state = states.tumble;
@@ -140,6 +150,8 @@ function DoFinisher()
 	{
 		state = states.punch;
 		sprite_index = spr_player_lungehit;
+		if character == "E"
+			sprite_index = spr_playerE_lungehit;
 		image_index = 0;
 		movespeed = 14;
 		with (instance_create(x, y, obj_superdashcloud))

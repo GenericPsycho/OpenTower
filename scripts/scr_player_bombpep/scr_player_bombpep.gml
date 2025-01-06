@@ -1,7 +1,7 @@
 function scr_player_bombgrab()
 {
 	move = key_left + key_right;
-	if sprite_index != spr_uppercutfinishingblow && sprite_index != spr_player_throw
+	if sprite_index != spr_uppercutfinishingblow && sprite_index != spr_player_throw && sprite_index != spr_playerE_throw
 		hsp = move * movespeed;
 	else
 		hsp = 0;
@@ -35,7 +35,7 @@ function scr_player_bombgrab()
 		movespeed = 0;
 	if (!instance_exists(bombgrabID))
 		state = states.normal;
-	if sprite_index != spr_haulingstart && sprite_index != spr_uppercutfinishingblow && sprite_index != spr_player_throw
+	if sprite_index != spr_haulingstart && sprite_index != spr_uppercutfinishingblow && sprite_index != spr_player_throw && sprite_index != spr_playerE_throw
 	{
 		if grounded && vsp > 0
 		{
@@ -104,6 +104,8 @@ function scr_player_bombgrab()
 			else
 			{
 				sprite_index = spr_player_throw;
+				if character == "E"
+					sprite_index = spr_playerE_throw;
 				with bombgrabID
 				{
 					state = states.normal;
@@ -343,6 +345,8 @@ function scr_player_bombpep()
 	if key_slap2 && state != states.normal && sprite_index != spr_bombpepintro && sprite_index != spr_bombpepend
 	{
 		sprite_index = spr_player_throw;
+		if character == "E"
+			sprite_index = spr_playerE_throw;
 		fmod_event_one_shot_3d("event:/sfx/enemies/projectile", x, y);
 		image_index = 0;
 		hsp = 0;

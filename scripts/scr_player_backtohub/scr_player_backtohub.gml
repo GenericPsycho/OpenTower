@@ -1,5 +1,7 @@
 function scr_player_backtohub()
 {
+	if global.caught
+		sprite_index = spr_doise_deadair
 	global.leveltorestart = -4;
 	global.noisejetpack = false;
 	hsp = 0;
@@ -53,6 +55,18 @@ function scr_player_backtohub()
 			state = states.normal;
 			landAnim = false;
 			facestompAnim = true;
+		}
+	}
+	else if sprite_index == spr_doise_deadair || spr_doise_deadice
+	{
+		if y < backtohubstarty
+		{
+			y += 20;
+			if y >= backtohubstarty
+			{
+				y = backtohubstarty;
+				state = states.animatronic
+			}
 		}
 	}
 }

@@ -1,1 +1,1 @@
-text = lang_get_value_granny("garbage13")
+text = lang_get_value_granny(global.option_datoggle ? "modgarbage13" : "garbage13")

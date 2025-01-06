@@ -9,9 +9,9 @@ function scr_player_handstandjump()
 	{
 		if movespeed < 10
 		{
-			if ((sprite_index == spr_player_pistolshot || sprite_index == spr_shotgun_shot) && movespeed < 8)
+			if ((sprite_index == spr_player_pistolshot || sprite_index == spr_shotgun_shot || sprite_index == spr_playerE_pistolshot) && movespeed < 8)
 				movespeed += 0.25;
-			else if sprite_index == spr_player_lunge && movespeed < 12
+			else if (sprite_index == spr_player_lunge || sprite_index == spr_playerE_lunge) && movespeed < 12
 				movespeed += 0.8;
 			else if movespeed < 10
 				movespeed += 0.5;
@@ -21,7 +21,7 @@ function scr_player_handstandjump()
 	{
 		if movespeed < 10
 		{
-			if ((sprite_index == spr_player_pistolshot || sprite_index == spr_shotgun_shot) && movespeed < 8)
+			if ((sprite_index == spr_player_pistolshot || sprite_index == spr_playerE_pistolshot || sprite_index == spr_shotgun_shot) && movespeed < 8)
 				movespeed += 0.25;
 			else if movespeed < 10
 				movespeed += 0.5;
@@ -36,11 +36,19 @@ function scr_player_handstandjump()
 		}
 	}
 	if shoot == 1
+	{
 		var attackdash = spr_player_pistolshot;
+		if character == "E"
+			var attackdash = spr_playerE_pistolshot;
+	}
 	else
 		attackdash = spr_suplexdash;
-	if (sprite_index == spr_player_lungestart && floor(image_index) == image_number - 1)
+	if ((sprite_index == spr_player_lungestart || sprite_index == spr_playerE_lungestart) && floor(image_index) == image_number - 1)
+	{
 		sprite_index = spr_player_lunge;
+		if character == "E"
+			sprite_index = spr_playerE_lunge;
+	}
 	var airattackdash = spr_suplexdashjump;
 	var airattackdashstart = spr_suplexdashjumpstart;
 	if global.attackstyle == 2

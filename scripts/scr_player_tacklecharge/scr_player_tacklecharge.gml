@@ -27,6 +27,8 @@ function scr_player_tacklecharge()
 		input_buffer_jump = 0;
 		image_index = 0;
 		sprite_index = spr_player_secondjump1;
+		if character == "E"
+			sprite_index = spr_playerE_secondjump1;
 		scr_fmod_soundeffect(jumpsnd, x, y);
 		vsp = -11;
 	}
@@ -66,7 +68,7 @@ function scr_player_tacklecharge()
 	if key_down && grounded
 	{
 		sprite_index = spr_crouchslip;
-		if character == "P"
+		if character == "P" || character == "E"
 			machhitAnim = false;
 		state = states.crouchslide;
 	}

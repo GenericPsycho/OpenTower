@@ -8,6 +8,6 @@ yoffset = 0;
 state = 0; // not an enum
 chargeindex = 0;
 alarm[0] = 1;
-loopsnd = fmod_event_create_instance("event:/sfx/playerN/piggrab");
-throwsnd = fmod_event_create_instance("event:/sfx/playerN/pigthrow");
+loopsnd = fmod_event_create_instance("event:/modded-sfx/playerNfix/piggrab");
+throwsnd = fmod_event_create_instance("event:/modded-sfx/playerNfix/pigthrow");
 fmod_event_instance_play(loopsnd);

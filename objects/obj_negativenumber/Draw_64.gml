@@ -1,4 +1,4 @@
-if !global.option_hud
+if !global.option_hud || global.leveltosave == "tutorial"
 	exit;
 
 draw_set_font(global.moneyfont);

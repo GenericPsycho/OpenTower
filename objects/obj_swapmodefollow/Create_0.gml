@@ -34,7 +34,7 @@ get_character_spr = function()
 	
 	if ispeppino
 	{
-		spr_palette = spr_peppalette;
+		spr_palette = (global.option_datoggle ? spr_peppalette : spr_peppaletteOG);
 		spr_idle = spr_player_idle;
 		spr_move = spr_player_move;
 		spr_air = spr_player_flyingfollower;
@@ -43,7 +43,7 @@ get_character_spr = function()
 		
 		if isgustavo
 		{
-			spr_palette = spr_ratmountpalette;
+			spr_palette = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
 			spr_idle = spr_player_ratmountidle;
 			spr_move = spr_player_ratmountmove;
 			spr_air = spr_player_ratmountballoon;
@@ -57,7 +57,7 @@ get_character_spr = function()
 	}
 	else
 	{
-		spr_palette = spr_noisepalette;
+		spr_palette = global.option_datoggle ? spr_noisepalette : spr_noisepaletteOG;
 		spr_idle = spr_playerN_idle;
 		spr_move = spr_playerN_move;
 		spr_air = spr_playerN_doublejump;

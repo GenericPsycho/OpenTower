@@ -29,7 +29,7 @@ with other
 }
 if _transfo
 {
-	fmod_event_one_shot("event:/sfx/pep/pray");
+	fmod_event_one_shot("event:/modded-sfx/pep/onefuck");
 	var p = other.id;
 	with (instance_create(other.x - 540, camera_get_view_y(view_camera[0]) - 100, obj_priestangel))
 	{
@@ -42,7 +42,11 @@ if _transfo
 			create_debris(x, y - 40, spr_mortdead);
 	}
 	if sprite_index != spr_angelpriest
+	{
 		sprite_index = spr_priest_pray;
+		if obj_player1.character == "E"
+			sprite_index = spr_chansey_pray;
+	}
 	if (collect && ds_list_find_index(global.saveroom, id) == -1)
 	{
 		notification_push(notifs.priest_collect, [room, id, _state]);

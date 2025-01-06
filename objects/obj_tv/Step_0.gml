@@ -5,7 +5,7 @@ timer_x = timer_xstart;
 timer_ystart = SCREEN_HEIGHT + timer_yplus;
 if global.combotime > 0 && global.combo > 0
 	visualcombo = global.combo;
-if (room == Realtitlescreen || room == Longintro || room == Mainmenu || room == rank_room || room == rm_levelselect || room == timesuproom || room == boss_room1 || room == characterselect || room == hub_loadingscreen || (string_copy(room_get_name(room), 1, 5) == "tower" && !global.panic))
+if (room == Realtitlescreen || room == Longintro || room == Mainmenu || room == rank_room || room == rm_levelselect || room == timesuproom || room == boss_room1 || room == characterselect || room == hub_loadingscreen || room == forest_G1b || (string_copy(room_get_name(room), 1, 14) == "tower_tutorial") || (string_copy(room_get_name(room), 1, 5) == "tower" && !global.panic))
 {
 	visible = false;
 	sprite_index = spr_tv_off;
@@ -47,19 +47,39 @@ switch state
 {
 	case states.normal:
 		idlespr = spr_tv_idle;
+		if obj_player1.character == "E"
+			idlespr = spr_tv_idleE;
 		if !obj_player1.ispeppino
 			idlespr = spr_tv_idleN;
 		if global.panic
+		{
 			idlespr = spr_tv_exprpanic;
-		else if global.combo >= 3 && global.combo < 50 && !obj_player.isgustavo
+			if obj_player1.character == "E"
+				idlespr = spr_tv_exprpanicE;
+		}
+		else if global.combo >= 3 && global.combo < 50 && !obj_player1.isgustavo
+		{
 			idlespr = spr_tv_exprcombo;
-		else if global.combo >= 50 && !obj_player.isgustavo
+			if obj_player1.character == "E"
+				idlespr = spr_tv_exprcomboE
+		}
+		else if global.combo >= 50 && !obj_player1.isgustavo
+		{
 			idlespr = spr_tv_exprheat;
+			if obj_player1.character == "E"
+				idlespr = spr_tv_exprheatE
+		}
 		if obj_player1.isgustavo
 		{
 			idlespr = spr_tv_idleG;
+			if obj_player1.character == "E"
+				idlespr = spr_tv_idleK
 			if global.panic
+			{
 				idlespr = spr_tv_escapeG;
+				if obj_player1.character == "E"
+					idlespr = spr_tv_escapeK;
+			}
 		}
 		if !obj_player1.ispeppino && global.panic
 			idlespr = spr_tv_exprpanicN;
@@ -86,9 +106,17 @@ switch state
 				if (!isgustavo || !ispeppino)
 				{
 					if mach4mode == 1
+					{
 						tv_do_expression(spr_tv_exprmach4);
+						if character == "E"
+							tv_do_expression(spr_tv_exprmach4E)
+					}
 					else if (state == states.mach3 || sprite_index == spr_mach3boost)
+					{
 						tv_do_expression(spr_tv_exprmach3);
+						if character == "E"
+							tv_do_expression(spr_tv_exprmach3E)
+					}
 				}
 			}
 		}
@@ -107,6 +135,7 @@ switch state
 				break;
 			case spr_tv_idle:
 			case spr_tv_idleN:
+			case spr_tv_idleE:
 				if idleanim > 0
 					idleanim--;
 				if sprite_index != idlespr
@@ -114,6 +143,8 @@ switch state
 				if (idleanim <= 0 && floor(image_index) == image_number - 1)
 				{
 					sprite_index = choose(spr_tv_idleanim1, spr_tv_idleanim2);
+					if obj_player1.character == "E"
+						sprite_index = choose(spr_tv_idleanim1E, spr_tv_idleanim2E);
 					if !obj_player1.ispeppino
 					{
 						if sprite_index == spr_tv_idleanim1
@@ -128,12 +159,14 @@ switch state
 			case spr_tv_idleanim2:
 			case spr_tv_idleanim1N:
 			case spr_tv_idleanim2N:
+			case spr_tv_idleanim1E:
+			case spr_tv_idleanim2E:
 				if floor(image_index) == image_number - 1
 				{
 					sprite_index = idlespr;
 					idleanim = 240 + (60 * irandom_range(-1, 2));
 				}
-				if idlespr != spr_tv_idle && idlespr != spr_tv_idleN
+				if (idlespr != spr_tv_idle && idlespr != spr_tv_idleN && idlespr != spr_tv_idleE)
 					sprite_index = idlespr;
 				break;
 			default:
@@ -234,6 +267,7 @@ switch state
 		{
 			case spr_tv_exprhurt:
 			case spr_tv_exprhurtN:
+			case spr_tv_exprhurtE:
 			case spr_tv_exprhurt1:
 			case spr_tv_exprhurt2:
 			case spr_tv_exprhurt3:
@@ -254,6 +288,9 @@ switch state
 			case spr_tv_exprhurtN8:
 			case spr_tv_exprhurtN9:
 			case spr_tv_exprhurtN10:
+			case spr_tv_exprhurt1E:
+			case spr_tv_exprhurt2E:
+			case spr_tv_exprhurt3E:
 				if obj_player1.state != states.hurt
 				{
 					if expressionbuffer > 0
@@ -267,6 +304,7 @@ switch state
 				break;
 			
 			case spr_tv_hurtG:
+			case spr_tv_hurtK:
 				if obj_player1.state != states.ratmounthurt
 				{
 					if expressionbuffer > 0
@@ -281,18 +319,25 @@ switch state
 			
 			case spr_tv_exprcombo:
 			case spr_tv_exprcomboN:
+			case spr_tv_exprcomboE:
 				if (global.combo < 3 || _transfospr != -4 || obj_player1.isgustavo || obj_player1.mach4mode || obj_player1.state == states.hurt || obj_player1.state == states.mach3 || obj_player1.sprite_index == obj_player1.spr_mach3boost || global.stylethreshold >= 3)
 				{
 					state = states.tv_whitenoise;
 					expressionsprite = -4;
 					if obj_player1.state == states.hurt
+					{
 						tv_do_expression(spr_tv_exprhurt, true);
+						if obj_player1.character == "E"
+							tv_do_expression(spr_tv_exprhurtE, true);
+					}
 				}
 				break;
 			
 			case spr_tv_exprcollect:
 			case spr_tv_exprcollectN:
+			case spr_tv_exprcollectE:
 			case spr_tv_happyG:
+			case spr_tv_happyK:
 				if expressionbuffer > 0
 					expressionbuffer--;
 				else
@@ -304,7 +349,8 @@ switch state
 			
 			case spr_tv_exprmach3:
 			case spr_tv_exprmach3N:
-				with obj_player1
+			case spr_tv_exprmach3E:
+				with obj_player
 				{
 					if (state != states.mach3 && state != states.climbwall && (state != states.chainsaw || (tauntstoredstate != states.mach3 && tauntstoredstate != states.climbwall)) && sprite_index != spr_mach3boost && mach4mode == 0)
 					{
@@ -312,12 +358,17 @@ switch state
 						other.expressionsprite = -4;
 					}
 					if mach4mode
+					{
 						tv_do_expression(spr_tv_exprmach4, true);
+						if character == "E"
+							tv_do_expression(spr_tv_exprmach4E, true);
+					}
 				}
 				break;
 			
 			case spr_tv_exprmach4:
 			case spr_tv_exprmach4N:
+			case spr_tv_exprmach4E:
 				with obj_player1
 				{
 					if (mach4mode == 0 && (state != states.chainsaw || (tauntstoredstate != states.mach3 && tauntstoredstate != states.climbwall)))
@@ -330,6 +381,7 @@ switch state
 			
 			case spr_tv_exprheat:
 			case spr_tv_exprheatN:
+			case spr_tv_exprheatE:
 				_transfo = false;
 				with obj_player1
 				{
@@ -347,6 +399,7 @@ switch state
 			
 			case spr_tv_exprpanic:
 			case spr_tv_exprpanicN:
+			case spr_tv_exprpanicE:
 				_transfo = false;
 				with obj_player1
 				{
@@ -399,7 +452,7 @@ if global.panic && global.fill > 0
 }
 else if global.panic
 {
-	if pizzaface_sprite == spr_timer_pizzaface1
+	if pizzaface_sprite == spr_timer_pizzaface1 || pizzaface_sprite == spr_timer_woon
 	{
 		pizzaface_sprite = spr_timer_pizzaface2;
 		pizzaface_index = 0;
@@ -419,7 +472,7 @@ else if global.panic
 }
 else
 {
-	pizzaface_sprite = spr_timer_pizzaface1;
+	pizzaface_sprite = global.extras_sendoff ? spr_timer_woon : spr_timer_pizzaface1;
 	hand_sprite = spr_timer_hand1;
 	timer_y = timer_ystart + 212;
 }

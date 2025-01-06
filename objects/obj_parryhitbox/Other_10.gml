@@ -12,7 +12,11 @@ if myplayer.state != states.hurt
 		if !isgustavo
 			sprite_index = choose(spr_parry1, spr_parry2, spr_parry3);
 		else
+		{
 			sprite_index = spr_player_ratmountspit;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerK_ratmountspit;
+		}
 		image_index = 0;
 		image_speed = 0.35;
 		taunttimer = 20;

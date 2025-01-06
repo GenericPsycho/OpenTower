@@ -7,5 +7,5 @@ bgsprite = spr_gate_tutorialBG
 title_index = 1
 titlecard_index = 1
 title_music = "event:/music/w1/medievaltitle"
-if global.swapmode
+if global.swapmode || fmod_get_parameter("blocked") == 1
 	instance_destroy()

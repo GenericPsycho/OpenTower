@@ -1,7 +1,7 @@
 hsp = (dir * 2.5);
 if grounded && vsp > 0
 {
-	fmod_event_one_shot_3d("event:/sfx/playerN/doiserock", x, y);
+	fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/doiserock", x, y);
 	vsp = -(7 - clamp(bounce, 0, 4));
 	bounce++;
 	anglespd = 8;

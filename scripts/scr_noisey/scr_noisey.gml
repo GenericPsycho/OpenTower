@@ -1,6 +1,6 @@
 function scr_noisey_float()
 {
-	sprite_index = spr_noisey_grabbed;
+	sprite_index = obj_player1.character == "E" ? spr_wynaut_grabbed : spr_noisey_grabbed;
 	hsp = 0;
 	vsp = 0;
 	var spd = 4;

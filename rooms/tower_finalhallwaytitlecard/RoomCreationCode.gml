@@ -17,6 +17,14 @@ with (obj_player)
 with (instance_create(x, y, obj_titlecard))
 {
 	titlecard_sprite = spr_titlecards;
+	if !obj_player1.ispeppino && global.extras_betternoise && !global.swapmode
+		titlecard_sprite = global.doisemode ? spr_titlecardsD : spr_titlecardsN
+	else if global.swapmode && global.extras_betternoise
+		titlecard_sprite = global.doisemode ? spr_titlecardsSD : spr_titlecardsS
+	else
+		titlecard_sprite = spr_titlecards;
+	if obj_player1.character == "E"
+		titlecard_sprite = spr_titlecardsE;
 	titlecard_index = 15;
 	title_sprite = spr_titlecards_title2;
 	title_index = 5;

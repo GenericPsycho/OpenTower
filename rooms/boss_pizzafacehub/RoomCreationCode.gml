@@ -9,13 +9,33 @@ gamesave_async_save();
 
 if obj_player1.ispeppino && !global.swapmode
 {
-	layer_set_visible("Backgrounds_Ring2", true);
+	if obj_player1.character == "E"
+	{
+		layer_set_visible("Backgrounds_Ring4", true);
+		layer_set_visible("Backgrounds_Ring2", false);
+	}
+	else
+	{
+		layer_set_visible("Backgrounds_Ring2", true);
+		layer_set_visible("Backgrounds_Ring4", false);
+	}
 	layer_set_visible("Backgrounds_Ring3", false);
+	layer_set_visible("Backgrounds_Ring5", false);
 }
 else
 {
-	layer_set_visible("Backgrounds_Ring3", true);
 	layer_set_visible("Backgrounds_Ring2", false);
+	layer_set_visible("Backgrounds_Ring4", false);
+	if ( global.doisemode)
+	{
+		layer_set_visible("Backgrounds_Ring5", false);
+		layer_set_visible("Backgrounds_Ring3", true);
+	}
+	else
+	{
+		layer_set_visible("Backgrounds_Ring5", true);
+		layer_set_visible("Backgrounds_Ring3", false);
+	}
 }
 
 with obj_player1

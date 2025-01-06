@@ -8,3 +8,4 @@ state = states.normal;
 ispeppino = true;
 snd = fmod_event_create_instance("event:/sfx/fakepep/chase");
 fmod_event_instance_play(snd);
+sprite_index = obj_player1.character == "E" ? spr_ditto_chase : spr_fakepeppino_chase

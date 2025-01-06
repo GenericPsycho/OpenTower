@@ -5,10 +5,10 @@ if sprite_index == bg_pigdark
 }
 image_xscale = Approach(image_xscale, 1, 0.0001);
 image_yscale = Approach(image_yscale, 1, 0.0001);
-if image_xscale >= 1 && sprite_index != bg_pigdarkthumb
+if (image_xscale >= 1 && sprite_index != bg_pigdarkthumb)
 {
 	fmod_event_one_shot_3d("event:/sfx/voice/pig", room_width / 2, room_height / 2);
-	fmod_event_one_shot("event:/sfx/ending/star");
+	fmod_event_one_shot("event:/modded-sfx/ending/shootingstar");
 	sprite_index = bg_pigdarkthumb;
 	alarm[0] = 120;
 }

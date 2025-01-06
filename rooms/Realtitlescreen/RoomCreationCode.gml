@@ -172,6 +172,7 @@ enum states
 	bombpogo,
 	jetpackstart,
 	jetpack,
+	jetpack2,
 	jetpackcancel,
 	jetpackspin,
 	shield,
@@ -328,6 +329,7 @@ for (var i = 0; i < array_length(data_arr); i++)
 {
 	global.game[i] = scr_read_game(data_arr[i] + ".ini");
 	global.gameN[i] = scr_read_game(data_arr[i] + "N.ini");
+	global.gameE[i] = scr_read_game(data_arr[i] + "E.ini");
 }
 global.newtoppin[0] = false;
 global.newtoppin[1] = false;

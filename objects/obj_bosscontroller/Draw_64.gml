@@ -10,7 +10,12 @@ switch state
 		{
 			draw_set_alpha(1);
 			draw_rectangle_color(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, c_white, c_white, c_white, c_white, false);
+			shader_set(global.Pal_Shader);
+			pattern_set(global.Base_Pattern_Color, playersprshadow, 0, 1, 1, global.palettetexture);
+			pal_swap_set(obj_player1.spr_palette, obj_player1.paletteselect, false);
 			draw_sprite_ext(playersprshadow, -1, playerx, SCREEN_HEIGHT, 1, 1, 0, c_white, 1);
+			pattern_reset();
+			reset_shader_fix();
 			draw_sprite_ext(bossspr, -1, bossx, SCREEN_HEIGHT, 1, 1, 0, c_black, 1);
 			draw_set_alpha(whitefade);
 			draw_rectangle_color(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, c_white, c_white, c_white, c_white, false);
@@ -56,15 +61,17 @@ switch state
 			pattern_set(global.Base_Pattern_Color, playerspr, 0, 1, 1, global.palettetexture);
 			pal_swap_set(obj_player1.spr_palette, obj_player1.paletteselect, false);
 			draw_sprite_ext(playerspr, -1, px, py, 1, 1, 0, c_player, 1);
-			if (bossspr == spr_vsfakepep || bossspr == spr_vsfakepep2)
+			if (bossspr == spr_vsfakepep || bossspr == spr_vsfakepep2 || bossspr == spr_vsditto || bossspr == spr_vsditto2)
 			{
 				var palinfo = get_pep_palette_info();
 				var ps = palinfo.paletteselect;
 				pattern_set(global.Base_Pattern_Color, bossspr, 0, _xs, _ys, palinfo.patterntexture);
-				pal_swap_set(spr_peppalette, ps, false);
+				pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), ps, false);
 			}
 			else
-				pal_swap_set(spr_peppalette, 0, false);
+			{
+				pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 0, false);
+			}
 			draw_sprite_ext(bossspr, 0, bx, by, _xs, _ys, 0, c_player, 1);
 			pattern_reset();
 			reset_shader_fix();
@@ -90,10 +97,10 @@ switch state
 			var bpal = boss_palette;
 			var bpalsel = -4;
 			var btex = -4;
-			if boss_hpsprite == spr_bossfight_fakepephp
+			if boss_hpsprite == spr_bossfight_fakepephp || boss_hpsprite == spr_bossfight_dittohp
 			{
 				palinfo = get_pep_palette_info();
-				bpal = spr_peppalette;
+				bpal = obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG);
 				bpalsel = palinfo.paletteselect;
 				btex = palinfo.patterntexture;
 			}

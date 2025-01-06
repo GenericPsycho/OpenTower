@@ -3,9 +3,11 @@ function scr_player_ratmountclimbwall()
 	image_speed = 0.5;
 	hsp = 0;
 	vsp = 0;
-	if sprite_index != spr_player_ratmountbounceside
+	if sprite_index != spr_player_ratmountbounceside && sprite_index != spr_playerK_ratmountbounceside
 	{
 		sprite_index = spr_player_ratmountbounceside;
+		if character == "E"
+			sprite_index = spr_playerK_ratmountbounceside;
 		image_index = 0;
 	}
 	else if floor(image_index) == image_number - 1
@@ -15,6 +17,8 @@ function scr_player_ratmountclimbwall()
 		state = states.ratmountjump;
 		jumpAnim = false;
 		sprite_index = spr_player_ratmountfall;
+		if character == "E"
+			sprite_index = spr_playerK_ratmountfall;
 	}
 	if floor(image_index) == image_number - 1
 	{
@@ -27,11 +31,15 @@ function scr_player_ratmountclimbwall()
 			movespeed = xscale * 10;
 			fmod_event_one_shot_3d("event:/sfx/ratmount/walljump2", x, y);
 			sprite_index = spr_player_ratmountwalljump;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountwalljump;
 		}
 		else
 		{
-			state = states.ratmountjump;;
+			state = states.ratmountjump;
 			sprite_index = spr_player_ratmountfall;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountfall;
 		}
 	}
 }

@@ -6,7 +6,7 @@ function scr_bombshoot(_state)
 		input_buffer_shoot = 0;
 		image_index = 0;
 		sprite_index = spr_playerN_noisebombkick;
-		fmod_event_one_shot_3d("event:/sfx/playerN/bombthrow", x, y);
+		fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/bombthrow", x, y);
 		savedgrounded = grounded;
 		state = states.bombkick;
 		pistolcooldown = 50;

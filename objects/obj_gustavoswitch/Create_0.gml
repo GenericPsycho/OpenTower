@@ -7,6 +7,13 @@ sprite_index = spr_gustavoswitch1;
 switchstart = spr_gustavoswitch1;
 switchend = spr_gustavoswitch2;
 spr_sign = spr_pepsign;
+if obj_player1.character == "E"
+{
+	sprite_index = spr_pikaswitch1;
+	switchstart = spr_pikaswitch1;
+	switchend = spr_pikaswitch2;
+	spr_sign = spr_plusign;
+}
 if !obj_player1.ispeppino
 {
 	sprite_index = spr_noiseswitch1;

@@ -2,6 +2,8 @@ with obj_player1
 {
 	state = states.actor;
 	sprite_index = spr_player_outofpizza1;
+	if character == "E"
+		sprite_index = spr_playerE_outofpizza1;
 	image_index = 0;
 	deathspeed = 10;
 	vsp = -12;

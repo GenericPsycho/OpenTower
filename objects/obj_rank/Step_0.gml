@@ -35,6 +35,25 @@ if sprite_index != spr_rankNPend && sprite_index != spr_rankNPendstart
 				sprite_index = spr_rankD;
 			if global.rank == "p"
 				sprite_index = spr_rankP;
+			if global.rank == "pp"
+				sprite_index = spr_rankPplus;
+		}
+		else if obj_player1.character == "E"
+		{
+			if global.rank == "s"
+				sprite_index = spr_rankES;
+			if global.rank == "a"
+				sprite_index = spr_rankEA;
+			if global.rank == "b"
+				sprite_index = spr_rankEB;
+			if global.rank == "c"
+				sprite_index = spr_rankEC;
+			if global.rank == "d"
+				sprite_index = spr_rankED;
+			if global.rank == "p"
+				sprite_index = spr_rankEP;
+			if global.rank == "pp"
+				sprite_index = spr_rankEPplus;
 		}
 		else
 		{
@@ -46,9 +65,14 @@ if sprite_index != spr_rankNPend && sprite_index != spr_rankNPendstart
 				sprite_index = spr_rankNB;
 			if global.rank == "c"
 				sprite_index = spr_rankNC;
-			if global.rank == "d"
+			if (global.rank == "d" && (!instance_exists(obj_peddito)))
 				sprite_index = spr_rankND;
-			if global.rank == "p"
+			if (global.rank == "d" && instance_exists(obj_peddito))
+			{
+                sprite_index = idiot <= 20 ? spr_rankIDIOT : spr_rankDD;
+				global.killedbypeddito = true;
+			}
+			if global.rank == "p" || global.rank == "pp"
 				sprite_index = spr_rankNP;
 		}
 	}
@@ -68,6 +92,25 @@ if sprite_index != spr_rankNPend && sprite_index != spr_rankNPendstart
 				sprite_index = spr_rankD;
 			if global.rank == "p"
 				sprite_index = spr_rankP;
+			if global.rank == "pp"
+				sprite_index = spr_rankPplus;
+		}
+		else if obj_player1.character == "E"
+		{
+			if global.rank == "s"
+				sprite_index = spr_rankES;
+			if global.rank == "a"
+				sprite_index = spr_rankEA;
+			if global.rank == "b"
+				sprite_index = spr_rankEB;
+			if global.rank == "c"
+				sprite_index = spr_rankEC;
+			if global.rank == "d"
+				sprite_index = spr_rankED;
+			if global.rank == "p"
+				sprite_index = spr_rankEP;
+			if global.rank == "pp"
+				sprite_index = spr_rankEPplus;
 		}
 		else
 		{
@@ -79,15 +122,21 @@ if sprite_index != spr_rankNPend && sprite_index != spr_rankNPendstart
 				sprite_index = spr_rankNB;
 			if global.rank == "c"
 				sprite_index = spr_rankNC;
-			if global.rank == "d"
+			if (global.rank == "d" && (!instance_exists(obj_peddito)))
 				sprite_index = spr_rankND;
-			if global.rank == "p"
+			if (global.rank == "d" && instance_exists(obj_peddito))
+			{
+				sprite_index = idiot <= 20 ? spr_rankIDIOT : spr_rankDD;
+				global.killedbypeddito = true;
+			}
+			if global.rank == "p" || global.rank == "pp"
 				sprite_index = spr_rankNP;
 		}
 	}
 }
 if brown
 {
+	global.pedditoiscoming = false;
 	brownfade = Approach(brownfade, 1, 0.07);
 	if brownfade == 1 && sprite_index == spr_rankNP
 	{

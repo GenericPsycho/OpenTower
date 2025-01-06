@@ -11,6 +11,19 @@ if global.panic
 	instance_destroy(obj_door)
 	instance_destroy(obj_bossdoor)
 }
+var lay_id = layer_get_id("Assets_1")
+var pep = layer_sprite_get_id(lay_id, "graphic_4320583E")
+var plu = layer_sprite_get_id(lay_id, "graphic_526015E")
+if obj_player1.character == "E"
+{
+	layer_sprite_alpha(pep, 0)
+	layer_sprite_alpha(plu, 1)
+}
+else
+{
+	layer_sprite_alpha(pep, 1)	
+	layer_sprite_alpha(plu, 0)
+}
 global.door_sprite = spr_door
 global.door_index = 4
 scr_random_granny()

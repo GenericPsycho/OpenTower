@@ -184,7 +184,7 @@ function scr_player_firemouth()
 		else
 			image_speed = 0.6;
 	}
-	else if sprite_index == spr_player_firemouthspin
+	else if sprite_index == spr_player_firemouthspin || sprite_index == spr_playerE_firemouthspin
 	{
 		image_speed = abs(vsp) / 10;
 		if image_speed < 0.25

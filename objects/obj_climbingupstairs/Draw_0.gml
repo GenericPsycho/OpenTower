@@ -3,6 +3,8 @@ draw_sprite(gerome_spr, gerome_index, gerome_x, gerome_y);
 draw_sprite(spr_elevatorcliff, cliff_index, cliff_x, cliff_y);
 shader_set(global.Pal_Shader);
 var spr = spr_peppinoelevator;
+if obj_player1.character == "E"
+	spr = spr_plumeelevator;
 if !obj_player1.ispeppino
 	spr = spr_noiseelevator;
 pattern_set(global.Base_Pattern_Color, spr, peppino_index, 1, 1, global.palettetexture);

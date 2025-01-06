@@ -62,7 +62,23 @@ switch scene
 			with obj_music
 			{
 				if music != -4
-					fmod_event_instance_set_parameter(music.event, "state", 1, true);
+				{
+					if global.option_datoggle
+					{
+						var randomintro = irandom(100)
+						var introranstate = 0
+						if randomintro < 50
+							introranstate = 1
+						else if randomintro > 50 && randomintro < 85
+							introranstate = 2
+						else
+							introranstate = 3
+					}
+					else
+						introranstate = 4
+					fmod_event_instance_set_parameter(music.event, "state", introranstate, true);
+				}
+				
 			}
 		}
 		break;
@@ -403,7 +419,7 @@ switch scene
 			pizzaface.sprite_index = spr_pizzaface;
 			pizzaface.image_speed = 0.35;
 			gustavo = instance_create(room_width / 2, 386, obj_playerprop);
-			gustavo.spr_palette = spr_ratmountpalette;
+			gustavo.spr_palette = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
 			gustavo.sprite_index = spr_intro_gustavomap;
 			stick = instance_create(room_width * 0.55, 200, obj_introprop);
 			stick.sprite_index = spr_intro_stick1;
@@ -519,9 +535,9 @@ switch scene
 			scene++;
 			scenebuffer = 40;
 			bossdir = 1;
-			bossarr = [spr_intro_unkown, spr_intro_noise, spr_intro_vigi];
+			bossarr = global.option_datoggle ? [spr_intro_unkownmod, spr_intro_noisemod, spr_intro_vigimod] : [spr_intro_unkown, spr_intro_noise, spr_intro_vigi];
 			boss = instance_create(0, -540, obj_introprop);
-			boss.sprite_index = spr_intro_pepperman;
+			boss.sprite_index = global.option_datoggle ? spr_intro_peppermanmod : spr_intro_pepperman;
 		}
 		break;
 	case 22:
@@ -559,7 +575,7 @@ switch scene
 		{
 			instance_destroy(obj_introprop);
 			title = instance_create(480, 270, obj_introprop);
-			title.sprite_index = spr_intro_title;
+			title.sprite_index = global.option_datoggle ? spr_intro_titlemod : spr_intro_title;
 			title.shake_mag = 8;
 			bg = instance_create(0, 0, obj_introprop);
 			bg.sprite_index = spr_intro_white;

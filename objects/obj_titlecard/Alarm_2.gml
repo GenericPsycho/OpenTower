@@ -7,4 +7,4 @@ var head = noisehead[noisehead_pos++];
 head.visible = true;
 head.visual_scale = 2;
 trace("Displaying head: ", head);
-fmod_event_one_shot("event:/sfx/playerN/titlecard");
+fmod_event_one_shot("event:/modded-sfx/playerNfix/titlecard");

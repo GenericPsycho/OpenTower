@@ -32,3 +32,6 @@ heavy = false;
 depth = 0;
 grabbedby = 0;
 stuntouchbuffer = 0;
+spr_palette = palette_anchovie;
+paletteselect = 0;
+snotty = false

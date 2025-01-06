@@ -1,7 +1,14 @@
 if room == rm_editor
 	exit;
 if snotty
+{
 	paletteselect = 1;
+	instance_change(obj_cheeseslime, 0)
+	if global.doisemode && !obj_player1.ispeppino
+		elite = true;
+	else
+		elite = false;
+}
 switch state
 {
 	case states.idle:

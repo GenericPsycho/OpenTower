@@ -1,6 +1,12 @@
 scr_menu_getinput();
 if !ready
 {
+	var checkDoise = global.gameN[global.currentsavefile - 1];
+	if checkDoise.palette == 17
+		selectN = doiseselect
+	else
+		selectN = noiseselect
+		
 	if (!global.swapmode || obj_inputAssigner.player_input_device[obj_inputAssigner.player_index] > -2)
 	{
 		var move = key_left2 + key_right2;
@@ -33,7 +39,7 @@ if !ready
 			}
 			else
 			{
-				fmod_event_one_shot("event:/sfx/ui/noiseselect");
+				fmod_event_instance_play(other.selectN)
 				obj_noiseselect.sprite_index = spr_noiseselected;
 				obj_noiseselect.image_index = 0;
 				with obj_player1
@@ -47,7 +53,7 @@ if !ready
 		else
 		{
 			fmod_event_one_shot("event:/sfx/ui/pepselect");
-			fmod_event_one_shot("event:/sfx/ui/noiseselect");
+			fmod_event_instance_play(other.selectN)
 			obj_peppinoselect.sprite_index = spr_peppinoselected;
 			obj_peppinoselect.image_index = 0;
 			obj_noiseselect.sprite_index = spr_noiseselected;

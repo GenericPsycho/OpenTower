@@ -13,7 +13,7 @@ function scr_player_tumble()
 		movespeed = 6;
 	if (!grounded && (sprite_index == spr_crouchslip || sprite_index == spr_machroll || sprite_index == spr_mach2jump || sprite_index == spr_backslide || sprite_index == spr_backslideland))
 	{
-		if !ispeppino
+		if !ispeppino && !global.doisemode
 		{
 			sprite_index = spr_playerN_divebomb;
 			state = states.machcancel;
@@ -51,6 +51,8 @@ function scr_player_tumble()
 		if ispeppino
 		{
 			sprite_index = spr_player_poundcancel1;
+			if character == "E"
+				sprite_index = spr_playerE_poundcancel1;
 			image_index = 0;
 			state = states.freefall;
 			dir = xscale;
@@ -58,16 +60,52 @@ function scr_player_tumble()
 		}
 		else
 		{
-			sprite_index = spr_playerN_divebomb;
-			state = states.machcancel;
-			vsp = 20;
-			hsp = 0;
-			savedmove = xscale;
-			movespeed = 0;
-			input_buffer_slap = 0;
-			input_buffer_jump = 0;
-			image_index = 0;
-			exit;
+			if global.doisemode
+			{
+				sprite_index = spr_playerN_jetpackboostdown;
+				image_index = 0;
+				state = states.freefall;
+				dir = xscale;
+				vsp = 20;
+				freefallsmash = 50
+				exit;
+			}
+			else
+			{
+				sprite_index = spr_playerN_divebomb;
+				state = states.machcancel;
+				vsp = 20;
+				hsp = 0;
+				savedmove = xscale;
+				movespeed = 0;
+				input_buffer_slap = 0;
+				input_buffer_jump = 0;
+				image_index = 0;
+				exit;
+			}
+		}
+		
+		if (!ispeppino) && global.doisemode
+        {
+            with (create_debris(obj_player.x, obj_player.y, spr_genericpoofeffect, true))
+            {
+                destroyonanimation = true
+                hsp = (-(irandom_range(5, 8)))
+                vsp = (-(irandom_range(5, 8)))
+                image_speed = 0.3
+                grav = 0
+            }
+            with (create_debris(obj_player.x, obj_player.y, spr_genericpoofeffect, true))
+            {
+                destroyonanimation = true
+                hsp = irandom_range(5, 8)
+                vsp = (-(irandom_range(5, 8)))
+                image_speed = 0.3
+                grav = 0
+            }
+	        with (instance_create(x, y, obj_parryeffect))
+                sprite_index = spr_piledrivereffect
+	        scr_fmod_soundeffect(snd_noiseSjumprelease, x, y)
 		}
 	}
 	if movespeed <= 2 && sprite_index != spr_tumble && sprite_index != spr_breakdance

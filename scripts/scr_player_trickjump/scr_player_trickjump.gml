@@ -5,7 +5,7 @@ function scr_player_trickjump()
 	{
 		if ispeppino
 			image_speed = 0.35;
-		if (sprite_index == spr_player_rampjump && floor(image_index) == image_number - 1)
+		if ((sprite_index == spr_player_rampjump || sprite_index == spr_playerE_rampjump) && floor(image_index) == image_number - 1)
 			image_index = image_number - 1;
 	}
 	else
@@ -13,7 +13,11 @@ function scr_player_trickjump()
 		if ispeppino
 			image_speed = 0.5;
 		if floor(image_index) == image_number - 1
+		{
 			sprite_index = spr_player_rampjump;
+			if character == "E"
+				sprite_index = spr_playerE_rampjump;
+		}
 	}
 	if (scr_solid(x + xscale, y) && !scr_slope() && (scr_solid_slope(x + sign(hsp), y) || place_meeting(x + sign(hsp), y, obj_solid)) && !place_meeting(x + sign(hsp), y, obj_destructibles))
 	{

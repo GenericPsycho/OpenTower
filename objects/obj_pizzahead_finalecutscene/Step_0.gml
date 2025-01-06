@@ -106,6 +106,53 @@ switch state
 						sprite_index = spr_pizzahead_beatdown14;
 						image_xscale = -1;
 						break;
+						
+					case spr_meowth_beatdown1:
+						sprite_index = spr_meowth_beatdown2;
+						break;
+					case spr_meowth_beatdown2:
+						sprite_index = spr_meowth_beatdown3;
+						break;
+					case spr_meowth_beatdown3:
+						sprite_index = spr_meowth_beatdown4;
+						break;
+					case spr_meowth_beatdown4:
+						sprite_index = spr_meowth_beatdown5;
+						break;
+					case spr_meowth_beatdown5:
+						sprite_index = spr_meowth_beatdown6;
+						break;
+					case spr_meowth_beatdown6:
+						sprite_index = spr_meowth_beatdown7;
+						break;
+					case spr_meowth_beatdown7:
+						sprite_index = spr_meowth_beatdown8;
+						break;
+					case spr_meowth_beatdown8:
+						sprite_index = spr_meowth_beatdown9;
+						break;
+					case spr_meowth_beatdown9:
+						sprite_index = spr_meowth_beatdown10;
+						break;
+					case spr_meowth_beatdown10:
+						sprite_index = spr_meowth_beatdown11;
+						break;
+					case spr_meowth_beatdown11:
+						sprite_index = spr_meowth_beatdown12;
+						break;
+					case spr_meowth_beatdown12:
+						sprite_index = spr_meowth_beatdown13;
+						break;
+					case spr_meowth_beatdown13:
+						sprite_index = spr_meowth_beatdown14;
+						break;
+					case spr_meowth_beatdown14:
+						sprite_index = spr_meowth_beatdown15;
+						break;
+					case spr_meowth_beatdown15:
+						sprite_index = spr_meowth_beatdown14;
+						image_xscale = -1;
+						break;
 				}
 			}
 			else
@@ -155,6 +202,50 @@ switch state
 						sprite_index = spr_pizzahead_beatdown1;
 						image_xscale = 1;
 						break;
+						
+					case spr_meowth_beatdown14:
+						sprite_index = spr_meowth_beatdown13;
+						break;
+					case spr_meowth_beatdown13:
+						sprite_index = spr_meowth_beatdown12;
+						break;
+					case spr_meowth_beatdown12:
+						sprite_index = spr_meowth_beatdown11;
+						break;
+					case spr_meowth_beatdown11:
+						sprite_index = spr_meowth_beatdown10;
+						break;
+					case spr_meowth_beatdown10:
+						sprite_index = spr_meowth_beatdown9;
+						break;
+					case spr_meowth_beatdown9:
+						sprite_index = spr_meowth_beatdown8;
+						break;
+					case spr_meowth_beatdown8:
+						sprite_index = spr_meowth_beatdown7;
+						break;
+					case spr_meowth_beatdown7:
+						sprite_index = spr_meowth_beatdown6;
+						break;
+					case spr_meowth_beatdown6:
+						sprite_index = spr_meowth_beatdown5;
+						break;
+					case spr_meowth_beatdown5:
+						sprite_index = spr_meowth_beatdown4;
+						break;
+					case spr_meowth_beatdown4:
+						sprite_index = spr_meowth_beatdown3;
+						break;
+					case spr_meowth_beatdown3:
+						sprite_index = spr_meowth_beatdown2;
+						break;
+					case spr_meowth_beatdown2:
+						sprite_index = spr_meowth_beatdown1;
+						break;
+					case spr_meowth_beatdown1:
+						sprite_index = spr_meowth_beatdown1;
+						image_xscale = 1;
+						break;
 				}
 			}
 		}
@@ -168,6 +259,8 @@ switch state
 			fmod_event_instance_play(snd);
 			state = states.superslam;
 			sprite_index = spr_pizzahead_piledriverfinal;
+			if obj_player1.character == "E"
+				sprite_index = spr_meowth_piledriverfinal
 			image_index = 0;
 			image_speed = 0.35;
 		}

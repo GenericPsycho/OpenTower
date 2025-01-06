@@ -53,7 +53,7 @@ function noise_do_attack_normal()
 		case states.handstandjump:
 			slide = irandom(100) > 50;
 			movespeed = 15;
-			sprite_index = spr_playerN_spin;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 			image_index = 0;
 			break;
 		
@@ -61,14 +61,14 @@ function noise_do_attack_normal()
 			slidejump = 1;
 			movespeed = 6;
 			vsp = -11;
-			sprite_index = spr_playerN_jump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jump : spr_playerN_jump;
 			image_index = 0;
 			break;
 		
 		case states.skateboard:
 			skateboard_turns = 0;
 			movespeed = 0;
-			sprite_index = spr_playerN_mach1;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_mach1 : spr_playerN_mach1;
 			image_index = 0;
 			break;
 		
@@ -76,13 +76,13 @@ function noise_do_attack_normal()
 			state = states.skateboard;
 			skateboard_turns = 1;
 			movespeed = 0;
-			sprite_index = spr_playerN_mach1;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_mach1 : spr_playerN_mach1;
 			image_index = 0;
 			break;
 		
 		case states.bombkick:
 			state = states.throwing;
-			sprite_index = spr_playerN_noisebombkick;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombkick : spr_playerN_noisebombkick;
 			image_index = 0;
 			break;
 		
@@ -116,14 +116,14 @@ function noise_do_attack_normal()
 		case states.jetpackcancel:
 			state = states.jetpackstart;
 			jetpackcancel = true;
-			sprite_index = spr_playerN_jetpackstart;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackstart : spr_playerN_jetpackstart;
 			image_index = 0;
 			movespeed = 0;
 			break;
 		
 		case states.jetpackstart:
 			jetpackcancel = false;
-			sprite_index = spr_playerN_jetpackstart;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackstart : spr_playerN_jetpackstart;
 			image_index = 0;
 			movespeed = 0;
 			break;
@@ -132,7 +132,7 @@ function noise_do_attack_normal()
 			movespeed = 10;
 			state = states.jetpackspin;
 			vsp = -15;
-			sprite_index = spr_playerN_noisebombspinjump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombspinjump : spr_playerN_noisebombspinjump;
 			image_index = 0;
 			particle_set_scale(particle.jumpdust, image_xscale, 1);
 			create_particle(x, y, particle.jumpdust, 0);
@@ -149,7 +149,7 @@ function noise_do_attack_angry()
 			movespeed = 15;
 			spin_count = 1;
 			spin_buffer = spin_max;
-			sprite_index = spr_playerN_spin;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 			image_index = 0;
 			break;
 		case states.jump:
@@ -159,7 +159,7 @@ function noise_do_attack_angry()
 			spin_count = 0;
 			movespeed = 6;
 			vsp = -11;
-			sprite_index = spr_playerN_jump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jump : spr_playerN_jump;
 			image_index = 0;
 			break;
 		case states.skateboardturn:
@@ -170,7 +170,7 @@ function noise_do_attack_angry()
 			movespeed = 15;
 			spin_count = 0;
 			spin_buffer = spin_max;
-			sprite_index = spr_playerN_spin;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 			image_index = 0;
 			break;
 		case states.skateboard:
@@ -181,13 +181,13 @@ function noise_do_attack_angry()
 			movespeed = 15;
 			spin_count = 0;
 			spin_buffer = spin_max;
-			sprite_index = spr_playerN_spin;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 			image_index = 0;
 			break;
 		case states.bombkick:
 			bombcount = 1;
 			state = states.throwing;
-			sprite_index = spr_playerN_noisebombkick;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombkick : spr_playerN_noisebombkick;
 			image_index = 0;
 			break;
 		case states.throwing:
@@ -219,13 +219,13 @@ function noise_do_attack_angry()
 			jumpcount = 1;
 			state = states.jetpackstart;
 			jetpackcancel = true;
-			sprite_index = spr_playerN_jetpackstart;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackstart : spr_playerN_jetpackstart;
 			image_index = 0;
 			movespeed = 0;
 			break;
 		case states.jetpackstart:
 			jetpackcancel = false;
-			sprite_index = spr_playerN_jetpackstart;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackstart : spr_playerN_jetpackstart;
 			image_index = 0;
 			movespeed = 0;
 			break;
@@ -234,7 +234,7 @@ function noise_do_attack_angry()
 			movespeed = 10;
 			state = states.jetpackspin;
 			vsp = -15;
-			sprite_index = spr_playerN_noisebombspinjump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombspinjump : spr_playerN_noisebombspinjump;
 			image_index = 0;
 			particle_set_scale(particle.jumpdust, image_xscale, 1);
 			create_particle(x, y, particle.jumpdust, 0);
@@ -368,7 +368,7 @@ function boss_noise_handstandjump()
 			movespeed = 6;
 			state = states.jump;
 			slidejump = 2;
-			sprite_index = spr_playerN_fall;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_fall : spr_playerN_fall;
 		}
 	}
 	if slide && movespeed < 10 && spin_count <= 0
@@ -395,7 +395,7 @@ function boss_noise_handstandjump()
 			spin_count--;
 			state = states.handstandjump;
 			movespeed = 15;
-			sprite_index = spr_playerN_spin;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 			image_index = 0;
 		}
 	}
@@ -423,7 +423,7 @@ function boss_noise_crouchslide()
 			state = states.skateboard;
 			skateboard_turns = 1;
 			movespeed = 0;
-			sprite_index = spr_playerN_mach1;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_mach1 : spr_playerN_mach1;
 			image_index = 0;
 		}
 	}
@@ -432,7 +432,7 @@ function boss_noise_crouchslide()
 		state = states.skateboardturn;
 		skateboard_turns = 1;
 		movespeed = 12;
-		sprite_index = spr_playerN_machslideboost;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_machslideboost : spr_playerN_machslideboost;
 		image_index = 0;
 	}
 	if (place_meeting(x + sign(hsp), y, obj_solid))
@@ -448,16 +448,16 @@ function boss_noise_jump()
 {
 	image_speed = 0.35;
 	hsp = image_xscale * movespeed;
-	if (sprite_index == spr_playerN_jump && image_index > image_number - 1)
+	if ((sprite_index == spr_playerN_jump || sprite_index == spr_playerW_jump) && image_index > image_number - 1)
 	{
-		sprite_index = spr_playerN_fall;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_fall : spr_playerN_fall;
 		image_index = 0;
 	}
 	if slidejump == 1 && vsp >= 0
 	{
 		state = states.handstandjump;
 		slide = false;
-		sprite_index = spr_playerN_spin;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 		image_index = 0;
 		movespeed = 10;
 	}
@@ -484,7 +484,7 @@ function boss_noise_skateboard()
 	{
 		state = states.skateboardturn;
 		movespeed = 12;
-		sprite_index = spr_playerN_machslideboost;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_machslideboost : spr_playerN_machslideboost;
 		image_index = 0;
 	}
 	if (place_meeting(x + sign(hsp), y, obj_solid))
@@ -500,8 +500,10 @@ function boss_noise_skateboard()
 			shake_mag_acc = 3 / room_speed;
 		}
 	}
-	if (sprite_index == spr_playerN_mach1 && image_index > image_number - 1)
-		sprite_index = spr_playerN_mach;
+	if ((sprite_index == spr_playerN_mach1 || sprite_index == spr_playerW_mach1) && image_index > image_number - 1)
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_mach : spr_playerN_mach;
+	}
 }
 function boss_noise_skateboardturn()
 {
@@ -513,9 +515,9 @@ function boss_noise_skateboardturn()
 	image_speed = 0.35;
 	if (image_index > image_number - 1)
 	{
-		if sprite_index == spr_playerN_machslideboost
+		if sprite_index == spr_playerN_machslideboost || sprite_index == spr_playerW_machslideboost
 		{
-			sprite_index = !angry ? spr_playerN_mach1 : spr_playerN_mach3;
+			sprite_index = !angry ? (obj_player1.character == "E" ? spr_playerW_mach1 : spr_playerN_mach1) : spr_playerN_mach3;
 			state = states.skateboard;
 			skateboard_turns--;
 			movespeed = !angry ? 12 : 15;
@@ -529,7 +531,7 @@ function boss_noise_throwing()
 	hsp = image_xscale * movespeed;
 	if movespeed > 0
 		movespeed -= 0.5;
-	if (sprite_index == spr_playerN_noisebombkick && floor(image_index) == 4 && !bombkick)
+	if ((sprite_index == spr_playerN_noisebombkick || sprite_index == spr_playerW_noisebombkick) && floor(image_index) == 4 && !bombkick)
 	{
 		bombkick = true;
 		with (instance_create(x + 20, y, obj_noisebossbomb))
@@ -548,7 +550,7 @@ function boss_noise_throwing()
 		{
 			bombcount--;
 			state = states.throwing;
-			if sprite_index == spr_playerN_noisebombkick
+			if sprite_index == spr_playerN_noisebombkick || sprite_index == spr_playerW_noisebombkick
 			{
 				sprite_index = spr_playerN_noisebombthrow;
 				image_index = 0;
@@ -560,7 +562,7 @@ function boss_noise_throwing()
 			}
 			else
 			{
-				sprite_index = spr_playerN_noisebombkick;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombkick : spr_playerN_noisebombkick;
 				image_index = 0;
 			}
 		}
@@ -575,16 +577,16 @@ function boss_noise_pogo()
 		movespeed += 0.5;
 	if (place_meeting(x + sign(hsp), y, obj_solid))
 		image_xscale *= -1;
-	if grounded && sprite_index != spr_playerN_pogobounce && sprite_index != spr_playerN_pogobouncemach
+	if grounded && sprite_index != spr_playerN_pogobounce && sprite_index != spr_playerN_pogobouncemach && sprite_index != spr_playerW_pogobounce
 	{
 		image_index = 0;
 		vsp = 0;
 		movespeed = 0;
 		pogospeedprev = false;
-		sprite_index = pogomach ? spr_playerN_pogobouncemach : spr_playerN_pogobounce;
+		sprite_index = pogomach ? spr_playerN_pogobouncemach : (obj_player1.character == "E" ? spr_playerW_pogobounce : spr_playerN_pogobounce);
 		create_particle(x, y, particle.landcloud, 0);
 	}
-	if (!pogospeedprev && (sprite_index == spr_playerN_pogobounce || sprite_index == spr_playerN_pogobouncemach) && floor(image_index) == 4)
+	if (!pogospeedprev && (sprite_index == spr_playerN_pogobounce || sprite_index == spr_playerN_pogobouncemach || sprite_index == spr_playerW_pogobounce) && floor(image_index) == 4)
 	{
 		vsp = bombpogo ? -12 : -6;
 		if pogospeed < maxpogo
@@ -592,8 +594,10 @@ function boss_noise_pogo()
 		movespeed = pogospeed;
 		pogospeedprev = true;
 	}
-	if (image_index > image_number - 1 && (sprite_index == spr_playerN_pogobounce || sprite_index == spr_playerN_pogobouncemach || sprite_index == spr_playerN_pogofallmach || sprite_index == spr_playerN_pogofall))
-		sprite_index = pogochargeactive ? spr_playerN_pogofallmach : spr_playerN_pogofall;
+	if (image_index > image_number - 1 && (sprite_index == spr_playerN_pogobounce || sprite_index == spr_playerN_pogobouncemach || sprite_index == spr_playerN_pogofallmach || sprite_index == spr_playerN_pogofall || sprite_index == spr_playerW_pogobounce || sprite_index == spr_playerW_pogofall))
+	{
+		sprite_index = pogochargeactive ? spr_playerN_pogofallmach : (obj_player1.character == "E" ? spr_playerW_pogofall : spr_playerN_pogofall);
+	}
 	if pogospeed > 12 && !pogochargeactive
 		pogochargeactive = true;
 	if pogospeed > maxpogo
@@ -630,9 +634,9 @@ function boss_noise_jetpackstart()
 	vsp = 0;
 	if (image_index > image_number - 1)
 	{
-		state = states.jetpack;
+		state = states.jetpack2;
 		movespeed = !angry ? 15 : 20;
-		sprite_index = !angry ? spr_playerN_jetpackboost : spr_playerN_crazyrun;
+		sprite_index = !angry ? (obj_player1.character == "E" ? spr_playerW_jetpackboost : spr_playerN_jetpackboost) : spr_playerN_crazyrun;
 	}
 }
 function boss_noise_jetpack()
@@ -666,7 +670,7 @@ function boss_noise_jetpack()
 		{
 			state = states.jetpackspin;
 			vsp = -15;
-			sprite_index = spr_playerN_noisebombspinjump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombspinjump : spr_playerN_noisebombspinjump;
 			image_index = 0;
 			particle_set_scale(particle.jumpdust, image_xscale, 1);
 			create_particle(x, y, particle.jumpdust, 0);
@@ -702,7 +706,7 @@ function boss_noise_jetpackspin()
 			movespeed = 10;
 			state = states.jetpackspin;
 			vsp = -15;
-			sprite_index = spr_playerN_noisebombspinjump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombspinjump : spr_playerN_noisebombspinjump;
 			image_index = 0;
 			particle_set_scale(particle.jumpdust, image_xscale, 1);
 			create_particle(x, y, particle.jumpdust, 0);

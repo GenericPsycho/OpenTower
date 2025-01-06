@@ -31,7 +31,7 @@ if DEBUG
 	{
 		game_set_speed(floor(real(int)), gamespeed_fps);
 	});
-	TEST_P_RANK = new DebugCommand("test_p_rank", "", "", function()
+	TEST_P_RANK = new DebugCommand("test_p_rank", "", "<ver>", function(ver)
 	{
 		global.collect = global.srank + 5000;
 		global.lap = true;
@@ -42,6 +42,12 @@ if DEBUG
 		global.combotime = 60;
 		global.combo = 99;
 		global.panic = true;
+		global.lapcount = 2;
+		if ver == "plus"
+		{
+			global.hurtcount = 0;
+			global.lapcount = 3;
+		}
 	});
 	KILL_BOSS = new DebugCommand("kill_boss", "", "", function()
 	{
@@ -52,13 +58,29 @@ if DEBUG
 		with obj_baddie
 			elitehit = real(int);
 	});
-	SWITCH_CHAR = new DebugCommand("switch_char", "Switches character", "", function()
+	SWITCH_CHAR = new DebugCommand("switch_char", "Switches character", "<char>", function(char)
 	{
-		with obj_player
+		if char != "P" && char != "N" && char != "E" && char != "R"
+			exit;
+		else
 		{
-			character = "P";
-			ispeppino = !ispeppino;
-			scr_characterspr();
+			with obj_player
+			{
+				switch(char)
+				{ 
+					case "P":
+					case "N":
+						character = "P";
+						ispeppino = char == "N" ? false : true;
+						break;
+					case "E":
+					case "R":
+						character = char;
+						ispeppino = true;
+						break;
+				}
+				scr_characterspr();
+			}
 		}
 	});
 	FILL_GATESWITCH = new DebugCommand("gateswitchmax", "", "", function()
@@ -210,8 +232,14 @@ if DEBUG
 		
 		global.panic = !global.panic;
 		global.fill = fill;
+		global.escapetimer = fill;
 		if global.panic
+		{
 			obj_camera.alarm[1] = 60;
+			global.lapcount = 1;
+		}
+		else
+			global.lapcount = 0;
 		obj_tv.chunkmax = global.fill;
 	});
 	SHOW_COLLISIONS = new DebugCommand("showcollisions", "Shows the collisions", "<bool>", function(toggle)
@@ -326,6 +354,8 @@ if DEBUG
 							break;
 						case states.cheesepep:
 							_spr = spr_cheesepep_idle;
+							if character == "E"
+								_spr = spr_cheeseplu_idle;
 							break;
 						case states.knightpep:
 							_spr = spr_knightpepidle;
@@ -335,6 +365,8 @@ if DEBUG
 							break;
 						case states.ratmount:
 							_spr = spr_player_ratmountidle;
+							if character == "E"
+								_spr = spr_playerK_ratmountidle;
 							break;
 					}
 					sprite_index = _spr;
@@ -343,7 +375,44 @@ if DEBUG
 			}
 		}
 	});
+
+	SUMMON_PEDDITO = new DebugCommand("summon_peddito", "You can already guess what does this do", "<sprite>", function(pep_sprite)
+	{
+		with instance_create(0, y, obj_peddito)
+		{
+			if pep_sprite == undefined || pep_sprite != "madbastard"
+			{
+				sprite_index = spr_peddito;
+				global.pedditosprite = spr_peddito;
+			}
+			else
+			{
+				sprite_index = spr_peddito_madden;
+				global.pedditosprite = spr_peddito_madden;
+			}
+		}
+	});
 	
+	DOISE_DEBUG = new DebugCommand("doise_debug", "", "<pass>", function(pass)
+	{
+		if pass == undefined || pass != "papaschochoofiscusowistodoslosdias"
+		{
+			fmod_event_one_shot("event:/sfx/misc/golfjingle")
+			instance_create(0, 0, obj_peddito)
+		}
+		else
+		{
+			global.doisedebug = true;
+			fmod_set_parameter("doiseisdead", 0, true);
+			obj_player1.state = states.normal;
+			global.killedbypeddito = false;
+			global.caught = false;
+			global.pedditoiscoming = false;
+			global.iced = false;
+			fmod_event_one_shot("event:/sfx/ui/select")
+		}
+	});
+
 	active = false;
 	showcollisions = false;
 	showhud = true;
@@ -357,7 +426,7 @@ if DEBUG
 	
 	command_list = ds_list_create();
 	ds_list_add(command_list, DESTROYICE, SET_GAME_SPEED, SHOW_HUD, SHOW_COLLISIONS, PLAYER_ROOM, CAMERA_ZOOM, HARDMODE, PLAYER_SET_STATE, PANIC, ALLTOPPINS, GIVEHEAT, ROOMCHECK, SWITCH_CHAR, SET_BOSS_HP);
-	ds_list_add(command_list, OTHERTEST, KILL_BOSS, TEST_P_RANK, FILL_GATESWITCH, SETCOMBO, GIVEKEY, LOADTEST, NOCLIP, THROWARC, HIDETILES, LOCKCAMERA, BOSSINVINCIBLE, UNLOCK_TOPPINS, UNLOCK_BOSS_KEY, SHOW_DEBUG_OVERLAY, GOTOEDITOR);
+	ds_list_add(command_list, OTHERTEST, KILL_BOSS, TEST_P_RANK, FILL_GATESWITCH, SETCOMBO, GIVEKEY, LOADTEST, NOCLIP, THROWARC, HIDETILES, LOCKCAMERA, BOSSINVINCIBLE, UNLOCK_TOPPINS, UNLOCK_BOSS_KEY, SHOW_DEBUG_OVERLAY, GOTOEDITOR, SUMMON_PEDDITO, DOISE_DEBUG);
 	
 	input_text = "";
 	text_list = ds_list_create();

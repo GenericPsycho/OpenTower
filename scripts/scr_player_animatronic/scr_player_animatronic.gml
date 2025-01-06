@@ -3,9 +3,9 @@ function scr_player_animatronic()
 	if !ispeppino
 	{
 		xscale = 1;
-		sprite_index = spr_playerN_animatronic;
+		sprite_index = global.iced ? spr_doise_deadice : spr_playerN_animatronic;
 		if !grounded
-			sprite_index = spr_doise_deadair;
+			sprite_index = global.iced ? spr_doise_deadice : spr_doise_deadair;
 		image_speed = 0.35;
 		if animatronic_buffer > 0
 			animatronic_buffer--;
@@ -13,7 +13,7 @@ function scr_player_animatronic()
 			instance_create_unique(x, y, obj_noiseanimatroniceffect);
 		exit;
 	}
-	sprite_index = spr_pepanimatronic;
+	sprite_index = character == "E" ? spr_pluanimatronic : spr_pepanimatronic;
 	image_speed = 0.35;
 	move = key_left + key_right;
 	hsp = move * movespeed;
@@ -51,7 +51,7 @@ function scr_player_animatronic()
 		{
 			GamepadSetVibration(0, 0.4, 0.4, 0.65);
 			global.collect -= 10;
-			fmod_event_one_shot_3d("event:/sfx/pep/hurt", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/pep/hurtsound", x, y)
 			with (instance_create(121, 60, obj_negativenumber))
 				number = "-10";
 			repeat 10

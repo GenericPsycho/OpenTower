@@ -72,8 +72,8 @@ function scr_player_punch()
 						movespeed += 0.2;
 				}
 				hsp = xscale * movespeed;
-				var _kungfuground = sprite_index == spr_player_kungfu1 || sprite_index == spr_player_kungfu2 || sprite_index == spr_player_kungfu3 || sprite_index == spr_shotgunsuplexdash;
-				var _Sjumpcancel = sprite_index == spr_player_Sjumpcancel || sprite_index == spr_player_Sjumpcancelland || sprite_index == spr_player_Sjumpcancelslide;
+				var _kungfuground = sprite_index == spr_player_kungfu1 || sprite_index == spr_player_kungfu2 || sprite_index == spr_player_kungfu3 || sprite_index == spr_shotgunsuplexdash || sprite_index == spr_playerE_kungfu1 || sprite_index == spr_playerE_kungfu2 || sprite_index == spr_playerE_kungfu3;
+				var _Sjumpcancel = sprite_index == spr_player_Sjumpcancel || sprite_index == spr_player_Sjumpcancelland || sprite_index == spr_player_Sjumpcancelslide || spr_playerE_Sjumpcancel;
 				if _kungfuground && image_index > 7 && !key_attack && movespeed > 0
 					movespeed -= 0.5;
 				if floor(image_index) == image_number - 1
@@ -83,6 +83,9 @@ function scr_player_punch()
 						case spr_player_kungfu1:
 						case spr_player_kungfu2:
 						case spr_player_kungfu3:
+						case spr_playerE_kungfu1:
+						case spr_playerE_kungfu2:
+						case spr_playerE_kungfu3:
 						case spr_shotgunsuplexdash:
 							state = states.normal;
 							if move != xscale && move != 0
@@ -111,7 +114,7 @@ function scr_player_punch()
 				{
 					if grounded && vsp > 0
 					{
-						if sprite_index == spr_player_Sjumpcancel
+						if sprite_index == spr_player_Sjumpcancel || sprite_index == spr_playerE_Sjumpcancel
 						{
 							sprite_index = spr_player_Sjumpcancelland;
 							image_index = 0;

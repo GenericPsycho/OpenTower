@@ -80,7 +80,7 @@ if (place_meeting(x, y, obj_boxofpizza) || place_meeting(x, y - 1, obj_boxofpizz
 {
 	box = true;
 	hallway = false;
-	state = states.crouch;
+	state = global.killedbypeddito ? states.animatronic : states.crouch;
 }
 if (object_index != obj_player2 || global.coop == 1)
 {

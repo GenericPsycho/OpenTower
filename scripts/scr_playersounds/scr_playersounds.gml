@@ -79,6 +79,8 @@ function scr_playersounds()
 				s = 1;
 			else if ((state == states.mach2 && sprite_index == spr_mach) || state == states.climbwall)
 				s = 2;
+			else if state == states.jetpack
+                    s = 2
 			else if state == states.mach3 && sprite_index != spr_crazyrun
 				s = 3;
 			else if sprite_index == spr_crazyrun
@@ -90,7 +92,7 @@ function scr_playersounds()
 		}
 		else
 			fmod_event_instance_stop(machsnd, true);
-		if ((state == states.knightpepslopes && grounded && vsp > 0) || state == states.grind || (state == states.trashroll && grounded && vsp > 0 && sprite_index == spr_player_trashslide))
+		if ((state == states.knightpepslopes && grounded && vsp > 0) || state == states.grind || (state == states.trashroll && grounded && vsp > 0 && (sprite_index == spr_player_trashslide || sprite_index == spr_playerE_trashslide)))
 		{
 			if (!fmod_event_instance_is_playing(knightslidesnd))
 				fmod_event_instance_play(knightslidesnd);
@@ -98,6 +100,23 @@ function scr_playersounds()
 		}
 		else if (fmod_event_instance_is_playing(knightslidesnd))
 			fmod_event_instance_stop(knightslidesnd, true);
+			
+		if (state == states.jetpack && (sprite_index == spr_playerN_jetpackboost || sprite_index == spr_playerN_jetpackslide))
+        {
+            if (!fmod_event_instance_is_playing(jetpacksnd))
+                fmod_event_instance_play(jetpacksnd)
+            fmod_event_instance_set_3d_attributes(jetpacksnd, x, y)
+        }
+        else if fmod_event_instance_is_playing(jetpacksnd)
+            fmod_event_instance_stop(jetpacksnd, true)
+        if (state == states.jump && sprite_index == spr_playerN_noisebombspinjump)
+        {
+            if (!fmod_event_instance_is_playing(jetpackspinsnd))
+                fmod_event_instance_play(jetpackspinsnd)
+            fmod_event_instance_set_3d_attributes(jetpackspinsnd, x, y)
+        }
+        else if fmod_event_instance_is_playing(jetpackspinsnd)
+            fmod_event_instance_stop(jetpackspinsnd, true)
 		
 		var sjumpsnd = superjumpsnd;
 		if ispeppino
@@ -119,7 +138,7 @@ function scr_playersounds()
 				else if (!fmod_event_instance_is_playing(sjumpsnd))
 					fmod_event_instance_set_parameter(sjumpsnd, "state", 0, true);
 			}
-			if (sprite_index == spr_player_Sjumpcancelstart || sprite_index == spr_playerN_sidewayspin)
+			if (sprite_index == spr_player_Sjumpcancelstart || sprite_index == spr_playerE_Sjumpcancelstart || sprite_index == spr_playerN_sidewayspin)
 				fmod_event_instance_stop(sjumpsnd, true);
 			if (fmod_event_instance_is_playing(sjumpsnd))
 				fmod_event_instance_set_3d_attributes(sjumpsnd, x, y);
@@ -136,7 +155,7 @@ function scr_playersounds()
 				if sprite_index == spr_tumblestart
 					tumbleintro = true;
 			}
-			if sprite_index == spr_tumble && !tumbleintro
+			if (sprite_index == spr_tumble) && !tumbleintro
 				fmod_event_instance_set_parameter(tumblesnd, "state", 1, true);
 			fmod_event_instance_set_3d_attributes(tumblesnd, x, y);
 		}
@@ -218,12 +237,12 @@ function scr_playersounds()
 			}
 			hamkuffID = -4;
 		}
-		if ((state == states.ratmount || state == states.ratmountjump) && (sprite_index == spr_player_ratmountattack || sprite_index == spr_player_ratmountmach3 || sprite_index == spr_player_ratmountdashjump || sprite_index == spr_lonegustavo_dash || sprite_index == spr_lonegustavo_mach3 || sprite_index == spr_lonegustavo_dashjump))
+		if ((state == states.ratmount || state == states.ratmountjump) && (sprite_index == spr_player_ratmountattack || sprite_index == spr_playerK_ratmountattack || sprite_index == spr_player_ratmountmach3 || sprite_index == spr_playerK_ratmountmach3 || sprite_index == spr_player_ratmountdashjump || sprite_index == spr_playerK_ratmountdashjump || sprite_index == spr_lonegustavo_dash || sprite_index == spr_lonepika_dash || sprite_index == spr_lonegustavo_mach3 || sprite_index == spr_lonepika_mach3 || sprite_index == spr_lonegustavo_dashjump || sprite_index == spr_lonepika_dashjump))
 		{
 			if (!fmod_event_instance_is_playing(ratmountmachsnd))
 				fmod_event_instance_play(ratmountmachsnd);
 			s = 0;
-			if (sprite_index == spr_player_ratmountmach3 || sprite_index == spr_lonegustavo_mach3 || sprite_index == spr_player_ratmountdashjump || sprite_index == spr_lonegustavo_dashjump)
+			if (sprite_index == spr_player_ratmountmach3 || sprite_index == spr_playerK_ratmountmach3 || sprite_index == spr_lonegustavo_mach3 || sprite_index == spr_lonepika_mach3 || sprite_index == spr_player_ratmountdashjump || sprite_index == spr_playerK_ratmountdashjump || sprite_index == spr_lonegustavo_dashjump || sprite_index == spr_lonepika_dashjump)
 				s = 1;
 			fmod_event_instance_set_parameter(ratmountmachsnd, "state", s, true);
 			if grounded
@@ -242,7 +261,7 @@ function scr_playersounds()
 		}
 		else
 			fmod_event_instance_stop(ratmountpunchsnd, true);
-		if state == states.ratmountbounce && sprite_index == spr_player_ratmountwalljump
+		if state == states.ratmountbounce && (sprite_index == spr_player_ratmountwalljump || sprite_index == spr_playerK_ratmountwalljump)
 		{
 			if (!fmod_event_instance_is_playing(ratmountgroundpoundsnd))
 				fmod_event_instance_play(ratmountgroundpoundsnd);
@@ -259,6 +278,8 @@ function scr_playersounds()
 			if (!fmod_event_instance_is_playing(animatronicsnd))
 				fmod_event_instance_play(animatronicsnd);
 			fmod_event_instance_set_3d_attributes(animatronicsnd, x + hsp, y + vsp);
+			if fmod_event_instance_is_playing(snd_noiseanimatronic) && character == "E"
+				fmod_event_instance_stop(snd_noiseanimatronic);
 		}
 		else
 			fmod_event_instance_stop(animatronicsnd, true);
@@ -454,7 +475,7 @@ function scr_playersounds()
 			else if fmod_event_instance_is_playing(snd_airspin)
 			{
 				if (sprite_index == spr_mach || sprite_index == spr_mach4 || sprite_index == spr_crazyrun)
-					fmod_event_one_shot_3d("event:/sfx/playerN/wallbounceland", x, y)
+					fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/wallbounceland", x, y)
 				fmod_event_instance_stop(snd_airspin, true)
 			}
 		}

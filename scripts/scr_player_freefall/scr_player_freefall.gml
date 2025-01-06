@@ -68,7 +68,7 @@ function scr_player_freefall()
 			movespeed -= 0.05;
 		if ((scr_solid(x + 1, y) && move == 1) || (scr_solid(x - 1, y) && move == -1))
 			movespeed = 0;
-		if move != 0 && sprite_index != spr_player_poundcancel1
+		if move != 0 && sprite_index != spr_player_poundcancel1 && sprite_index != spr_playerE_poundcancel1
 			xscale = move;
 	}
 	if vsp > 0
@@ -105,6 +105,8 @@ function scr_player_freefall()
 			fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 			if sprite_index == spr_player_poundcancel1
 				sprite_index = spr_player_poundcancel2;
+			else if sprite_index == spr_playerE_poundcancel1
+				sprite_index = spr_playerE_poundcancel2;
 			else if shotgunAnim == 0
 				sprite_index = spr_bodyslamland;
 			else

@@ -11,7 +11,7 @@ with other
 		baddiegrabbedID.paletteselect = paletteselect;
 		baddiegrabbedID.patterntexture = global.palettetexture;
 		if isgustavo && ispeppino
-			baddiegrabbedID.spr_palette = spr_ratmountpalette;
+			baddiegrabbedID.spr_palette = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
 		swap_player(false);
 		xscale = other.image_xscale;
 		pistolcharge = 0;

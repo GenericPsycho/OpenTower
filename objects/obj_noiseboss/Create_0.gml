@@ -55,22 +55,22 @@ stomped = false;
 shot = false;
 reset = false;
 flash = false;
-landspr = spr_playerN_hurt;
-idlespr = spr_playerN_hurt;
-fallspr = spr_playerN_hurt;
-stunfallspr = spr_noise_stun;
-walkspr = spr_playerN_idle;
-turnspr = spr_playerN_hurt;
-recoveryspr = spr_playerN_hurt;
-grabbedspr = spr_playerN_hurt;
-scaredspr = spr_playerN_hurt;
-ragespr = spr_playerN_hurt;
+landspr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+idlespr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+fallspr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+stunfallspr = obj_player1.character == "E" ? spr_wobbuffet_stun : spr_noise_stun;
+walkspr = obj_player1.character == "E" ? spr_playerW_idle : spr_playerN_idle;
+turnspr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+recoveryspr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+grabbedspr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+scaredspr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+ragespr = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
 hp = 1;
 slapped = false;
 grounded = true;
 birdcreated = false;
 boundbox = false;
-spr_dead = spr_playerN_deathend;
+spr_dead = obj_player1.character == "E" ? spr_playerW_deathend : spr_playerN_deathend;
 important = false;
 heavy = true;
 paletteselect = 0;
@@ -101,12 +101,12 @@ if (!obj_player1.ispeppino || global.swapmode)
 {
 	usepalette = true;
 	spr_palette = spr_noiseboss_palette;
-	paletteselect = 1;
+	paletteselect = !global.doisemode ? 1 : 2;
 	doise = true;
 }
 else
 {
 	usepalette = true;
 	spr_palette = spr_noiseboss_palette;
-	paletteselect = 2;
+	paletteselect = obj_player1.character == "E" ? 3 : 2;
 }

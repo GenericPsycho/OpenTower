@@ -21,7 +21,7 @@ if destroyable && elitehit <= 0
 	{
 		image_xscale = -1;
 		state = states.arenaintro;
-		sprite_index = spr_pizzahead_phase3_intro1;
+		sprite_index = obj_player1.character == "E" ? spr_meowth_phase3_intro1 : spr_pizzahead_phase3_intro1;
 		image_index = 0;
 		introbuffer = 120;
 	}

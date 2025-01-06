@@ -13,7 +13,7 @@ else
 	{
 		if !scorewins_show && global.swapmode
 		{
-			var snd = fmod_event_create_instance("event:/sfx/voice/swap");
+			var snd = fmod_event_create_instance("event:/modded-sfx/voice/switch");
 			var s = 0;
 			if scorewins == "N"
 				s = 1;

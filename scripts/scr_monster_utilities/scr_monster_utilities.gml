@@ -59,6 +59,7 @@ function scr_monster_stop_music()
 			}
 			fmod_event_instance_set_paused(pillarmusicID, savedpillarpause);
 			fmod_event_instance_set_paused(panicmusicID, savedpanicpause);
+			fmod_event_instance_set_paused(escapeID, savedescapepause);
 		}
 	}
 }

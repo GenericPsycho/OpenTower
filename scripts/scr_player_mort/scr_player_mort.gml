@@ -35,8 +35,12 @@ function scr_player_mort()
 	if (place_meeting(x + sign(hsp), y, obj_solid) && !place_meeting(x + sign(hsp), y, obj_slope))
 	{
 		movespeed = 0;
-		if sprite_index == spr_player_barrelmove
+		if sprite_index == spr_player_barrelmove || sprite_index == spr_playerE_barrelmove
+		{
 			sprite_index = spr_player_barrelidle;
+			if character == "E"
+				sprite_index = spr_playerE_barrelidle;
+		}
 	}
 	if !landAnim
 	{
@@ -98,6 +102,8 @@ function mort_attack()
 		input_buffer_slap = 0;
 		state = states.mortattack;
 		sprite_index = spr_player_mortattackfront;
+		if character == "E"
+			sprite_index = spr_playerE_mortattackfront;
 		image_index = 0;
 		if move != 0
 			xscale = move;
@@ -106,6 +112,8 @@ function mort_attack()
 		{
 			_angle = 90;
 			sprite_index = spr_player_mortattackup;
+			if character == "E"
+				sprite_index = spr_playerE_mortattackup;
 		}
 		else if key_down && !grounded
 		{
@@ -113,6 +121,8 @@ function mort_attack()
 				vsp = 3;
 			_angle = 270;
 			sprite_index = spr_player_mortattackdown;
+			if character == "E"
+				sprite_index = spr_playerE_mortattackdown;
 		}
 		else
 			movespeed = xscale * 10;
@@ -127,9 +137,9 @@ function mort_attack()
 			with (instance_create(x, y, obj_parryeffect))
 			{
 				follow = true;
-				if spr == spr_player_mortattackup
+				if spr == spr_player_mortattackup || spr == spr_playerE_mortattackup
 					sprite_index = spr_mortswingup;
-				else if spr == spr_player_mortattackdown
+				else if spr == spr_player_mortattackdown || spr == spr_playerE_mortattackdown
 					sprite_index = spr_mortswingdown;
 				else
 					sprite_index = spr_mortswing;
@@ -138,7 +148,7 @@ function mort_attack()
 			alarm[0] = 15;
 		}
 	}
-	if (sprite_index == spr_player_mortattackdown || sprite_index == spr_player_mortattackup || sprite_index == spr_player_mortattack)
+	if (sprite_index == spr_player_mortattackdown || sprite_index == spr_player_mortattackup || sprite_index == spr_player_mortattack || sprite_index == spr_playerE_mortattackdown || sprite_index == spr_playerE_mortattackup)
 	{
 		if punch_afterimage > 0
 			punch_afterimage--;
@@ -152,11 +162,11 @@ function mort_attack()
 			}
 		}
 	}
-	if sprite_index == spr_player_mortattackfront
+	if sprite_index == spr_player_mortattackfront || sprite_index == spr_playerE_mortattackfront
 		fmod_event_one_shot_3d("event:/sfx/mort/side", x + hsp, y);
-	else if sprite_index == spr_player_mortattackup
+	else if sprite_index == spr_player_mortattackup || sprite_index == spr_playerE_mortattackup
 		fmod_event_one_shot_3d("event:/sfx/mort/up", x, y + vsp);
-	else if sprite_index == spr_player_mortattackdown
+	else if sprite_index == spr_player_mortattackdown || sprite_index == spr_playerE_mortattackdown
 		fmod_event_one_shot_3d("event:/sfx/mort/down", x, y + vsp);
 }
 function Mort_DownMovement()

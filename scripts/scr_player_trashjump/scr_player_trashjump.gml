@@ -12,15 +12,25 @@ function scr_player_trashjump()
 		image_speed = 0.35;
 		exit;
 	}
-	if vsp > 0 && sprite_index == spr_player_trashjump
+	if vsp > 0 && (sprite_index == spr_player_trashjump || sprite_index == spr_playerE_trashjump)
 	{
 		sprite_index = spr_player_trashjump2;
+		if character == "E"
+			sprite_index = spr_playerE_trashjump2;
 		image_index = 0;
 	}
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_player_trashjump2)
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_player_trashjump2 || sprite_index == spr_playerE_trashjump2))
+	{
 		sprite_index = spr_player_trashfall;
-	if vsp < 0 && sprite_index != spr_player_trashjump
+		if character == "E"
+			sprite_index = spr_playerE_trashfall;
+	}
+	if vsp < 0 && (sprite_index != spr_player_trashjump && sprite_index != spr_playerE_trashjump)
+	{
 		sprite_index = spr_player_trashjump;
+		if character == "E"
+			sprite_index = spr_playerE_trashjump;
+	}
 	if !ispeppino
 		sprite_index = spr_playerN_trash;
 	if grounded && vsp > 0

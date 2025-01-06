@@ -24,6 +24,11 @@ if grounded && vsp > 0
 if vsp < 0
 	coyote_time = 0;
 can_jump = (grounded && vsp > 0) || (coyote_time && vsp > 0);
+if key_jump && (room == boss_pepperman || room == boss_vigilante || room == boss_noise || room == boss_fakepep || room == boss_fakepephallway || room == boss_fakepepkey) && can_jump
+{
+	global.jumped++;
+	trace("Jumped ", global.jumped, "times")
+}
 
 var prevmask = mask_index;
 if state != states.grab
@@ -32,11 +37,13 @@ if state != states.grab
 // reset noise walljumps
 if character == "P" && !ispeppino && !isgustavo
 {
-	if can_jump && vsp > 0
+	if can_jump && vsp > 0 && !global.doisemode
 	{
 		noisewalljump = 0;
 		noisedoublejump = true;
 	}
+	else if can_jump && vsp > 0 && global.doisemode
+		noisewalljump = 0;
 }
 
 // collision flags
@@ -64,6 +71,23 @@ if (character == "P" && !ispeppino && !skateboarding && ((scr_check_superjump() 
 	hsp = 0;
 	image_index = 0;
 }
+
+// activate Solitude related changes
+var noisepalinfo = get_noise_palette_info()
+global.solitude = ((!ispeppino || global.swapmode) && (noisepalinfo.paletteselect == 7 || noisepalinfo.paletteselect == 8 || noisepalinfo.paletteselect == 9 || noisepalinfo.paletteselect == 10 || noisepalinfo.paletteselect == 11) && global.option_datoggle) ? true : false;
+
+// doise parameters
+if global.pedditoiscoming && !global.killedbypeddito && !instance_exists(obj_peddito) && room != rank_room && state != states.backtohub
+	instance_create(-100, y, obj_peddito)
+if ((global.killedbypeddito || global.iced) && sprite_index != spr_playerN_bossdeath2D && state != states.backtohub && state != states.animatronic)
+	state = states.animatronic
+if state == states.animatronic && global.pedditoiscoming
+{
+	global.pedditoiscoming = false
+	if instance_exists(obj_peddito)
+		instance_destroy(obj_peddito)
+}
+global.doisemode = noisepalinfo.paletteselect == 17 ? true : false;
 
 // state machine
 switch state
@@ -271,6 +295,8 @@ switch state
 		break;
 	case states.throwing:
 		scr_player_throwing();
+	case states.jetpack:
+		scr_player_jetpack();
 		break;
 	case states.superslam:
 		scr_player_superslam();
@@ -695,16 +721,17 @@ else if sjumptimer > 0
 }
 if invtime > 0
 	invtime--;
-if sprite_index == spr_noise_phasetrans1P && image_index > 24
+if (sprite_index == spr_noise_phasetrans1P || sprite_index == spr_wobbuffet_phasetrans1P) && image_index > 24
 {
 	if !noisebossscream
 	{
-		fmod_event_one_shot_3d("event:/sfx/pep/screamboss", x, y);
-		fmod_event_one_shot_3d("event:/sfx/voice/noisescream", obj_noiseboss.x, obj_noiseboss.y);
+		fmod_event_one_shot_3d("event:/modded-sfx/pep/screamer", x, y)
+		if character != "E"
+			fmod_event_one_shot_3d("event:/modded-sfx/voice/screamingnoise", obj_noiseboss.x, obj_noiseboss.y)
 		noisebossscream = true;
 	}
 }
-else if sprite_index != spr_noise_phasetrans1P
+else if sprite_index != spr_noise_phasetrans1P && sprite_index != spr_wobbuffet_phasetrans1P
 	noisebossscream = false;
 if !ispeppino
 {
@@ -929,7 +956,7 @@ if state != states.mach2 && state != states.mach3 && state != states.trickjump &
 	ramp_points = false;
 }
 if (state != states.door && state != states.chainsaw && state != states.hit && place_meeting(x, y, obj_boxofpizza))
-	state = states.crouch;
+	state = global.killedbypeddito ? states.animatronic : states.crouch;
 if shoot_buffer > 0
 	shoot_buffer--;
 if cheesepep_buffer > 0
@@ -1034,7 +1061,7 @@ if pogochargeactive == 1
 }
 else
 	flashflicker = false;
-if state != states.throwing
+if state != states.throwing && state != states.jetpack
 	kickbomb = false;
 if pogocharge == 0
 {
@@ -1161,8 +1188,10 @@ if object_index == obj_player1
 	}
 	if (!(state == states.door || state == states.teleport || state == states.shotgun || state == states.tube || state == states.spaceshuttle || state == states.taxi || state == states.gottreasure || state == states.victory || state == states.gottreasure || state == states.actor || state == states.comingoutdoor || (state == states.knightpep && (sprite_index == spr_knightpepstart || sprite_index == spr_knightpepthunder)) || instance_exists(obj_fadeout) || (collision_flags & colflag.secret) > 0))
 	{
+		/*
 		if room != forest_G1b && global.combotime > 0 && global.combotimepause <= 0
 			global.combotime -= 0.15;
+		*/
 	}
 	if global.heattime > 0
 		global.heattime -= 0.15;
@@ -1186,7 +1215,7 @@ if object_index == obj_player1
 	if global.heattime <= 0 && global.style > -1 && global.stylelock == 0
 		global.style -= 0.05;
 }
-if (key_jump && !grounded && (state == states.mach2 || state == states.mach3) && (state != (states.climbwall & walljumpbuffer)) <= 0)
+if (key_jump && (!grounded) && (state == states.mach2 || state == states.mach3) && state != states.climbwall && state != (37 << 0) && walljumpbuffer <= 0)
 	input_buffer_walljump = 24;
 if boxxeddashbuffer > 0
 	boxxeddashbuffer--;
@@ -1233,7 +1262,7 @@ if (state == states.punch || (state == states.jump && sprite_index == spr_player
 	attacking = true;
 else
 	attacking = false;
-if (state == states.throwing || state == states.backkick || state == states.shoulder || state == states.uppunch)
+if (state == states.throwing || state == states.jetpack || state == states.backkick || state == states.shoulder || state == states.uppunch)
 	grabbing = true;
 else
 	grabbing = false;
@@ -1358,12 +1387,27 @@ if ((y > (room_height + 300) || y < -800) && !place_meeting(x, y, obj_verticalha
 			if !noise
 			{
 				if !other.isgustavo
+				{
 					sprite = choose(spr_technicaldifficulty1, spr_technicaldifficulty2, spr_technicaldifficulty3);
+					if other.character == "E"
+						sprite = choose(spr_technicaldifficulty1E, spr_technicaldifficulty2E, spr_technicaldifficulty3E);
+				}
 				else
+				{
 					sprite = spr_technicaldifficulty4;
+					if other.character == "E"
+						sprite = spr_technicaldifficulty4E;
+				}
 			}
 			else
+			{
+				var r = string_letters(room_get_name(room))
 				sprite = choose(spr_technicaldifficulty5, spr_technicaldifficulty6, spr_technicaldifficulty7);
+				if instance_exists(obj_peddito)
+					sprite = spr_technicaldifficulty7D;
+				if global.doisemode && !global.swapmode && r == "freezer" && !instance_exists(obj_peddito)
+					sprite = spr_technicaldifficulty5D;
+			}
 		}
 		vsp = 10;
 	}
@@ -1383,7 +1427,7 @@ if character != "M"
 {
 	if (!scr_solid_player(x, y))
 	{
-		if (state != states.ratmountcrouch && state != states.boxxedpepjump && state != states.boxxedpepspin && !(state == states.bump && sprite_index == spr_tumbleend) && (state != states.barrelslide && state != states.barrelclimbwall) && sprite_index != spr_player_breakdancesuper && sprite_index != spr_barrelslipnslide && sprite_index != spr_barrelroll && sprite_index != spr_bombpepintro && sprite_index != spr_knightpepthunder && state != states.stunned && state != states.crouch && state != states.shotguncrouch && state != states.shotguncrouchjump && state != states.boxxedpep && (state != states.pistol && sprite_index != spr_player_crouchshoot) && state != states.Sjumpprep && state != states.crouchslide && state != states.chainsaw && state != states.machroll && state != states.hurt && state != states.crouchjump && state != states.cheesepepstickup && state != states.cheesepepstickside && state != states.tumble)
+		if (state != states.ratmountcrouch && state != states.boxxedpepjump && state != states.boxxedpepspin && !(state == states.bump && sprite_index == spr_tumbleend) && (state != states.barrelslide && state != states.barrelclimbwall) && sprite_index != spr_player_breakdancesuper && sprite_index != spr_barrelslipnslide && sprite_index != spr_barrelroll && sprite_index != spr_bombpepintro && sprite_index != spr_knightpepthunder && state != states.stunned && state != states.crouch && state != states.shotguncrouch && state != states.shotguncrouchjump && state != states.boxxedpep && (state != states.pistol && sprite_index != spr_player_crouchshoot) && state != states.Sjumpprep && state != states.crouchslide && state != states.chainsaw && state != states.machroll && state != states.hurt && state != states.crouchjump && state != states.cheesepepstickup && state != states.cheesepepstickside && state != states.tumble && sprite_index != spr_playerN_jetpackslide)
 			mask_index = spr_player_mask;
 		else
 			mask_index = spr_crouchmask;

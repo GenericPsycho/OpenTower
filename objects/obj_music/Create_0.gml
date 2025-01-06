@@ -6,6 +6,7 @@ music_map = ds_map_create();
 music = noone;
 savedpillarpause = false;
 savedpanicpause = false;
+savedescapepause = false;
 savedmusicpause = false;
 savedsecretpause = false;
 savedpanicpos = 0;
@@ -15,6 +16,7 @@ pillarmusicID = fmod_event_create_instance("event:/music/pillarmusic");
 panicmusicP = fmod_event_create_instance("event:/music/pizzatime");
 panicmusicN = fmod_event_create_instance("event:/music/pizzatimenoise");
 panicmusicID = panicmusicP;
+escapeID = fmod_event_create_instance("event:/music/finalescape");
 kidspartychaseID = fmod_event_create_instance("event:/music/w5/kidspartychase");
 panicstart = false;
 
@@ -42,7 +44,6 @@ add_music(tower_2, "event:/music/hub", "event:/music/pillarmusic", false, hub_st
 add_music(tower_3, "event:/music/hub", "event:/music/pillarmusic", false, hub_state)
 add_music(tower_4, "event:/music/hub", "event:/music/pillarmusic", false, hub_state)
 add_music(tower_5, "event:/music/hub", "event:/music/pillarmusic", false, hub_state)
-add_music(tower_finalhallway, "event:/music/finalescape", noone, false) 
 add_music(tower_finalhallwaytitlecard, "event:/music/pillarmusic", noone, false) 
 add_music(tower_pizzafacehall, "event:/music/w5/finalhallway", noone, false) 
 add_music(tower_outside, "event:/sfx/misc/windloop", noone, false) 

@@ -16,6 +16,7 @@ if (place_meeting(x, y, obj_player) && sprite_index == spr_pizzaboxunopen)
 		instance_create(x, y, obj_taunteffect);
 		instance_create(x, y + 600, obj_itspizzatime);
 		global.panic = true;
+		global.lapcount = 1;
 		switch room
 		{
 			case floor2_roomtreasure:
@@ -54,7 +55,7 @@ if (place_meeting(x, y, obj_player) && sprite_index == spr_pizzaboxunopen)
 			if roomname == "strongcold"
 				sprite_index = spr_xmasshroomtoppin_intro;
 			else
-				sprite_index = spr_toppinshroom_intro;
+				sprite_index = scr_get_toppin_sprite("shroom", "intro");
 		}
 		if global.toppintotal < 5
 			obj_tv.message = "YOU NEED " + string(5 - global.toppintotal) + " MORE TOPPINS!";
@@ -78,7 +79,7 @@ if (place_meeting(x, y, obj_player) && sprite_index == spr_pizzaboxunopen)
 			if roomname == "strongcold"
 				sprite_index = spr_xmascheesetoppin_intro;
 			else
-				sprite_index = spr_toppincheese_intro;
+				sprite_index = scr_get_toppin_sprite("cheese", "intro");
 		}
 		instance_create(x, y, obj_taunteffect);
 		if global.toppintotal < 5
@@ -103,7 +104,7 @@ if (place_meeting(x, y, obj_player) && sprite_index == spr_pizzaboxunopen)
 			if roomname == "strongcold"
 				sprite_index = spr_xmastomatotoppin_intro;
 			else
-				sprite_index = spr_toppintomato_intro;
+				sprite_index = scr_get_toppin_sprite("tomato", "intro");
 		}
 		instance_create(x, y, obj_taunteffect);
 		if global.toppintotal < 5
@@ -128,7 +129,7 @@ if (place_meeting(x, y, obj_player) && sprite_index == spr_pizzaboxunopen)
 			if roomname == "strongcold"
 				sprite_index = spr_xmassausagetoppin_intro;
 			else
-				sprite_index = spr_toppinsausage_intro;
+				sprite_index = scr_get_toppin_sprite("sausage", "intro");
 		}
 		instance_create(x, y, obj_taunteffect);
 		if global.toppintotal < 5
@@ -153,7 +154,7 @@ if (place_meeting(x, y, obj_player) && sprite_index == spr_pizzaboxunopen)
 			if roomname == "strongcold"
 				sprite_index = spr_xmaspineappletoppin_intro;
 			else
-				sprite_index = spr_toppinpineapple_intro;
+				sprite_index = scr_get_toppin_sprite("pineapple", "intro");
 		}
 		instance_create(x, y, obj_taunteffect);
 		global.heattime = 60;

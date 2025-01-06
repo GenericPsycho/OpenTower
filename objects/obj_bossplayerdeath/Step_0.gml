@@ -9,8 +9,12 @@ with obj_player1
 		switch other.state
 		{
 			case states.jump:
-				if (sprite_index == spr_player_outofpizza1 && floor(image_index) == image_number - 1)
+				if ((sprite_index == spr_player_outofpizza1 || sprite_index == spr_playerE_outofpizza1) && floor(image_index) == image_number - 1)
+				{
 					sprite_index = spr_player_outofpizza2;
+					if character == "E"
+						sprite_index = spr_playerE_outofpizza2;
+				}
 				hsp = deathspeed * -xscale;
 				if (place_meeting(x + sign(hsp), y, obj_solid))
 				{
@@ -22,6 +26,8 @@ with obj_player1
 				{
 					image_index = 0;
 					sprite_index = spr_player_outofpizza3;
+					if character == "E"
+						sprite_index = spr_playerE_outofpizza3;
 					other.state = states.normal;
 					other.alarm[0] = 200;
 					other.alarm[2] = 150;
@@ -29,8 +35,12 @@ with obj_player1
 				break;
 		
 			case states.normal:
-				if (sprite_index == spr_player_outofpizza3 && floor(image_index) == image_number - 1)
+				if ((sprite_index == spr_player_outofpizza3 || sprite_index == spr_playerE_outofpizza3) && floor(image_index) == image_number - 1)
+				{
 					sprite_index = spr_player_outofpizza4;
+					if character == "E"
+						sprite_index = spr_playerE_outofpizza4;
+				}
 				hsp = deathspeed * -xscale;
 				deathspeed = Approach(deathspeed, 0, 0.1);
 				break;
@@ -60,9 +70,11 @@ with obj_player1
 					else
 					{
 						vsp = -3;
-						fmod_event_instance_set_parameter(snd_bossdeathN, "state", 1, true);
+						fmod_event_instance_set_parameter(snd_bossdeathN, "state", global.doisemode ? 2 : 1, true);
 						other.state = states.fall;
-						sprite_index = spr_playerN_bossdeath2;
+						sprite_index = global.doisemode ? spr_playerN_bossdeath2D : spr_playerN_bossdeath2;
+						if sprite_index == spr_playerN_bossdeath2D
+							global.killedbypeddito = true;
 						image_index = 0;
 					}
 				}

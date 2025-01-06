@@ -1,4 +1,4 @@
-if (staggerbuffer <= 0 && flickertime <= 0 && visible && (state == states.walk || (state == states.jump && sprite_index == spr_fakepeppino_bodyslamstart) || (state == states.freefall && sprite_index == spr_fakepeppino_bodyslamland) || (state == states.mach2 && attackspeed < 18) || state == states.Sjumpprep || (state == states.throwing && sprite_index != spr_fakepeppino_flailing)))
+if (staggerbuffer <= 0 && flickertime <= 0 && visible && (state == states.walk || (state == states.jump && (sprite_index == spr_fakepeppino_bodyslamstart || sprite_index == spr_ditto_bodyslamstart)) || (state == states.freefall && (sprite_index == spr_fakepeppino_bodyslamland || sprite_index == spr_ditto_bodyslamland)) || (state == states.mach2 && attackspeed < 18) || state == states.Sjumpprep || (state == states.throwing && sprite_index != spr_fakepeppino_flailing && sprite_index != spr_ditto_flailing)))
 {
 	var ix = -other.image_xscale;
 	if x != other.x
@@ -11,7 +11,7 @@ if (staggerbuffer <= 0 && flickertime <= 0 && visible && (state == states.walk |
 			image_xscale = ix;
 			hsp = -image_xscale * 20;
 			vsp = 0;
-			sprite_index = spr_fakepeppino_stagger;
+			sprite_index = obj_player1.character == "E" ? spr_ditto_stagger : spr_fakepeppino_stagger;
 			image_index = 0;
 		}
 		else
@@ -35,7 +35,7 @@ if (staggerbuffer <= 0 && flickertime <= 0 && visible && (state == states.walk |
 		vsp = -6;
 		thrown = false;
 		linethrown = false;
-		sprite_index = spr_fakepeppino_vulnerable;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_vulnerable : spr_fakepeppino_vulnerable;
 		stunned = 200;
 		flash = true;
 		repeat 4

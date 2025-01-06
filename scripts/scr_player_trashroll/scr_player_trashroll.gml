@@ -9,20 +9,32 @@ function scr_player_trashroll()
 	movespeed = max(3, movespeed);
 	if sprite_index != spr_playercorpsestart && sprite_index != spr_playercorpsesurf
 	{
-		if sprite_index != spr_player_trashjump && sprite_index != spr_player_trashjump2 && sprite_index != spr_player_trashfall
+		if ((sprite_index != spr_player_trashjump && sprite_index != spr_player_trashjump2 && sprite_index != spr_player_trashfall && sprite_index != spr_playerE_trashjump && sprite_index != spr_playerE_trashjump2 && sprite_index != spr_playerE_trashfall))
+		{
 			sprite_index = spr_player_trashslide;
+			if character == "E"
+				sprite_index = spr_playerE_trashslide;
+		}
 		else
 		{
-			if (floor(image_index) == image_number - 1 && sprite_index == spr_player_trashjump2)
+			if (floor(image_index) == image_number - 1 && (sprite_index == spr_player_trashjump2 || sprite_index == spr_playerE_trashjump2))
+			{
 				sprite_index = spr_player_trashfall;
-			if vsp > 0 && sprite_index == spr_player_trashjump
+				if character == "E"
+					sprite_index = spr_playerE_trashfall;
+			}
+			if vsp > 0 && (sprite_index == spr_player_trashjump || sprite_index == spr_playerE_trashjump)
 			{
 				sprite_index = spr_player_trashjump2;
+				if character == "E"
+					sprite_index = spr_playerE_trashjump2;
 				image_index = 0;
 			}
 			if grounded && vsp > 0
 			{
 				sprite_index = spr_player_trashslide;
+				if character == "E"
+					sprite_index = spr_playerE_trashslide;
 				image_speed = 0.35;
 			}
 		}

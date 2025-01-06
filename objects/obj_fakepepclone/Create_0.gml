@@ -18,6 +18,6 @@ state = states.transition;
 headID = -4;
 cooldown = 0;
 fmod_event_one_shot_3d("event:/sfx/fakepep/reform", x, y);
-sprite_index = spr_fakepeppino_reform;
+sprite_index = obj_player1.character == "E" ? spr_ditto_reform : spr_fakepeppino_reform;
 image_index = 0;
 image_speed = 0.35;

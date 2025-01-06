@@ -29,7 +29,7 @@ function swap_player(hurted = false, jumpscare = false)
 			if global.noisejetpack
 				noisepizzapepper = true;
 			else if global.leveltosave == "freezer"
-				global.noisejetpack = true;
+				global.noisejetpack = !global.doisemode ? true : false;
 		}
 		ispeppino = !ispeppino;
 		if ispeppino

@@ -26,6 +26,7 @@ if (!instance_exists(obj_backtohub_fadeout) && (!instance_exists(obj_pause) || o
 					if music != -4
 						fmod_event_instance_play(music.event);
 				}
+				global.lapcount = 1
 			}
 			global.heattime = 60;
 		}

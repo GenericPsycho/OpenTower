@@ -8,15 +8,19 @@ function scr_player_ratmountgrind()
 		xscale = move;
 		movespeed = Approach(movespeed, move * 6, 0.5);
 		sprite_index = spr_lonegustavo_hangwalk;
+		if character == "E"
+			sprite_index = spr_lonepika_hangwalk;
 	}
 	else
 	{
 		movespeed = Approach(movespeed, 0, 0.5);
 		sprite_index = spr_lonegustavo_hang;
+		if character == "E"
+			sprite_index = spr_lonepika_hang;
 	}
 	if !ispeppino
 	{
-		if sprite_index == spr_lonegustavo_hangwalk
+		if sprite_index == spr_lonegustavo_hangwalk || sprite_index == spr_lonepika_hangwalk
 			sprite_index = spr_playerN_glovesmove;
 		else
 			sprite_index = spr_playerN_glovesidle;
@@ -47,6 +51,8 @@ function scr_player_ratmountgrind()
 		{
 			state = states.ratmountjump;
 			sprite_index = spr_player_ratmountgroundpoundfall;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountgroundpoundfall;
 		}
 		else
 		{
@@ -64,12 +70,16 @@ function scr_player_ratmountgrind()
 			if key_down
 			{
 				sprite_index = spr_player_ratmountgroundpoundfall;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountgroundpoundfall;
 				vsp = 5;
 			}
 			else
 			{
 				image_index = 0;
 				sprite_index = spr_player_ratmountgroundpound;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountgroundpound;
 				vsp = -11;
 			}
 		}

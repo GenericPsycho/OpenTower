@@ -222,6 +222,8 @@ if (state == states.walk && obj_player1.isgustavo && !obj_player1.cutscene && ob
 		fmod_event_one_shot_3d("event:/sfx/pep/bumpwall", x, y);
 		brick = false;
 		sprite_index = spr_lonegustavo_idle;
+		if character == "E"
+			sprite_index = spr_lonepika_idle;
 		state = states.ratmount;
 	}
 }

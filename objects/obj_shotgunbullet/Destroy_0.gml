@@ -9,6 +9,8 @@ if pistol
 	with (instance_create(x, y, obj_sausageman_dead))
 	{
 		sprite_index = spr_peppinobullet_dead;
+		if obj_player1.character == "E"
+			sprite_index = spr_plumebullet_dead;
 		image_xscale = other.image_xscale;
 	}
 }

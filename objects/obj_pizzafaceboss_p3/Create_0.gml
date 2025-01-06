@@ -116,6 +116,13 @@ grounded = true;
 birdcreated = false;
 boundbox = false;
 spr_dead = spr_pizzahead_phase3stunned;
+if obj_player1.character == "E"
+{
+	stunfallspr = spr_meowth_phase3stunned;
+	grabbedspr = spr_meowth_phase3stunned;
+	spr_dead = spr_meowth_phase3stunned;
+	sprite_index = spr_meowth_phase3stunned;
+}
 important = false;
 heavy = true;
 paletteselect = 0;

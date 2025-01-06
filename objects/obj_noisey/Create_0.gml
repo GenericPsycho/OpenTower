@@ -43,7 +43,16 @@ grabbedby = 0;
 stuntouchbuffer = 0;
 ragedash = 0;
 ragecooldown = 0;
-if !obj_player1.ispeppino
+if obj_player1.character == "E"
+{
+	idlespr = spr_wynaut_walk;
+	stunfallspr = spr_wynaut_stun;
+	walkspr = spr_wynaut_walk;
+	grabbedspr = spr_wynaut_grabbed;
+	scaredspr = spr_wynaut_scared;
+	spr_dead = spr_wynaut_dead;
+}
+if ((!obj_player1.ispeppino) && !global.doisemode)
 {
 	spr_palette = spr_noiseboss_palette;
 	usepalette = true;

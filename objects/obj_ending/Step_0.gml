@@ -148,7 +148,7 @@ switch state
 			state++;
 			with (instance_create(0, 0, obj_introprop))
 			{
-				sprite_index = spr_theendshot;
+				sprite_index = obj_player1.character == "E" ? spr_theendshotE : spr_theendshot;
 				if !obj_player1.ispeppino
 					sprite_index = spr_theendshotN;
 				if global.swapmode

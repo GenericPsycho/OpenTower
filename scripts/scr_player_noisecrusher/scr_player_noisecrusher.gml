@@ -1,5 +1,7 @@
 function scr_player_noisecrusher()
 {
+	if global.doisemode && !noisecrusher
+		exit;
 	image_speed = 0.35;
 	if sprite_index == spr_playerN_noisecrusherland
 	{
@@ -85,6 +87,8 @@ function scr_player_noisecrusher()
 }
 function scr_player_do_noisecrusher()
 {
+	if global.doisemode && !noisecrusher
+		exit;
 	input_buffer_jump = 0;
 	movespeed = hsp * xscale;
 	state = states.ratmountbounce;

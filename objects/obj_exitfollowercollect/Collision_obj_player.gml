@@ -14,7 +14,7 @@ if (!other.ispeppino || global.swapmode)
 		if other.object_index == obj_fakepepfollower
 		{
 			use_palette = true;
-			spr_palette = spr_peppalette;
+			spr_palette = obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG);
 			paletteselect = 1;
 			if obj_player1.ispeppino
 				paletteselect = obj_player1.paletteselect;

@@ -1,5 +1,7 @@
 shader_set(global.Pal_Shader);
-var pal = spr_ratmountpalette;
+var pal = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
+if obj_player1.character == "E"
+	pal = spr_ratpikapalette;
 if !obj_player1.ispeppino
 	pal = obj_player1.spr_palette;
 if (sprite_index == switchend && instance_exists(obj_charswitch_intro) && obj_charswitch_intro.state != states.fall)

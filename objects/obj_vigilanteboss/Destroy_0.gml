@@ -20,14 +20,14 @@ if elitehit <= 0 && pizzahead && destroyable
 	{
 		with obj_bosscontroller
 		{
-			boss_hpsprite = spr_bossfight_noiseHP;
+			boss_hpsprite = obj_player1.character == "E" ? spr_bossfight_wobbuffetHP : spr_bossfight_noiseHP;
 			boss_palette = spr_bossfight_noisepalette
 		}
 		instance_destroy(spotlightID);
 		pizzahead = true;
 		flickertime = 0;
 		state = states.pizzaheadjump;
-		sprite_index = spr_playerN_jump;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_jump : spr_playerN_jump;
 		image_index = 0;
 		image_speed = 0.35;
 		hsp = 0;

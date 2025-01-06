@@ -13,6 +13,11 @@ money_y = 0;
 noisette = false;
 spr_helicopter = spr_stick_helicopter;
 kiss_snd = fmod_event_create_instance("event:/sfx/noisette/kiss");
+if obj_player1.character == "E"
+{
+	sprite_index = spr_gholdengo_idle;
+	spr_helicopter = spr_gholdengo_helicopter;
+}
 if (!obj_player1.ispeppino || global.swapmode)
 {
 	sprite_index = spr_noisettestick_idle;

@@ -13,12 +13,17 @@ else
 	fmod_event_one_shot_3d("event:/sfx/pep/bump", x, y);
 	with (instance_create(x, y, obj_sausageman_dead))
 	{
-		sprite_index = spr_playerN_noisebombdead;
-		usepalette = true;
-		spr_palette = other.spr_palette;
-		paletteselect = other.paletteselect;
-		oldpalettetexture = other.patterntexture;
-		vsp = -irandom_range(4, 6);
+		if ( global.doisemode)
+			sprite_index = spr_doiserock;
+		else
+		{
+			sprite_index = spr_playerN_noisebombdead;
+			usepalette = true;
+			spr_palette = other.spr_palette;
+			paletteselect = other.paletteselect;
+			oldpalettetexture = other.patterntexture;
+		}
+		vsp	= -irandom_range(4, 6);
 		hsp = sign(hsp) * 5;
 	}
 }

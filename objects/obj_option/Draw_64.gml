@@ -1,6 +1,6 @@
 draw_rectangle_color(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 0, 0, false);
 for (var i = 0; i < array_length(bg_alpha); i++)
-	draw_sprite_tiled_ext(spr_optionsBG, i, bg_x, bg_y, 1, 1, c_white, bg_alpha[i]);
+	draw_sprite_tiled_ext(global.solitude ? spr_optionsBG_EFTB : spr_optionsBG, i, bg_x, bg_y, 1, 1, c_white, bg_alpha[i]);
 
 if room != Mainmenu
 {
@@ -10,10 +10,10 @@ if room != Mainmenu
 if instance_exists(obj_keyconfig) || instance_exists(obj_screenconfirm) || instance_exists(obj_langselect)
 	exit;
 
-tdp_draw_set_font(lang_get_font("bigfont"));
+tdp_draw_set_font(lang_get_font(global.solitude ? "tutorialfont" : "bigfont"));
 tdp_draw_set_halign(fa_center);
 tdp_draw_set_valign(fa_middle);
-draw_set_color(c_white);
+draw_set_color(global.solitude ? c_red : c_white);
 
 var _os = optionselected;
 var m = menus[menu];
@@ -28,14 +28,14 @@ switch m.anchor
 	case anchor.center:
 		tdp_draw_set_halign(fa_center);
 		tdp_draw_set_valign(fa_top);
-		var c = c_white;
+		var c = global.solitude ? c_red : c_white;
 		var a = 1;
 		for (i = 0; i < len; i++)
 		{
 			var o = options[i];
-			c = c_gray;
+			c = global.solitude ? c_maroon : c_gray;
 			if i == _os
-				c = c_white;
+				c = global.solitude ? c_red : c_white;
 			var t = menu_lang_value(o.name);
 			menu_draw_text(xx, yy + (m.ypad * i), t, c, a);
 			if menu == menus.options
@@ -57,9 +57,9 @@ switch m.anchor
 			var _newline = false;
 			
 			o = options[i];
-			c = c_gray;
+			c = global.solitude ? c_maroon : c_gray;
 			if i == _os
-				c = c_white;
+				c = global.solitude ? c_red : c_white;
 			
 			if o.type == menutype.press && !o.localization
 				var txt = o.name;
@@ -91,11 +91,14 @@ switch m.anchor
 						spr = spr_slidericon2;
 					
 					draw_set_alpha(a);
+					shader_set(global.Pal_Shader);
+					pal_swap_set(spr_bloodlinepalette, global.solitude ? 1 : 0, false);
 					draw_sprite_ext(spr_slider, 0, x1, y1, 1, 1, 0, c_dkgray, a);
 					draw_sprite_ext(spr_slider, 0, x1, y1, 1, 1, 0, c, a);
 					draw_set_alpha(1);
 					
 					draw_sprite(spr, o.moving ? 1 : 0, x2, y2 - h);
+					shader_reset();
 					break;
 				
 				case menutype.multiple:

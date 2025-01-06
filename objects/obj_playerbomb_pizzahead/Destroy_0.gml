@@ -3,9 +3,9 @@ with (instance_create(targetx, targety, obj_explosioneffect))
 	image_speed = 0.4;
 	sprite_index = spr_bombexplosion;
 	depth = other.depth - 1;
-	scr_sound_multiple("event:/sfx/playerN/rushdownhit", x, y);
+	scr_sound_multiple("event:/modded-sfx/playerNfix/rushdownhit", x, y);
 	if other.punchcount <= 0
-		fmod_event_one_shot_3d("event:/sfx/playerN/rushdownend", x, y);
+		fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/rushdownend", x, y);
 }
 with target
 {

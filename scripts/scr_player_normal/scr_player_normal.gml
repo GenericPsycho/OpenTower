@@ -27,16 +27,30 @@ function state_player_normal()
 	var idlespr = spr_idle;
 	var movespr = spr_move;
 	if global.leveltosave == "freezer" && !global.noisejetpack
-		idlespr = spr_player_freezeridle;
+	{
+		idlespr = !ispeppino ? spr_playerN_freezeridle : spr_player_freezeridle;
+		if character == "E"
+			idlespr = spr_playerE_freezeridle;
+	}
 	if global.pistol && ispeppino
 	{
 		idlespr = spr_player_pistolidle;
 		movespr = spr_player_pistolwalk;
+		if character == "E"
+		{
+			idlespr = spr_playerE_pistolidle;
+			movespr = spr_playerE_pistolwalk;
+		}
 	}
 	if room == tower_soundtest && obj_soundtest.play
 	{
 		idlespr = spr_pepdance;
 		movespr = spr_pepdance;
+		if character == "E"
+		{
+			idlespr = spr_pludance;
+			movespr = spr_pludance;
+		}
 		if !ispeppino
 		{
 			idlespr = spr_noise_vulnerable2;
@@ -82,6 +96,8 @@ function state_player_normal()
 	hsp = (move * movespeed) + (railmovespeed * raildir);
 	if move != 0
 	{
+		if room == boss_pizzaface || room == tower_outside
+			notification_push(notifs.player_ismoving, [room])
 		if (move != 0) // redundant...
 			xscale = move;
 		if movespeed < maxmovespeed
@@ -102,7 +118,11 @@ function state_player_normal()
 			if shoot
 				sprite_index = spr_pistolwalk;
 			else if mort
+			{
 				sprite_index = spr_player_mortwalk;
+				if character == "E"
+					sprite_index = spr_playerE_mortwalk;
+			}
 			else if breakdance_pressed >= breakdance_max
 				sprite_index = spr_breakdance;
 			else if (global.fill <= 0 && !instance_exists(obj_ghostcollectibles))
@@ -121,7 +141,7 @@ function state_player_normal()
 		{
 			if steppybuffer > 0
 				steppybuffer--;
-			else if sprite_index != spr_breakdance && sprite_index != spr_pepdance && sprite_index != spr_noise_vulnerable2
+			else if sprite_index != spr_breakdance && sprite_index != spr_pepdance && sprite_index != spr_noise_vulnerable2 && sprite_index != spr_pludance
 			{
 				create_particle(x, y + 43, particle.cloudeffect, 0);
 				steppybuffer = 12;
@@ -155,7 +175,7 @@ function state_player_normal()
 				{
 					idleanim = random_range(0, 100);
 					if (irandom(100) <= 25)
-						fmod_event_one_shot_3d("event:/sfx/voice/myea", x, y);
+						fmod_event_one_shot_3d("event:/modded-sfx/voice/yeah", x, y)
 					image_index = 0;
 					if idleanim <= 16
 						sprite_index = spr_idle1;
@@ -178,9 +198,17 @@ function state_player_normal()
 					start_running = true;
 					movespeed = 0;
 					if shoot
+					{
 						sprite_index = spr_player_pistolidle;
+						if character == "E"
+							sprite_index = spr_playerE_pistolidle;
+					}
 					else if mort
+					{
 						sprite_index = spr_player_mortidle;
+						if character == "E"
+							sprite_index = spr_playerE_mortidle;
+					}
 					else if breakdance_pressed >= breakdance_max
 						sprite_index = spr_breakdance;
 					else if (global.fill <= 0 && !instance_exists(obj_ghostcollectibles))
@@ -217,16 +245,18 @@ function state_player_normal()
 		movespeed -= deccel;
 	if landAnim
 	{
-		if sprite_index == spr_player_mortland
+		if sprite_index == spr_player_mortland || sprite_index == spr_playerE_mortland
 		{
 			if floor(image_index) == image_number - 1
 			{
 				landAnim = false;
 				sprite_index = spr_player_mortidle;
+				if character == "E"
+					sprite_index = spr_playerE_mortidle;
 				image_index = 0;
 			}
 		}
-		else if sprite_index == spr_player_pistolland
+		else if sprite_index == spr_player_pistolland || sprite_index == spr_playerE_pistolland
 		{
 			if floor(image_index) == image_number - 1
 			{
@@ -304,7 +334,11 @@ function state_player_normal()
 				if shotgunAnim
 					sprite_index = spr_shotgunjump;
 				else if global.pistol && ispeppino
+				{
 					sprite_index = spr_player_pistoljump1;
+					if character == "E"
+						sprite_index = spr_playerE_pistoljump1;
+				}
 				image_index = 0;
 			}
 			particle_set_scale(particle.highjumpcloud2, xscale, 1);
@@ -335,7 +369,11 @@ function state_player_normal()
 			else
 				sprite_index = spr_shotgunfall;
 			if global.pistol && ispeppino
+			{
 				sprite_index = spr_player_pistoljump2;
+				if character == "E"
+					sprite_index = spr_playerE_pistoljump2;
+			}
 			image_index = 0;
 			jumpAnim = false;
 		}
@@ -373,7 +411,7 @@ function state_player_normal()
 		if ispeppino
 			vsp = -14;
 		else
-			vsp = -20;
+			vsp = global.doisemode ? -14 : -20;
 		
 		movespeed = hsp;
 		if key_attack // high jump going left
@@ -397,11 +435,14 @@ function state_player_normal()
 	switch character
 	{
 		case "P":
+		case "E":
 			if key_attack && state != states.handstandjump && !place_meeting(x + xscale, y, obj_solid) && (!place_meeting(x, y + 1, obj_iceblockslope) || !place_meeting(x + (xscale * 5), y, obj_solid)) && !global.kungfu
 			{
 				if !global.pistol || pistolanim == -4
 				{
 					sprite_index = spr_mach1;
+					if room == boss_pizzaface || room == tower_outside
+						notification_push(notifs.player_ismoving, [room])
 					image_index = 0;
 					state = states.mach2;
 					
@@ -423,7 +464,7 @@ function state_player_normal()
 		case "N":
 			if (pogochargeactive || pizzapepper > 0)
 			{
-				if key_attack2
+				if key_attack2 && sprite_index != spr_playerN_trash
 				{
 					state = states.Sjumpprep;
 					image_index = 0;

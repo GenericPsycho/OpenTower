@@ -24,7 +24,7 @@ switch state
 	case states.jetpackstart:
 		scr_noise_jetpackstart();
 		break;
-	case states.jetpack:
+	case states.jetpack2:
 		scr_noise_jetpack();
 		break;
 	case states.bounce:
@@ -91,7 +91,7 @@ switch state
 		scr_enemy_staggered();
 		break;
 }
-if sprite_index == spr_playerN_fightball
+if sprite_index == spr_playerN_fightball || sprite_index == spr_playerW_fightball
 {
 	if fightball_buffer1 > 0
 		fightball_buffer1--;
@@ -112,7 +112,7 @@ if sprite_index == spr_playerN_fightball
 			vsp = -irandom_range(5, 10);
 	}
 }
-boss_update_pizzaheadKO(spr_bossfight_noiseHP, spr_bossfight_noisepalette);
+boss_update_pizzaheadKO((obj_player1.character == "E" ? spr_bossfight_wobbuffetHP : spr_bossfight_noiseHP), spr_bossfight_noisepalette);
 with obj_noisey
 {
 	var t = id;
@@ -124,7 +124,7 @@ with obj_noisey
 }
 if !doise
 	boss_hurt_gustavo();
-if state == states.phase1hurt && doise
+if (state == states.phase1hurt && (doise && !global.doisemode))
 {
 	image_speed = 0.35;
 	image_index = obj_player1.image_index;
@@ -135,7 +135,7 @@ if (droptrap && (state == states.walk || state == states.stun))
 	{
 		droptrap = false;
 		state = states.droptrap;
-		sprite_index = spr_noise_copyexplode;
+		sprite_index = obj_player1.character == "E" ? spr_wobbuffet_copyexplode : spr_noise_copyexplode;
 		image_index = 0;
 	}
 }
@@ -175,7 +175,7 @@ if prevhp != elitehit
 	{
 		pizzahead_subhp = pizzahead_maxsubhp;
 		if (irandom(100) <= 25)
-			fmod_event_one_shot_3d("event:/sfx/voice/noisenegative", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/voice/noiseisnothappy", x, y)
 		avaiblemoves = [];
 		if lastattack == 0
 			skateboardhit += 1;
@@ -229,14 +229,14 @@ if ((!invincible || ((state == states.walk && flickertime <= 0) || (state == sta
 	alarm[5] = 0.15 * room_speed;
 else if (invincible && (state != states.walk || flickertime > 0) && (state != states.stun || savedthrown))
 	flash = false;
-if doise && pizzahead
+if ((!obj_player1.ispeppino || global.swapmode) && !global.doisemode && pizzahead)
 {
 	elitehit = 0;
 	prevhp = 0;
 	invincible = true;
 	flash = false;
 }
-if ((state == states.mach2 || state == states.machslide || state == states.jetpack || state == states.bounce || state == states.pogo) && alarm[4] < 0)
+if ((state == states.mach2 || state == states.machslide || state == states.jetpack2 || state == states.bounce || state == states.pogo) && alarm[4] < 0)
 	alarm[4] = 5;
 mask_index = spr_player_mask;
 if state != states.stun

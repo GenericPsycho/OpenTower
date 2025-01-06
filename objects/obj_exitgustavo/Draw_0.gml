@@ -1,4 +1,4 @@
-if ((!obj_player1.ispeppino || global.swapmode) && stick)
+if ((!obj_player1.ispeppino || global.swapmode) && stick == 1)
 	draw_self();
 else
 {

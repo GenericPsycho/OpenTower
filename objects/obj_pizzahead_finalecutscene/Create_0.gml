@@ -19,3 +19,5 @@ if room == boss_pizzafacefinale
 	layer_vspeed(beatdown2_lay, 1.7);
 	layer_vspeed(beatdown1_lay, 1.8);
 }
+if obj_player1.character == "E"
+	sprite_index = spr_meowth_beatdown1

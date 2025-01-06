@@ -1,5 +1,7 @@
 function scr_player_ratmounthurt()
 {
+	if global.killedbypeddito
+		exit;
 	hsp = -xscale * movespeed;
 	landAnim = false;
 	jumpAnim = false;
@@ -15,8 +17,16 @@ function scr_player_ratmounthurt()
 		movespeed = 0;
 	}
 	if brick
+	{
 		sprite_index = spr_player_ratmounthurt;
+		if character == "E"
+			sprite_index = spr_playerK_ratmounthurt;
+	}
 	else
+	{
 		sprite_index = spr_lonegustavo_hurt;
+		if character == "E"
+			sprite_index = spr_lonepika_hurt;
+	}
 	image_speed = 0.35;
 }

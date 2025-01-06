@@ -7,7 +7,7 @@ if use_collision
 		{
 			with obj_player1
 			{
-				sprite_index = spr_player_gnomecutscene1;
+				sprite_index = obj_player1.character == "E" ? spr_playerE_gnomecutscene1 : spr_player_gnomecutscene1;
 				if !ispeppino
 					sprite_index = spr_playerN_bosscutscene1;
 			}
@@ -20,9 +20,9 @@ if use_collision
 				fmod_event_one_shot_3d("event:/sfx/voice/peppermanscared", x, y);
 			if sprite_index == spr_playerV_hurt
 				fmod_event_one_shot_3d("event:/sfx/voice/vigiangry", x, y);
-			if sprite_index == spr_playerN_hurt
-				fmod_event_one_shot_3d("event:/sfx/voice/noisepositive", x, y);
-			if sprite_index == spr_fakepeppino_stun
+			if sprite_index == spr_playerN_hurt || sprite_index == spr_playerW_hurt
+				fmod_event_one_shot_3d("event:/modded-sfx/voice/noiseisactuallyhappy", x, y)
+			if sprite_index == spr_fakepeppino_stun || sprite_index == spr_ditto_stun
 				fmod_event_one_shot_3d("event:/sfx/voice/fakepeppositive", x, y);
 			sprite_index = angryspr;
 		}

@@ -26,31 +26,40 @@ function scr_palette_textureOLD()
 function scr_get_texture_array()
 {
 	return [
-		["funny", spr_peppattern1],
-		["itchy", spr_peppattern2],
-		["pizza", spr_peppattern3],
-		["stripes", spr_peppattern4],
-		["goldemanne", spr_peppattern5],
-		["bones", spr_peppattern6],
-		["pp", spr_peppattern7],
-		["war", spr_peppattern8],
-		["john", spr_peppattern9],
-		["candy", spr_peppattern10],
-		["bloodstained", spr_peppattern11],
-		["bat", spr_peppattern12],
-		["pumpkin", spr_peppattern13],
-		["fur", spr_peppattern14],
-		["flesh", spr_peppattern15],
+		["funny", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern1 : spr_peppattern1) : spr_peppattern1M],
+		["itchy", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern2 : spr_peppattern2) : spr_peppattern2M],
+		["pizza", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern3 : spr_peppattern3) : spr_peppattern3M],
+		["stripes", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern4 : spr_peppattern4) : spr_peppattern4M],
+		["goldemanne", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern5 : spr_peppattern5) : spr_peppattern5M],
+		["bones", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern6 : spr_peppattern6) : spr_peppattern6M],
+		["pp", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern7 : spr_peppattern7) : spr_peppattern7M],
+		["war", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern8 : spr_peppattern8) : spr_peppattern8M],
+		["john", !global.option_datoggle ? (obj_player1.character == "E" ? spr_plupattern9 : spr_peppattern9) : spr_peppattern9M],
+		["candy", !global.option_datoggle ? spr_peppattern10 : spr_peppattern10M],
+		["bloodstained", !global.option_datoggle ? spr_peppattern11 : spr_peppattern11M],
+		["bat", !global.option_datoggle ? spr_peppattern12 : spr_peppattern12M],
+		["pumpkin", !global.option_datoggle ? spr_peppattern13 : spr_peppattern13M],
+		["fur", !global.option_datoggle ? spr_peppattern14 : spr_peppattern14M],
+		["flesh", !global.option_datoggle ? spr_peppattern15 : spr_peppattern15M],
 		
-		["racer", spr_noisepattern1],
-		["comedian", spr_noisepattern2],
-		["banana", spr_noisepattern3],
-		["noiseTV", spr_noisepattern4],
-		["madman", spr_noisepattern5],
-		["bubbly", spr_noisepattern6],
-		["welldone", spr_noisepattern7],
-		["grannykisses", spr_noisepattern8],
-		["towerguy", spr_noisepattern9]
+		["racer", !global.option_datoggle ? spr_noisepattern1 : spr_noisepattern1M],
+		["comedian", !global.option_datoggle ? spr_noisepattern2 : spr_noisepattern2M],
+		["banana", !global.option_datoggle ? spr_noisepattern3 : spr_noisepattern3M],
+		["noiseTV", !global.option_datoggle ? spr_noisepattern4 : spr_noisepattern4M],
+		["madman", !global.option_datoggle ? spr_noisepattern5 : spr_noisepattern5M],
+		["bubbly", !global.option_datoggle ? spr_noisepattern6 : spr_noisepattern6M],
+		["welldone", !global.option_datoggle ? spr_noisepattern7 : spr_noisepattern7M],
+		["grannykisses", !global.option_datoggle ? spr_noisepattern8 : spr_noisepattern8M],
+		["towerguy", !global.option_datoggle ? spr_noisepattern9 : spr_noisepattern9M],
+		
+		["nge", spr_dapattern1],
+		["mn", spr_dapattern2],
+		["sg", spr_dapattern3],
+		["si", spr_dapattern4],
+		["cocs", spr_dapattern5],
+		["vv", spr_dapattern6],
+		["stfg", spr_dapattern7],
+		["gp", spr_dapattern8]
 	];
 }
 function scr_get_texture_palette(texture)
@@ -92,7 +101,7 @@ function scr_palette_texture(sprite, subimg, x, y, xscale, yscale, rot = 0, col 
 		gui = false;
 	
 	if shader_current() == global.Pal_Shader
-		pal_swap_set(spr_peppalette, 1, false);
+		pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 1, false);
 	
 	if !surface_exists(global.palettesurface)
 		global.palettesurface = surface_create(960, 540);

@@ -21,10 +21,14 @@ switch state
 			screen_clear(make_color_rgb(88, 192, 0));
 			draw_sprite(spr_oktoberfestbg, 0, SCREEN_X, SCREEN_Y);
 			if obj_player1.ispeppino
-				draw_sprite(spr_oktoberfest, 0, SCREEN_X, SCREEN_Y);
+				draw_sprite(obj_player1.character == "E" ? spr_oktoberfestE : spr_oktoberfest, 0, SCREEN_X, SCREEN_Y);
 			else
 				draw_sprite(spr_oktoberfestN, 0, SCREEN_X, SCREEN_Y);
 		}
+		if ((!obj_player1.ispeppino) && global.doisemode)
+            fmod_set_parameter("doiseisdead", 1, true)
+        if instance_exists(obj_peddito)
+            instance_destroy(obj_peddito)
 		break;
 	case 2:
 		draw_sprite(sprite_index, image_index, 0, 0);

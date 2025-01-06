@@ -9,6 +9,8 @@ if playerid.visible == 0
 		{
 			state = states.ratmount;
 			sprite_index = spr_player_ratmountidle;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountidle;
 		}
 		else
 			state = states.normal;

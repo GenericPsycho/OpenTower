@@ -1,4 +1,6 @@
 rank_spr = spr_rank_holyshit;
+if obj_player1.character == "E"
+	rank_spr = spr_rank_holyshitE
 rank_name = "";
 music = fmod_event_create_instance("event:/music/finalrank");
 fmod_event_instance_play(music);
@@ -6,15 +8,21 @@ bg_index = 0;
 bg_x = 0;
 bg_y = 0;
 ispeppino = obj_player1.ispeppino;
-snd_drumroll = fmod_event_create_instance("event:/sfx/playerN/finaljudgement_drumroll");
-snd_verdict = fmod_event_create_instance("event:/sfx/playerN/finaljudgement_verdict");
-snd_start = fmod_event_create_instance("event:/sfx/playerN/finaljudgement_start");
+snd_drumroll = fmod_event_create_instance("event:/modded-sfx/playerNfix/finaljudgement_drumroll");
+snd_verdict = fmod_event_create_instance("event:/modded-sfx/playerNfix/finaljudgement_verdict");
+snd_start = fmod_event_create_instance("event:/modded-sfx/playerNfix/finaljudgement_start");
 if !ispeppino
 	fmod_event_instance_play(snd_start);
 sprite_index = spr_finaljudgement;
+if obj_player1.character == "E"
+	sprite_index = spr_finaljudgementE;
 image_speed = 0.35;
 if !ispeppino
+{
 	sprite_index = spr_finaljudgementN;
+	if ( global.doisemode)
+        sprite_index = spr_finaljudgementD
+}
 fade = 1;
 state = 0; // not an enum
 introbuffer = 300;
@@ -73,24 +81,31 @@ var r = "yousuck";
 switch rank_spr
 {
 	case spr_rank_wow:
+	case spr_rank_wowE:
 		r = "wow";
 		break;
 	case spr_rank_notbad:
+	case spr_rank_notbadE:
 		r = "notbad";
 		break;
 	case spr_rank_nojudgement:
+	case spr_rank_nojudgementE:
 		r = "nojudgement";
 		break;
 	case spr_rank_confused:
+	case spr_rank_confusedE:
 		r = "confused";
 		break;
 	case spr_rank_holyshit:
+	case spr_rank_holyshitE:
 		r = "holyshit";
 		break;
 	case spr_rank_quick:
+	case spr_rank_quickE:
 		r = "quick";
 		break;
 	case spr_rank_officer:
+	case spr_rank_officerE:
 		r = "officer";
 		break;
 }
@@ -99,58 +114,129 @@ rank_name = r;
 switch rank_spr
 {
 	case spr_rank_yousuck:
+	case spr_rank_yousuckE:
 		bg_index = 0;
 		break;
 	case spr_rank_wow:
+	case spr_rank_wowE:
 		bg_index = 6;
 		break;
 	case spr_rank_notbad:
+	case spr_rank_notbadE:
 		bg_index = 5;
 		break;
 	case spr_rank_nojudgement:
+	case spr_rank_nojudgementE:
 		bg_index = 4;
 		break;
 	case spr_rank_confused:
+	case spr_rank_confusedE:
 		bg_index = 1;
 		break;
 	case spr_rank_holyshit:
+	case spr_rank_holyshitE:
 		bg_index = 7;
 		break;
 	case spr_rank_quick:
+	case spr_rank_quickE:
 		bg_index = 2;
 		break;
 	case spr_rank_officer:
+	case spr_rank_officerE:
 		bg_index = 3;
 		break;
 }
-if !ispeppino
+if obj_player1.character == "E"
 {
 	switch rank_spr
 	{
 		case spr_rank_yousuck:
-			rank_spr = spr_rankN1;
+			rank_spr = spr_rank_yousuckE;
 			break;
 		case spr_rank_confused:
-			rank_spr = spr_rankN2;
+			rank_spr = spr_rank_confusedE;
 			break;
 		case spr_rank_officer:
-			rank_spr = spr_rankN3;
+			rank_spr = spr_rank_officerE;
 			break;
 		case spr_rank_nojudgement:
-			rank_spr = spr_rankN4;
+			rank_spr = spr_rank_nojudgementE;
 			break;
 		case spr_rank_notbad:
-			rank_spr = spr_rankN5;
+			rank_spr = spr_rank_notbadE;
 			break;
 		case spr_rank_wow:
-			rank_spr = spr_rankN_wow;
+			rank_spr = spr_rank_wowE;
 			break;
 		case spr_rank_quick:
-			rank_spr = spr_rankN_quick;
+			rank_spr = spr_rank_quickE;
 			break;
 		case spr_rank_holyshit:
-			rank_spr = spr_rankN_holyshit;
+			rank_spr = spr_rank_holyshitE;
 			break;
+	}
+}
+if !ispeppino
+{
+	if !global.doisemode
+	{
+		switch rank_spr
+		{
+			case spr_rank_yousuck:
+				rank_spr = spr_rankN1;
+				break;
+			case spr_rank_confused:
+				rank_spr = spr_rankN2;
+				break;
+			case spr_rank_officer:
+				rank_spr = spr_rankN3;
+				break;
+			case spr_rank_nojudgement:
+				rank_spr = spr_rankN4;
+				break;
+			case spr_rank_notbad:
+				rank_spr = spr_rankN5;
+				break;
+			case spr_rank_wow:
+				rank_spr = spr_rankN_wow;
+				break;
+			case spr_rank_quick:
+				rank_spr = spr_rankN_quick;
+				break;
+			case spr_rank_holyshit:
+				rank_spr = spr_rankN_holyshit;
+				break;
+		}
+	}
+	else
+	{
+		switch rank_spr
+		{
+			case spr_rank_yousuck:
+				rank_spr = spr_rankD1;
+				break;
+			case spr_rank_confused:
+				rank_spr = spr_rankD2;
+				break;
+			case spr_rank_officer:
+				rank_spr = spr_rankD3;
+				break;
+			case spr_rank_nojudgement:
+				rank_spr = spr_rankD4;
+				break;
+			case spr_rank_notbad:
+				rank_spr = spr_rankD5;
+				break;
+			case spr_rank_wow:
+				rank_spr = spr_rankD_wow;
+				break;
+			case spr_rank_quick:
+				rank_spr = spr_rankD_quick;
+				break;
+			case spr_rank_holyshit:
+				rank_spr = spr_rankD_holyshit;
+				break;
+		}
 	}
 }
 

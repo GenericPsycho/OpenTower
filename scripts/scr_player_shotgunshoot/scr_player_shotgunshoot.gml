@@ -46,7 +46,7 @@ function scr_player_shotgunshoot()
 		{
 			minigunshot--;
 			minigunbuffer = 1.5;
-			fmod_event_one_shot_3d("event:/sfx/playerN/minigunshot", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/minigunshot", x, y);
 			if sprite_index != spr_playerN_minigundown
 			{
 				with (instance_create(x + (xscale * 60), y + 27, obj_shotgunbullet))

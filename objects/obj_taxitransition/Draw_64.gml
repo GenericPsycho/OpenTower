@@ -4,10 +4,12 @@ if start
 	shader_set(global.Pal_Shader);
 	var cy = irandom_range(-shake_mag, shake_mag);
 	pattern_set(global.Base_Pattern_Color, sprite_index, image_index, 1, 1, global.palettetexture);
-	if sprite_index != spr_taxitransition_gus
-		pal_swap_set(obj_player1.spr_palette, obj_player1.paletteselect, false);
+	if sprite_index == spr_taxitransition_gus
+		pal_swap_set(global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG, obj_player1.paletteselect, false);
+	else if sprite_index == spr_taxitransition_pika
+		pal_swap_set(spr_ratpikapalette, obj_player1.paletteselect, false);
 	else
-		pal_swap_set(spr_ratmountpalette, obj_player1.paletteselect, false);
+		pal_swap_set(obj_player1.spr_palette, obj_player1.paletteselect, false);
 	draw_sprite(sprite_index, image_index, 0, cy);
 	pattern_reset();
 	reset_shader_fix();

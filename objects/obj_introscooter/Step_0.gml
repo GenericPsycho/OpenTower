@@ -27,7 +27,10 @@ switch state
 		break;
 	case 3:
 		fade = Approach(fade, 1, 0.1);
-		fmod_event_one_shot("event:/sfx/intro/pepgustavointro");
+		if obj_player1.character == "E"
+			fmod_event_one_shot("event:/modded-sfx/intro/plumeintro");
+		else
+			fmod_event_one_shot("event:/sfx/intro/pepgustavointro");
 		if fade >= 1
 		{
 			state++;
@@ -43,11 +46,15 @@ switch state
 				with (instance_create(246, 405, obj_introprop))
 				{
 					sprite_index = spr_towerintro_peppino;
+					if obj_player1.character == "E"
+						sprite_index = spr_towerintro_plume;
 					depth = -8;
 				}
 				with (instance_create(136, 416, obj_introprop))
 				{
 					sprite_index = spr_towerintro_gustavo;
+					if obj_player1.character == "E"
+						sprite_index = spr_towerintro_pika
 					depth = -7;
 				}
 			}

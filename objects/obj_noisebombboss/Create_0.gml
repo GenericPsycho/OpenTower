@@ -9,3 +9,4 @@ hsp_carry = 0;
 vsp_carry = 0;
 platformid = 0;
 grounded = false;
+sprite_index = obj_player1.character == "E" ? spr_playerW_noisebomb : spr_playerN_noisebomb

@@ -8,9 +8,9 @@ hsp_carry = 0;
 vsp_carry = 0;
 grav = 0.5;
 platformid = -4;
-idlespr = spr_toppincheese;
-movespr = spr_toppincheese_run;
-tauntspr = spr_toppincheese_taunt;
+idlespr = scr_get_toppin_sprite("cheese", "idle");
+movespr = scr_get_toppin_sprite("cheese", "run");
+tauntspr = scr_get_toppin_sprite("cheese", "taunt")
 depth = 1;
 while (scr_solid(x, y))
 	y--;

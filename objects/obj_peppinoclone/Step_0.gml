@@ -22,7 +22,7 @@ switch state
 				if cooldown <= 0
 				{
 					state = states.punch;
-					sprite_index = spr_pepclone_attack;
+					sprite_index = obj_player1.character == "E" ? spr_pluclone_attack : spr_pepclone_attack;
 					image_index = 0;
 					shot = false;
 				}
@@ -38,10 +38,12 @@ switch state
 					else
 						sprite_index = idlespr;
 				}
-				else if sprite_index != spr_player_jump && sprite_index != spr_player_fall
-					sprite_index = spr_player_fall;
+				else if sprite_index != spr_player_jump && sprite_index != spr_player_fall && sprite_index != spr_playerE_jump && sprite_index != spr_playerE_fall
+					sprite_index = obj_player1.character == "E" ?  spr_playerE_fall : spr_player_fall;
 				else if (sprite_index == spr_player_jump && floor(image_index) == image_number - 1)
 					sprite_index = spr_player_fall;
+					else if (sprite_index == spr_playerE_jump && floor(image_index) == image_number - 1)
+					sprite_index = spr_playerE_fall;
 				var inst_front = collision_line(x, y + 25, x + (sign(hsp) * 78), y + 25, obj_solid, false, true);
 				var inst_down = collision_line(x + (sign(hsp) * 16), y, x + (sign(hsp) * 16), y + 64, obj_solid, false, true);
 				var inst_down2 = collision_line(x + (sign(hsp) * 16), y, x + (sign(hsp) * 16), y + 64, obj_platform, false, true);
@@ -49,7 +51,7 @@ switch state
 				if (((!place_meeting(x, y + 1, obj_slope) && (inst_front != -4 || inst_up != -4)) || (inst_down == noone && inst_down2 == noone)) && targetplayer.y <= (y + 32) && grounded && state != states.charge)
 				{
 					vsp = -11;
-					sprite_index = spr_player_jump;
+					sprite_index = obj_player1.character == "E" ? spr_playerE_jump : spr_player_jump;
 					image_index = 0;
 				}
 			}

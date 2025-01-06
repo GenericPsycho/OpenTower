@@ -1,4 +1,4 @@
-if room == rm_editor
+if room == rm_editor || room == tower_entrancehall
 	exit;
 if (ds_list_find_index(global.saveroom, id) == -1 && global.snickchallenge == 0)
 {

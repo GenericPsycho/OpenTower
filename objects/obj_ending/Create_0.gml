@@ -7,6 +7,13 @@ credits = [
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_music"), "%", "\"")],
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_sfx"), "%", "\"")],
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mort"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod1"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod2"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod3"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod4"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod5"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod6"), "%", "\"")],
+	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_mod7"), "%", "\"")],
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_playtester1"), "%", "\"")],
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_playtester2"), "%", "\"")],
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_playtester3"), "%", "\"")],
@@ -22,7 +29,9 @@ credits = [
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_keyword2"), "%", "\"")],
 	[noone, string_replace_all(lang_get_value_newline_raw("en", "credits_sprites"), "%", "\"")],
 	[0, noone], [1, noone], [2, noone], [3, noone], [4, noone], [5, noone], [6, noone], [7, noone], [9, noone], [10, noone], [11, noone], [12, noone],
-	[noone, lang_get_value_newline("credits_fmod")]
+	[noone, lang_get_value_newline("credits_fmod")],
+	[noone, lang_get_value_newline("credits_thanks")],
+	[noone, lang_get_value_newline("credits_takecare")]
 ];
 for (var i = 0; i < array_length(credits); i++)
 {
@@ -51,7 +60,7 @@ introbuffer = 0;
 
 // random background baddies
 spawn_arr = [
-	spr_forknight_walk, spr_slimemove, spr_pepgoblin, spr_ancho, spr_pizzagoblin_walk,
+	spr_forknight_walk, global.extras_sendoff ? spr_miniwoonmove : spr_slimemove, spr_pepgoblin, spr_ancho, spr_pizzagoblin_walk,
 	spr_badrat_walk, spr_banditochicken_chase, spr_tank_walk, spr_bigcheese_walk,
 	spr_canongoblin_walk, spr_robot_walk, spr_coolpinea, spr_fencer_charge, spr_farmer1_walk,
 	spr_farmer2_walk, spr_peasanto_walk, spr_ghostknight_move, spr_ghoul_attack,
@@ -62,12 +71,19 @@ spawn_arr = [
 	spr_soldier_walk, spr_swedishmonkey_walk, spr_shrimp_walk, spr_treasureguy_escape
 ];
 
+if global.extras_anchovies
+	spawn_arr = [spr_ancho]
+
 // scene
 var _noise = !obj_player1.ispeppino;
 if global.swapmode
 	_noise = true;
 if _noise
+{
 	spawn_arr = [spr_playerN_move];
+	if global.doisemode
+		spawn_arr = [spr_playerN_doiseskate]
+}
 
 with (instance_create(0, 0, obj_introprop))
 {
@@ -76,35 +92,56 @@ with (instance_create(0, 0, obj_introprop))
 }
 with (instance_create(0, 0, obj_introprop))
 {
-	sprite_index = spr_towerending;
+	sprite_index = obj_player1.character == "E" ? spr_towerendingE : spr_towerending;
 	depth = -7;
 }
 if !_noise
 {
-	with (instance_create(0, 0, obj_introprop))
+	if obj_player1.character != "E"
 	{
-		sprite_index = spr_towerending_bosses;
-		depth = -8;
+		with (instance_create(0, 0, obj_introprop))
+		{
+			sprite_index = spr_towerending_bosses;
+			depth = -8;
+		}
+		with (instance_create(145, 345, obj_introprop))
+		{
+			sprite_index = spr_towerending_mrstick;
+			depth = -8;
+		}
+		with (instance_create(369, 409, obj_introprop))
+		{
+			sprite_index = spr_towerending_gustavo;
+			depth = -8;
+		}
+		with (instance_create(484, 386, obj_introprop))
+		{
+			sprite_index = spr_towerending_brick;
+			depth = -8;
+		}
+		with (instance_create(288, 408, obj_introprop))
+		{
+			sprite_index = spr_towerending_peppino;
+			depth = -9;
+		}
 	}
-	with (instance_create(145, 345, obj_introprop))
+	else
 	{
-		sprite_index = spr_towerending_mrstick;
-		depth = -8;
-	}
-	with (instance_create(369, 409, obj_introprop))
-	{
-		sprite_index = spr_towerending_gustavo;
-		depth = -8;
-	}
-	with (instance_create(484, 386, obj_introprop))
-	{
-		sprite_index = spr_towerending_brick;
-		depth = -8;
-	}
-	with (instance_create(288, 408, obj_introprop))
-	{
-		sprite_index = spr_towerending_peppino;
-		depth = -9;
+		with (instance_create(369, 409, obj_introprop))
+		{
+			sprite_index = spr_towerending_pika;
+			depth = -8;
+		}
+		with (instance_create(484, 386, obj_introprop))
+		{
+			sprite_index = spr_towerending_brick;
+			depth = -8;
+		}
+		with (instance_create(288, 408, obj_introprop))
+		{
+			sprite_index = spr_towerending_plume;
+			depth = -9;
+		}
 	}
 }
 else
@@ -119,10 +156,13 @@ else
 		sprite_index = spr_towerending_noise;
 		depth = -9;
 	}
-	with (instance_create(490, 373, obj_introprop))
+	if !global.doisemode
 	{
-		sprite_index = spr_towerending_noisey;
-		depth = -9;
+		with (instance_create(490, 373, obj_introprop))
+		{
+			sprite_index = spr_towerending_noisey;
+			depth = -9;
+		}
 	}
 	if global.swapmode
 	{

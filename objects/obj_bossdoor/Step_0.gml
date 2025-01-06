@@ -1,4 +1,5 @@
 event_inherited();
+
 switch state
 {
 	case states.jump:

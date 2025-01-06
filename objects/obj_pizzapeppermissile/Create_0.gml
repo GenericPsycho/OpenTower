@@ -18,7 +18,7 @@ if _destroy
 		noisepeppermissile = 0;
 	exit;
 }
-fmod_event_one_shot_3d("event:/sfx/playerN/fireball", x, y);
+fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/fireball", x, y);
 image_angle = point_direction(x, y, target.x, target.y);
 direction = image_angle;
 speed = 10;

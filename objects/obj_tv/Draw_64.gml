@@ -1,12 +1,14 @@
 if room == editor_room
 	exit;
 
+var noisetv = 1
+
 draw_set_font(lang_get_font("bigfont"));
 draw_set_halign(fa_center);
 draw_set_color(c_white);
 draw_set_alpha(1);
 
-if is_bossroom() || instance_exists(obj_tutorialbook)
+if ((is_bossroom() || instance_exists(obj_tutorialbook)) || ((!obj_player1.ispeppino) && (!global.swapmode) && global.leveltosave != "tutorial" && room != forest_G1b && (global.doisemode && !global.swapmode && !obj_player1.ispeppino && obj_player1.state == states.animatronic)))
 	exit;
 
 var collect_x = irandom_range(-collect_shake, collect_shake);
@@ -22,9 +24,16 @@ combofill_x = lerp(combofill_x, _minX + ((_maxX - _minX) * _perc), 0.5);
 combofill_y = _cy;
 
 shader_set(global.Pal_Shader);
-pal_swap_set(spr_tv_combofillpalette, (!global.combodropped && global.prank_enemykilled) ? 2 : 1, false);
-draw_sprite(spr_tv_combobubblefill, combofill_index, combofill_x, combofill_y);
-pal_swap_set(spr_tv_combopalette, (obj_player1.ispeppino && !global.swapmode) ? 0 : 1, false);
+pal_swap_set(spr_tv_combofillpalette, (!global.combodropped && global.prank_enemykilled) ? (scr_is_pplus_rank() ? 3 : 2) : 1, false);
+draw_sprite(scr_is_pplus_rank() ? spr_tv_combodevilfill : spr_tv_combobubblefill, combofill_index, combofill_x, combofill_y);
+var combopal = 0
+if obj_player1.ispeppino && obj_player1.character == "E"
+	combopal = 4
+if !obj_player1.ispeppino
+	combopal = !global.doisemode ? 1 : 3
+if global.swapmode
+	combopal = 2
+pal_swap_set(spr_tv_combopalette, combopal, false);
 lang_draw_sprite(spr_tv_combobubble, -1, _cx, _cy);
 
 draw_set_font(global.combofont2);
@@ -57,19 +66,44 @@ if room != strongcold_endscreen
 		draw_sprite_ext(sprite_index, image_index, tv_x + collect_x, tv_y + collect_y + hud_posY, 1, 1, 0, c_white, alpha);
 	}
 	
-	if (!obj_player1.ispeppino || global.swapmode)
+	if (!obj_player1.ispeppino) && !global.swapmode
 	{
-		pal_swap_set(spr_tv_palette, 1, false);
+		if ( global.doisemode)
+            noisetv = 3
+        else if global.solitude
+			noisetv = obj_player1.paletteselect - 1
+		pal_swap_set(spr_tv_palette, noisetv, false);
 		var spr = spr_tv_empty;
 		if sprite_index == spr_tv_open
 			spr = sprite_index;
 		draw_sprite_ext(spr, image_index, tv_x + collect_x, tv_y + collect_y + hud_posY, 1, 1, 0, c_white, alpha);
 	}
+	if global.swapmode
+    {
+        pal_swap_set(spr_tv_palette, 2, false);
+		var spr = spr_tv_empty;
+		if sprite_index == spr_tv_open
+			spr = sprite_index;
+		draw_sprite_ext(spr, image_index, tv_x + collect_x, tv_y + collect_y + hud_posY, 1, 1, 0, c_white, alpha);
+    }
 	
+	if (obj_player1.character == "E")
+	{
+		pal_swap_set(spr_tv_palette, 4, false);
+		var spr = spr_tv_empty;
+		if sprite_index == spr_tv_open
+			spr = sprite_index;
+		draw_sprite_ext(spr, image_index, tv_x + collect_x, tv_y + collect_y + hud_posY, 1, 1, 0, c_white, alpha);
+	}
+
 	if state == states.tv_whitenoise
 	{
-		if (!obj_player1.ispeppino || global.swapmode)
-			pal_swap_set(spr_tv_palette, 1, false);
+		if (!obj_player1.ispeppino)
+			pal_swap_set(spr_tv_palette, noisetv, false)
+		else
+			pal_swap_set(spr_tv_palette, obj_player1.character == "E" ? 4 : 0, false)
+        if global.swapmode
+            pal_swap_set(spr_tv_palette, 2, false)
 		draw_sprite(spr_tv_whitenoise, tv_trans, tv_x + collect_x, tv_y + collect_y + hud_posY);
 	}
 	

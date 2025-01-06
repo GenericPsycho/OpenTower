@@ -1,3 +1,4 @@
+
 function scr_noise_init_sounds()
 {
 	snd_spin = fmod_event_create_instance("event:/sfx/noise/spin");
@@ -33,7 +34,7 @@ function scr_noise_update_sounds()
 	}
 	else
 		fmod_event_instance_stop(snd_skateloop, true);
-	if state == states.jetpack
+	if state == states.jetpack2
 	{
 		if (!fmod_event_instance_is_playing(snd_jetpackloop))
 			fmod_event_instance_play(snd_jetpackloop);
@@ -65,7 +66,7 @@ function scr_noise_update_sounds()
 	}
 	else
 		fmod_event_instance_stop(snd_droptrap, true);
-	if sprite_index == spr_playerN_fightball
+	if sprite_index == spr_playerN_fightball || sprite_index == spr_playerW_fightball
 	{
 		if fightball_snd_buffer > 0
 			fightball_snd_buffer--;
@@ -81,7 +82,7 @@ function scr_noise_update_sounds()
 function scr_noise_arenaintro()
 {
 	// DOISE IS DEAD
-	if doise && !global.resetdoise
+	if (doise && (!global.resetdoise) && !global.doisemode)
 	{
 		var _dead = false;
 		ini_open_from_string(obj_savesystem.ini_str);
@@ -124,13 +125,13 @@ function scr_noise_arenaintro()
 	}
 	
 	// PEPPINO meets NOISE
-	if obj_player1.ispeppino && !doise
+	if obj_player1.ispeppino
 	{
 		if !skipintro
 		{
 			if !intro
 			{
-				sprite_index = spr_noise_intro1;
+				sprite_index = obj_player1.character == "E" ? spr_wobbuffet_intro1 : spr_noise_intro1;
 				image_index = 0;
 				intro = true;
 				introbuffer = 130;
@@ -143,7 +144,7 @@ function scr_noise_arenaintro()
 					x = roomstartx;
 					image_speed = 0.35;
 					xscale = 1;
-					sprite_index = spr_player_gnomecutscene2;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene2 : spr_player_gnomecutscene2;
 					image_index = 0;
 				}
 			}
@@ -151,13 +152,13 @@ function scr_noise_arenaintro()
 			{
 				if floor(image_index) == image_number - 1
 				{
-					if sprite_index == spr_noise_intro1
+					if sprite_index == spr_noise_intro1 || sprite_index == spr_wobbuffet_intro1
 						image_index = 16;
-					else if sprite_index == spr_noise_intro2
+					else if sprite_index == spr_noise_intro2 || sprite_index == spr_wobbuffet_intro2
 						image_index = 7;
-					else if sprite_index == spr_noise_intro3
+					else if sprite_index == spr_noise_intro3 || sprite_index == spr_wobbuffet_intro3
 					{
-						sprite_index = spr_playerN_idle;
+						sprite_index = obj_player1.character == "E" ? spr_playerW_idle : spr_playerN_idle;
 						introbuffer = 1;
 					}
 				}
@@ -165,44 +166,51 @@ function scr_noise_arenaintro()
 				{
 					if floor(image_index) == image_number - 1
 					{
-						if sprite_index == spr_player_gnomecutscene2
+						if sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2
 							image_index = image_number - 1;
-						else if sprite_index == spr_player_gnomecutscene3
-							sprite_index = spr_player_gnomecutscene4;
+						else if sprite_index == spr_player_gnomecutscene3 || spr_playerE_gnomecutscene3
+							sprite_index = character == "E" ? spr_playerE_gnomecutscene4 : spr_player_gnomecutscene4;
 						else if sprite_index == spr_player_idlefrown
+							sprite_index = spr_idle;
+						else if sprite_index == spr_playerE_idlefrown
 							sprite_index = spr_idle;
 					}
 					hsp = 0;
 					movespeed = 0;
 					flash = false;
 					x = roomstartx;
-					if (other.sprite_index == spr_noise_intro1 && sprite_index == spr_player_gnomecutscene2 && floor(other.image_index) > 16)
+					if ((other.sprite_index == spr_noise_intro1 || other.sprite_index == spr_wobbuffet_intro1) && (sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2) && floor(other.image_index) > 16)
 					{
-						sprite_index = spr_player_gnomecutscene3;
+						sprite_index = character == "E" ? spr_playerE_gnomecutscene3 : spr_player_gnomecutscene3;
 						image_index = 0;
-						fmod_event_one_shot("event:/sfx/pep/screamboss");
+						fmod_event_one_shot("event:/modded-sfx/pep/screamer")
 					}
 					if other.sprite_index == spr_noise_intro2 && sprite_index != spr_player_idlefrown && sprite_index != spr_idle
 					{
 						sprite_index = spr_player_idlefrown;
 						image_index = 0;
 					}
+					else if other.sprite_index == spr_wobbuffet_intro2 && sprite_index != spr_playerE_idlefrown && sprite_index != spr_idle
+					{
+						sprite_index = spr_playerE_idlefrown;
+						image_index = 0;
+					}
 				}
 				if introbuffer > 0
 					introbuffer--;
-				else if sprite_index == spr_noise_intro1
+				else if sprite_index == spr_noise_intro1 || sprite_index == spr_wobbuffet_intro1
 				{
-					sprite_index = spr_noise_intro2;
+					sprite_index = obj_player1.character == "E" ? spr_wobbuffet_intro2 : spr_noise_intro2;
 					image_index = 0;
 					introbuffer = 80;
 				}
-				else if sprite_index == spr_noise_intro2
+				else if sprite_index == spr_noise_intro2 || sprite_index == spr_wobbuffet_intro2
 				{
-					sprite_index = spr_noise_intro3;
+					sprite_index = obj_player1.character == "E" ? spr_wobbuffet_intro3 : spr_noise_intro3;
 					image_index = 0;
 					introbuffer = 80;
 				}
-				else if (sprite_index == spr_noise_intro3 || sprite_index == spr_playerN_idle)
+				else if (sprite_index == spr_noise_intro3 || sprite_index == spr_wobbuffet_intro3 || sprite_index == spr_playerN_idle || sprite_index == spr_playerW_idle)
 				{
 					state = states.walk;
 					spotlightID.expand = true;
@@ -215,7 +223,7 @@ function scr_noise_arenaintro()
 			}
 		}
 		else
-			scr_boss_genericintro(spr_playerN_idle);
+			scr_boss_genericintro(obj_player1.character == "E" ? spr_playerW_idle : spr_playerN_idle);
 		exit;
 	}
 	
@@ -238,8 +246,16 @@ function scr_noise_arenaintro()
 				x = roomstartx;
 				image_speed = 0.35;
 				xscale = 1;
-				sprite_index = spr_playerN_doiseintro1;
-				other.sprite_index = spr_playerN_idle;
+				if global.doisemode
+				{
+					other.sprite_index = spr_playerN_doiseintro1;
+					sprite_index = spr_playerN_idle;
+				}
+				else
+				{
+					sprite_index = spr_playerN_doiseintro1;
+					other.sprite_index = spr_playerN_idle;
+				}
 			}
 		}
 		else
@@ -252,7 +268,7 @@ function scr_noise_arenaintro()
 					image_index = 7;
 				else if sprite_index == spr_noise_intro3
 				{
-					sprite_index = spr_playerN_idle;
+					sprite_index = spr_playerN_idle;	
 					introbuffer = 1;
 				}
 			}
@@ -260,14 +276,16 @@ function scr_noise_arenaintro()
 			{
 				if floor(image_index) == image_number - 1
 				{
-					if sprite_index == spr_player_gnomecutscene2
+					if sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2
 						image_index = image_number - 1;
-					else if sprite_index == spr_player_gnomecutscene3
+					else if sprite_index == spr_player_gnomecutscene3 || sprite_index == spr_playerE_gnomecutscene3
 						sprite_index = spr_player_gnomecutscene4;
 					else if sprite_index == spr_player_idlefrown
 						sprite_index = spr_idle;
-					else if sprite_index == spr_noise_vulnerable1
-						sprite_index = spr_noise_vulnerable1loop;
+					else if sprite_index == spr_playerE_idlefrown
+						sprite_index = spr_idle;
+					else if sprite_index == spr_noise_vulnerable1 || sprite_index == spr_wobbuffet_vulnerable1
+						sprite_index = character == "E" ? spr_wobbuffet_vulnerable1loop : spr_noise_vulnerable1loop;
 					else if sprite_index == spr_playerN_doiseintro2
 					{
 						sprite_index = spr_playerN_doiseintro3;
@@ -275,6 +293,16 @@ function scr_noise_arenaintro()
 						{
 							introbuffer = 100;
 							sprite_index = spr_noise_vulnerable2;
+							image_index = 0;
+						}
+					}
+					else if other.sprite_index == spr_playerN_doiseintro2
+					{
+						sprite_index = spr_noise_vulnerable2;
+						with other
+						{
+							introbuffer = 100;
+							sprite_index = spr_playerN_doiseintro3;
 							image_index = 0;
 						}
 					}
@@ -295,7 +323,16 @@ function scr_noise_arenaintro()
 					image_index = 0;
 				}
 			}
-			else if sprite_index == spr_noise_vulnerable2
+			else if obj_player1.sprite_index == spr_playerN_idle
+			{
+				introbuffer = 500;
+				with obj_player1
+				{
+					other.sprite_index = spr_playerN_doiseintro2;
+					other.image_index = 0;
+				}
+			}
+			else if sprite_index == spr_noise_vulnerable2 || sprite_index = spr_playerN_doiseintro3
 			{
 				state = states.walk;
 				spotlightID.expand = true;
@@ -332,7 +369,9 @@ function scr_noise_arenaintro()
 		}
 	}
 	else
+	{
 		scr_boss_genericintro(spr_playerN_idle);
+	}
 }
 function scr_doise_end_start()
 {
@@ -345,7 +384,7 @@ function scr_doise_end_start()
 	substate = states.bump;
 	x = room_width / 2;
 	y = 402;
-	sprite_index = spr_playerN_fightball;
+	sprite_index = obj_player1.character == "E" ? spr_playerW_fightball : spr_playerN_fightball;
 	image_index = 0;
 	image_speed = 0.35;
 	fmod_event_one_shot_3d("event:/sfx/pep/bumpwall", x, y);
@@ -359,7 +398,7 @@ function scr_doise_end_start()
 	obj_player1.sprite_index = obj_player1.spr_bump;
 	obj_player1.hsp = -obj_player1.xscale * s;
 	image_xscale = -1;
-	sprite_index = spr_playerN_bump;
+	sprite_index = obj_player1.character == "E" ? spr_playerW_bump : spr_playerN_bump;
 	hsp = -image_xscale * s;
 	substate = states.bump;
 	cratebuffer = 80;
@@ -387,7 +426,7 @@ function scr_noise_do_hurt(object)
 }
 function scr_noise_walk()
 {
-	if pizzahead && doise
+	if (pizzahead && doise && !global.doisemode)
 	{
 		image_speed = 0.35;
 		sprite_index = spr_playerN_animatronic;
@@ -398,51 +437,55 @@ function scr_noise_walk()
 	}
 	if grounded
 		hsp = Approach(hsp, 0, 0.25);
-	if grounded && vsp > 0 && sprite_index == spr_playerN_hurt && flickertime > 2
+	if grounded && vsp > 0 && (sprite_index == spr_playerN_hurt || sprite_index == spr_playerW_hurt) && flickertime > 2
 	{
 		hsp = Approach(hsp, 0, 0.5);
 		create_particle(x, y, particle.landcloud);
 		vsp = -5;
 		touchedground = true;
 	}
-	if (x != targetplayer.x && sprite_index != spr_playerN_bombend && (sprite_index == spr_noise_vulnerable1 || sprite_index == spr_noise_vulnerable1loop))
+	if (x != targetplayer.x && sprite_index != spr_playerN_bombend && sprite_index != spr_playerW_bombend && (sprite_index == spr_noise_vulnerable1 || sprite_index == spr_noise_vulnerable1loop || sprite_index == spr_wobbuffet_vulnerable1 || sprite_index == spr_wobbuffet_vulnerable1loop))
 		image_xscale = sign(targetplayer.x - x);
 	if cooldown > 0 && flickertime <= 0 && !ballooncrash
 		cooldown--;
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_playerN_facehurtup)
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_playerN_facehurtup || sprite_index == spr_playerW_facehurtup))
 	{
-		sprite_index = spr_playerN_facehurt;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_facehurt : spr_playerN_facehurt;
 		image_index = 0;
 		if droptrap
-			sprite_index = spr_playerN_idle;
+		{
+			sprite_index = obj_player1.character == "E" ? spr_playerW_idle : spr_playerN_idle;
+		}
 	}
 	if floor(image_index) == image_number - 1
 	{
-		if sprite_index == spr_playerN_bombend
-			sprite_index = spr_noise_vulnerablesmile;
-		else if sprite_index == spr_noise_vulnerable1
-			sprite_index = spr_noise_vulnerable1loop;
+		if sprite_index == spr_playerN_bombend || sprite_index == spr_playerW_bombend
+			sprite_index = obj_player1.character == "E" ? spr_wobbuffet_vulnerablesmile : spr_noise_vulnerablesmile;
+		else if sprite_index == spr_noise_vulnerable1 || sprite_index == spr_wobbuffet_vulnerable1
+			sprite_index = obj_player1.character == "E" ? spr_wobbuffet_vulnerable1loop : spr_noise_vulnerable1loop;
 	}
-	if droptrap && sprite_index == spr_playerN_idle
+	if droptrap && (sprite_index == spr_playerN_idle || sprite_index == spr_playerW_idle)
 		image_index = 0;
 	if flickertime > 0
-		sprite_index = spr_playerN_hurt;
-	else if grounded && sprite_index != spr_playerN_facehurtup && sprite_index != spr_playerN_facehurt && sprite_index != spr_playerN_bombend && sprite_index != spr_noise_vulnerable1 && sprite_index != spr_noise_vulnerable1loop && sprite_index != spr_noise_vulnerable2
 	{
-		if sprite_index != spr_noise_vulnerablesmile
+		sprite_index = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
+	}
+	else if grounded && sprite_index != spr_playerN_facehurtup && sprite_index != spr_playerN_facehurt && sprite_index != spr_playerN_bombend && sprite_index != spr_noise_vulnerable1 && sprite_index != spr_noise_vulnerable1loop && sprite_index != spr_noise_vulnerable2 && sprite_index != spr_playerW_facehurtup && sprite_index != spr_playerW_facehurt && sprite_index != spr_playerW_bombend && sprite_index != spr_wobbuffet_vulnerable1 && sprite_index != spr_wobbuffet_vulnerable1loop && sprite_index != spr_wobbuffet_vulnerable2
+	{
+		if sprite_index != spr_noise_vulnerablesmile && sprite_index != spr_wobbuffet_vulnerablesmile
 		{
-			sprite_index = spr_noise_vulnerablesmile;
+			sprite_index = obj_player1.character == "E" ? spr_wobbuffet_vulnerablesmile : spr_noise_vulnerablesmile;
 			var idle = irandom(80);
 			if (irandom(100) <= 25)
-				fmod_event_one_shot_3d("event:/sfx/voice/noisepositive", x, y);
+				fmod_event_one_shot_3d("event:/modded-sfx/voice/noiseisactuallyhappy", x, y)
 			if idle >= 10 && idle < 50
 			{
-				sprite_index = spr_noise_vulnerable1;
+				sprite_index = obj_player1.character == "E" ? spr_wobbuffet_vulnerable1 : spr_noise_vulnerable1;
 				image_index = 0;
 			}
 			else if idle >= 50
 			{
-				sprite_index = spr_noise_vulnerable2;
+				sprite_index = obj_player1.character == "E" ? spr_wobbuffet_vulnerable2 : spr_noise_vulnerable2;
 				image_index = 0;
 			}
 		}
@@ -455,7 +498,7 @@ function scr_noise_walk()
 			if cooldown <= 0 && flickertime <= 0
 			{
 				image_index = 0;
-				sprite_index = spr_playerN_spin;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_spin : spr_playerN_spin;
 				state = states.pizzahead_spinningkick;
 			}
 		}
@@ -471,7 +514,7 @@ function scr_noise_walk()
 			instance_create(0, 0, obj_noiseballooncrash);
 			state = states.noiseballooncrash;
 			image_xscale = (x > (room_width / 2)) ? -1 : 1;
-			sprite_index = spr_noise_phasetrans1;
+			sprite_index = obj_player1.character == "E" ? spr_wobbuffet_phasetrans1 : spr_noise_phasetrans1;
 			image_index = 0;
 			with obj_player1
 			{
@@ -479,7 +522,7 @@ function scr_noise_walk()
 				xscale = (x > (room_width / 2)) ? 1 : -1;
 				state = states.actor;
 				image_speed = 0.35;
-				sprite_index = spr_noise_phasetrans1P;
+				sprite_index = character == "E" ? spr_wobbuffet_phasetrans1P : spr_noise_phasetrans1P;
 				image_index = 0;
 			}
 		}
@@ -493,22 +536,22 @@ function scr_noise_mach2()
 	hsp = image_xscale * attackspeed;
 	if attackspeed < 17 && grounded
 		attackspeed += 0.25;
-	if sprite_index == spr_playerN_mach1 && attackspeed > 6
-		sprite_index = spr_playerN_mach;
+	if (sprite_index == spr_playerN_mach1 || sprite_index == spr_playerW_mach1) && attackspeed > 6
+		sprite_index = obj_player1.character == "E" ? spr_playerW_mach : spr_playerN_mach;
 	if !golf
 	{
-		if machbuffer > 0 && grounded && sprite_index == spr_playerN_mach
+		if (machbuffer > 0 && grounded && (sprite_index == spr_playerN_mach || sprite_index == spr_playerW_mach))
 			machbuffer--;
-		else if machbuffer == 0 && grounded && sprite_index == spr_playerN_mach
+		else if (machbuffer == 0 && grounded && (sprite_index == spr_playerN_mach || sprite_index == spr_playerW_mach))
 		{
 			fmod_event_one_shot_3d("event:/sfx/noise/machslide", x, y);
 			state = states.machslide;
-			sprite_index = spr_playerN_machslidestart;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_machslidestart : spr_playerN_machslidestart;
 			image_index = 0;
 			attackspeed = 8;
 			if phase == 2
 			{
-				sprite_index = spr_playerN_noisebombkick;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombkick : spr_playerN_noisebombkick;
 				image_index = 4;
 				with (instance_create(x + (image_xscale * 20), y, obj_skateboardnoise))
 					image_xscale = other.image_xscale;
@@ -523,33 +566,37 @@ function scr_noise_mach2()
 		vsp = -11;
 		attackspeed = 8;
 		image_index = 0;
-		sprite_index = spr_playerN_secondjump1;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_secondjump1 : spr_playerN_secondjump1;
 		skateboardjumpcooldown = -1;
 	}
-	if ((sprite_index == spr_playerN_secondjump1 || sprite_index == spr_playerN_secondjump2) && place_meeting(x + hsp, y, obj_solid))
+	if ((sprite_index == spr_playerN_secondjump1 || sprite_index == spr_playerN_secondjump2 || sprite_index == spr_playerW_secondjump1 || sprite_index == spr_playerW_secondjump2) && place_meeting(x + hsp, y, obj_solid))
 	{
 		fmod_event_one_shot_3d("event:/sfx/fakepep/jump", x, y);
-		sprite_index = spr_playerN_walljumpstart;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_walljumpstart : spr_playerN_walljumpstart;
 		image_xscale *= -1;
 		vsp = -11;
 		attackspeed = 6;
 		create_particle(x, y, particle.jumpdust);
 	}
-	if (sprite_index == spr_playerN_walljumpstart && floor(image_index) == image_number - 1)
-		sprite_index = spr_playerN_walljumpend;
-	if (sprite_index == spr_playerN_secondjump1 && floor(image_index) == image_number - 1)
-		sprite_index = spr_playerN_secondjump2;
-	if (grounded && vsp > 0 && (sprite_index == spr_playerN_secondjump1 || sprite_index == spr_playerN_secondjump2 || sprite_index == spr_playerN_walljumpend))
-		sprite_index = spr_playerN_mach;
+	if ((sprite_index == spr_playerN_walljumpstart || sprite_index == spr_playerW_walljumpstart) && floor(image_index) == image_number - 1)
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_walljumpend : spr_playerN_walljumpend;
+	}
+	if ((sprite_index == spr_playerN_secondjump1 || sprite_index == spr_playerW_secondjump1) && floor(image_index) == image_number - 1)
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_secondjump2 : spr_playerN_secondjump2;
+	}
+	if (grounded && vsp > 0 && (sprite_index == spr_playerN_secondjump1 || sprite_index == spr_playerN_secondjump2 || sprite_index == spr_playerN_walljumpend || sprite_index == spr_playerW_secondjump1 || sprite_index == spr_playerW_secondjump2 || sprite_index == spr_playerW_walljumpend))
+		sprite_index = obj_player1.character == "E" ? spr_playerW_mach : spr_playerN_mach;
 	var tx = targetplayer.x;
 	var ix = sign(tx - x);
-	if ix != image_xscale && grounded && sprite_index == spr_playerN_mach && state != states.machslide
+	if (ix != image_xscale && grounded && (sprite_index == spr_playerN_mach || sprite_index == spr_playerW_mach) && state != states.machslide)
 	{
 		if !golf
 		{
 			fmod_event_one_shot_3d("event:/sfx/noise/skateturn", x, y);
 			state = states.machslide;
-			sprite_index = spr_playerN_machslideboost;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_machslideboost : spr_playerN_machslideboost;
 			image_index = 0;
 			image_speed = 0.35;
 			attackspeed = 10;
@@ -583,17 +630,19 @@ function scr_noise_machslide()
 		machbuffer--;
 	if floor(image_index) == image_number - 1
 	{
-		if sprite_index == spr_playerN_machslideboost
+		if sprite_index == spr_playerN_machslideboost || sprite_index == spr_playerW_machslideboost
 			image_index = image_number - 1;
-		else if sprite_index == spr_playerN_machslidestart
-			sprite_index = spr_playerN_machslideend;
-		else if (sprite_index == spr_playerN_machslideend || sprite_index == spr_playerN_noisebombkick)
+		else if sprite_index == spr_playerN_machslidestart || sprite_index == spr_playerW_machslidestart
+		{
+			sprite_index = obj_player1.character == "E" ? spr_playerW_machslideend : spr_playerN_machslideend;
+		}
+		else if (sprite_index == spr_playerN_machslideend || sprite_index == spr_playerN_noisebombkick || sprite_index == spr_playerW_machslideend || sprite_index == spr_playerW_noisebombkick)
 		{
 			state = states.walk;
 			hsp = 0;
 		}
 	}
-	if sprite_index == spr_playerN_machslideboost && attackspeed <= 0
+	if (sprite_index == spr_playerN_machslideboost || sprite_index == spr_playerW_machslideboost) && attackspeed <= 0
 	{
 		state = states.mach2;
 		attackspeed = 8;
@@ -601,7 +650,7 @@ function scr_noise_machslide()
 			cooldown = 80;
 		else
 			cooldown = 100;
-		sprite_index = spr_playerN_mach;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_mach : spr_playerN_mach;
 		image_index = 0;
 		image_xscale *= -1;
 	}
@@ -610,7 +659,7 @@ function scr_noise_spin()
 {
 	if image_index > 2
 		hsp = image_xscale * 2;
-	if (floor(image_index) == image_number - 4 && sprite_index == spr_playerN_spin)
+	if (floor(image_index) == image_number - 4 && (sprite_index == spr_playerN_spin || sprite_index == spr_playerW_spin))
 	{
 		if skateboardhit <= 1
 			array_push(avaiblemoves, "skateboard");
@@ -629,7 +678,7 @@ function scr_noise_spin()
 				image_xscale = sign(targetplayer.x - x);
 			skateboardcount = 0;
 			state = states.mach2;
-			sprite_index = spr_playerN_mach1;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_mach1 : spr_playerN_mach1;
 			image_index = 0;
 			attackspeed = 0;
 			machbuffer = 240;
@@ -644,7 +693,7 @@ function scr_noise_spin()
 			if x != targetplayer.x
 				image_xscale = sign(targetplayer.x - x);
 			state = states.jump;
-			sprite_index = spr_playerN_jump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_jump : spr_playerN_jump;	
 			image_index = 0;
 			vsp = -11;
 			lastattack = 1;
@@ -662,7 +711,7 @@ function scr_noise_spin()
 		{
 			fmod_event_one_shot_3d("event:/sfx/noise/pogo", x, y);
 			state = states.pogo;
-			sprite_index = spr_playerN_pogobounce;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_pogobounce : spr_playerN_pogobounce;
 			image_index = 0;
 			bounced = false;
 			attackspeed = 2;
@@ -676,7 +725,7 @@ function scr_noise_spin()
 			buttslamcooldown = 200;
 			fmod_event_one_shot_3d("event:/sfx/fakepep/jump", x, y);
 			state = states.dropstart;
-			sprite_index = spr_playerN_doublejump;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_doublejump : spr_playerN_doublejump;
 			image_index = 0;
 			vsp = -30;
 			hsp = 0;
@@ -691,14 +740,16 @@ function scr_noise_spin()
 }
 function scr_noise_jump()
 {
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_playerN_jump)
-		sprite_index = spr_playerN_fall;
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_playerN_jump || sprite_index == spr_playerW_jump))
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_fall : spr_playerN_fall;
+	}
 	hsp = 0;
 	if vsp >= 0
 	{
 		fmod_event_one_shot_3d("event:/sfx/noise/jetpackstart", x, y);
 		state = states.jetpackstart;
-		sprite_index = spr_playerN_jetpackstart;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackstart : spr_playerN_jetpackstart;
 		image_index = 0;
 	}
 }
@@ -708,8 +759,8 @@ function scr_noise_jetpackstart()
 	vsp = 0;
 	if floor(image_index) == image_number - 1
 	{
-		state = states.jetpack;
-		sprite_index = spr_playerN_jetpackboost;
+		state = states.jetpack2;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackboost : spr_playerN_jetpackboost;
 		attackspeed = 14;
 		var tx = targetplayer.x;
 		var ty = targetplayer.y;
@@ -735,18 +786,20 @@ function scr_noise_jetpack()
 		attackspeed += 0.5;
 	if (place_meeting(x, y + 1, obj_solid))
 	{
-		sprite_index = spr_playerN_jetpackslide;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackslide : spr_playerN_jetpackslide;
 		if (abs(hsp) <= 5)
 			hsp = image_xscale * 6;
 	}
 	else
-		sprite_index = spr_playerN_jetpackboost;
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_jetpackboost : spr_playerN_jetpackboost;
+	}
 	if (place_meeting(x + sign(hsp), y, obj_solid))
 	{
 		state = states.bounce;
 		vsp = -17;
 		instance_create(x + (image_xscale * 20), y, obj_bangeffect);
-		sprite_index = spr_playerN_noisebombspinjump;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombspinjump : spr_playerN_noisebombspinjump;
 		scr_fmod_soundeffect(snd_groundpound, x, y);
 	}
 }
@@ -780,7 +833,7 @@ function scr_noise_bounce()
 		{
 			instance_create(x, y, obj_canonexplosion);
 			hsp = 0;
-			sprite_index = spr_playerN_bombend;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_bombend : spr_playerN_bombend;
 			image_index = 0;
 		}
 	}
@@ -792,7 +845,7 @@ function scr_noise_pogo()
 	else
 		hsp = image_xscale * attackspeed;
 	var ix = sign(targetplayer.x - x);
-	if (floor(image_index) >= 4 && sprite_index == spr_playerN_pogobounce && !bounced)
+	if (floor(image_index) >= 4 && (sprite_index == spr_playerN_pogobounce || sprite_index == spr_playerW_pogobounce) && !bounced)
 	{
 		vsp = -12;
 		bounced = true;
@@ -813,7 +866,7 @@ function scr_noise_pogo()
 	}
 	if (pogobomb == 1 && ((image_xscale > 0 && targetplayer.x > (x - 20)) || (image_xscale < 0 && targetplayer.x < (x + 20)) || vsp > 0) && attackspeed > 10)
 	{
-		if !doise
+		if ((!doise) || global.doisemode)
 		{
 			with (instance_create(x, y, obj_noisebombboss))
 			{
@@ -829,15 +882,17 @@ function scr_noise_pogo()
 		}
 		pogobomb = false;
 	}
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_playerN_pogobounce)
-		sprite_index = spr_playerN_pogofall;
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_playerN_pogobounce || sprite_index == spr_playerW_pogobounce))
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_pogofall : spr_playerN_pogofall;
+	}
 	if grounded && vsp > 0 && bounced
 	{
 		if machbuffer > 0
 		{
 			fmod_event_one_shot_3d("event:/sfx/noise/pogo", x, y);
 			bounced = false;
-			sprite_index = spr_playerN_pogobounce;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_pogobounce : spr_playerN_pogobounce;
 			image_index = 0;
 			hsp = 0;
 		}
@@ -853,7 +908,7 @@ function scr_noise_pogo()
 				fmod_event_one_shot_3d("event:/sfx/noise/noisecrusher", x, y);
 				state = states.noisecrusher;
 				vsp = -17;
-				sprite_index = spr_noise_crusherjump;
+				sprite_index = obj_player1.character == "E" ? spr_wobbuffet_crusherjump : spr_noise_crusherjump;
 				create_particle(x, y, particle.genericpoofeffect);
 				image_index = 0;
 				create_particle(x, y, particle.highjumpcloud2);
@@ -878,13 +933,15 @@ function scr_noise_dropstart()
 	}
 	if cloudbuffer > 0
 		cloudbuffer--;
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_playerN_jump)
-		sprite_index = spr_playerN_fall;
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_playerN_jump || sprite_index == spr_playerW_jump))
+	{
+		sprite_index = obj_player1.character == "E" ? spr_playerW_fall : spr_playerN_fall;
+	}
 	if (place_meeting(x, y, obj_solid) || vsp >= 0 || place_meeting(x, y - 1, obj_solid))
 		y -= 30;
 	if y < -50
 	{
-		sprite_index = spr_noisehotair;
+		sprite_index = obj_player1.character == "E" ? spr_wobbuffethotair : spr_noisehotair;
 		state = states.drop;
 		jetpack_ystart = 90;
 		jetpack_ydir = 1;
@@ -893,10 +950,14 @@ function scr_noise_dropstart()
 function scr_noise_drop()
 {
 	image_speed = 0.35;
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_playerN_doublejump)
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_playerN_doublejump || sprite_index == spr_playerW_doublejump))
+	{
 		sprite_index = spr_playerN_doublejumpfall;
-	if (floor(image_index) == image_number - 1 && sprite_index == spr_noisehotairdrop)
-		sprite_index = spr_noisehotair;
+	}
+	if (floor(image_index) == image_number - 1 && (sprite_index == spr_noisehotairdrop || sprite_index == spr_wobbuffethotairdrop))
+	{
+		sprite_index = obj_player1.character == "E" ? spr_wobbuffethotair : spr_noisehotair;
+	}
 	var ix = sign(targetplayer.x - x);
 	hsp = Approach(hsp, ix * 7, 0.4);
 	vsp = 0;
@@ -912,7 +973,7 @@ function scr_noise_drop()
 		buttslamcooldown = 200;
 		vsp = -7;
 		hsp = 0;
-		sprite_index = spr_playerN_bodyslamstart;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_bodyslamstart : spr_playerN_bodyslamstart;
 		state = states.freefall;
 		image_index = 0;
 		with (instance_create(x, y, obj_noisehotairempty))
@@ -923,16 +984,16 @@ function scr_noise_drop()
 	else if dropcooldown == 0 && state != states.freefall
 	{
 		dropcooldown = -1;
-		sprite_index = spr_noisehotairdrop;
+		sprite_index = obj_player1.character == "E" ? spr_wobbuffethotairdrop : spr_noisehotairdrop;
 		image_index = 0;
 	}
-	if sprite_index == spr_noisehotairdrop && dropcooldown <= -1 && image_index > 3
+	if (sprite_index == spr_noisehotairdrop || sprite_index == spr_wobbuffethotairdrop) && dropcooldown <= -1 && image_index > 3
 	{
 		if (phase == 2 || hotairhit == 1)
 			dropcooldown = 80;
 		else
 			dropcooldown = 120;
-		if !doise
+		if ((!doise) || global.doisemode)
 		{
 			with (instance_create(x, y, obj_noisebombboss))
 			{
@@ -960,7 +1021,7 @@ function scr_noise_droptrap()
 	hsp = 0;
 	if floor(image_index) == image_number - 1
 	{
-		if doise
+		if (doise && !global.doisemode)
 		{
 			with (instance_create(x, y, obj_doiserock))
 				vsp = -11;
@@ -970,7 +1031,7 @@ function scr_noise_droptrap()
 		buttslamcooldown = 200;
 		vsp = 0;
 		hsp = 0;
-		sprite_index = spr_playerN_bodyslamstart;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_bodyslamstart : spr_playerN_bodyslamstart;
 		state = states.freefall;
 		image_index = 0;
 		x = obj_player1.x;
@@ -982,13 +1043,13 @@ function scr_noise_freefall()
 {
 	image_speed = 0.35;
 	hsp = 0;
-	if (sprite_index == spr_playerN_bodyslamstart && floor(image_index) == image_number - 1)
+	if ((sprite_index == spr_playerN_bodyslamstart || sprite_index == spr_playerW_bodyslamstart) && floor(image_index) == image_number - 1)
 	{
-		sprite_index = spr_playerN_bodyslam;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_bodyslam : spr_playerN_bodyslam;
 		image_index = 0;
 		vsp = 14;
 	}
-	if ((grounded && vsp > 0) && sprite_index != spr_playerN_bodyslamland)
+	if ((grounded && vsp > 0) && sprite_index != spr_playerN_bodyslamland && sprite_index != spr_playerW_bodyslamland)
 	{
 		with obj_camera
 		{
@@ -996,7 +1057,7 @@ function scr_noise_freefall()
 			shake_mag_acc = 5 / room_speed;
 		}
 		create_particle(x, y, particle.groundpoundeffect);
-		sprite_index = spr_playerN_bodyslamland;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_bodyslamland : spr_playerN_bodyslamland;
 		image_index = 0;
 		buttslamlandcooldown = 20;
 	}
@@ -1010,7 +1071,7 @@ function scr_noise_freefall()
 			cooldown = 100;
 		state = states.walk;
 		image_index = 0;
-		sprite_index = spr_playerN_facehurtup;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_facehurtup : spr_playerN_facehurtup;
 		hsp = 0;
 		if phase == 2
 		{
@@ -1046,20 +1107,22 @@ function scr_noise_golf()
 function scr_noise_noisecrusher()
 {
 	hsp = 0;
-	if sprite_index == spr_playerN_bodyslamstart
+	if sprite_index == spr_playerN_bodyslamstart || sprite_index == spr_playerW_bodyslamstart
 		vsp = 0;
 	if vsp > 2
 		vsp += 0.5;
-	if vsp > 0 && sprite_index == spr_noise_crusherjump
-		sprite_index = spr_noise_crusherfall;
-	if (sprite_index == spr_noise_crusherland && floor(image_index) == image_number - 1)
+	if vsp > 0 && (sprite_index == spr_noise_crusherjump || sprite_index == spr_wobbuffet_crusherjump)
+	{
+		sprite_index = obj_player1.character == "E" ? spr_wobbuffet_crusherfall : spr_noise_crusherfall;
+	}
+	if ((sprite_index == spr_noise_crusherland || sprite_index == spr_wobbuffet_crusherland) && floor(image_index) == image_number - 1)
 	{
 		create_particle(x, y, particle.genericpoofeffect);
 		state = states.walk;
 	}
-	if grounded && vsp > 0 && sprite_index != spr_noise_crusherland
+	if grounded && vsp > 0 && sprite_index != spr_noise_crusherland && sprite_index != spr_wobbuffet_crusherland
 	{
-		sprite_index = spr_noise_crusherland;
+		sprite_index = obj_player1.character == "E" ? spr_wobbuffet_crusherland : spr_noise_crusherland;
 		image_index = 0;
 		fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 		with (instance_create(x + (image_xscale * 40), y, obj_noisecrushertrail))
@@ -1146,7 +1209,7 @@ function scr_noise_fightball()
 				obj_player1.hsp = -obj_player1.xscale * 5;
 				introbuffer = 50;
 				image_xscale = -1;
-				sprite_index = spr_playerN_bump;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_bump : spr_playerN_bump;
 				hsp = -image_xscale * 5;
 				substate = states.bump;
 			}
@@ -1169,10 +1232,10 @@ function scr_noise_finale()
 {
 	with obj_player1
 	{
-		if (sprite_index == spr_player_gnomecutscene2 && floor(image_index) == image_number - 1)
+		if ((sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2) && floor(image_index) == image_number - 1)
 			image_index = image_number - 1;
-		if (sprite_index == spr_player_gnomecutscene3 && floor(image_index) == image_number - 1)
-			sprite_index = spr_player_gnomecutscene4;
+		if ((sprite_index == spr_player_gnomecutscene3 || sprite_index == spr_playerE_gnomecutscene3) && floor(image_index) == image_number - 1)
+			sprite_index = character == "E" ? spr_playerE_gnomecutscene4 : spr_player_gnomecutscene4;
 		if (sprite_index == spr_playerN_stunned && floor(image_index) == image_number - 1)
 			image_index = image_number - 3;
 		if (sprite_index == spr_player_stunneddoise && floor(image_index) == image_number - 1)
@@ -1222,7 +1285,7 @@ function scr_noise_finale()
 				obj_player1.sprite_index = obj_player1.spr_bump;
 				obj_player1.hsp = -obj_player1.xscale * s;
 				image_xscale = -1;
-				sprite_index = spr_playerN_bump;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_bump : spr_playerN_bump;
 				hsp = -image_xscale * s;
 				substate = states.bump;
 			}
@@ -1234,22 +1297,36 @@ function scr_noise_finale()
 			if doise && cratebuffer > 0
 				cratebuffer--;
 			if (hsp == 0 && !instance_exists(obj_noisebosscrate) && (!doise || cratebuffer <= 0))
-				instance_create(!doise ? x : obj_player1.x, -100, obj_noisebosscrate);
+			{
+	            if (((!obj_player1.ispeppino) && global.doisemode) || (global.swapmode && global.doisemode) || (obj_player1.ispeppino && (!global.swapmode) && !global.doisemode))
+		            instance_create(x, -100, obj_noisebosscrate)
+			    else
+				    instance_create(obj_player1.x, -100, obj_noisebosscrate)
+			}
 			if (instance_exists(obj_noisebosscrate) && obj_noisebosscrate.y >= y - 10)
 			{
-				if !doise
+				if ((!doise) || global.doisemode)
 				{
 					minigunbuffer = 0;
+					
 					repeat 3
-						create_debris(obj_noisebosscrate.x, obj_noisebosscrate.y, spr_wooddebris);
-					sprite_index = spr_playerN_minigunstart;
-					fmod_event_one_shot_3d("event:/sfx/pep/shotgunload", x, y);
-					fmod_event_one_shot_3d("event:/sfx/misc/breakblock", x, y);
+						create_debris(obj_noisebosscrate.x, obj_noisebosscrate.y, obj_player1.character == "E" ? spr_waterdrop : spr_wooddebris);
+					if obj_player1.character == "E"
+					{
+						sprite_index = spr_playerW_minigunstart;
+						fmod_event_one_shot_3d("event:/sfx/misc/beerbreak", x, y);
+					}
+					else
+					{
+						sprite_index = spr_playerN_minigunstart;
+						fmod_event_one_shot_3d("event:/sfx/misc/breakblock", x, y);
+						fmod_event_one_shot_3d("event:/sfx/pep/shotgunload", x, y)
+					}
 					image_index = 0;
 					substate = states.shotgun;
 					with obj_player1
 					{
-						sprite_index = spr_player_gnomecutscene2;
+						sprite_index = character == "E" ? spr_playerE_gnomecutscene2 : spr_player_gnomecutscene2;
 						image_index = 0;
 						if !ispeppino
 							sprite_index = spr_playerN_bosscutscene1;
@@ -1263,7 +1340,7 @@ function scr_noise_finale()
 					image_index = 0;
 					substate = states.shotgun;
 					fmod_event_one_shot_3d("event:/sfx/pep/groundpound", obj_player1.x, obj_player1.y);
-					fmod_event_one_shot_3d("event:/sfx/voice/noisepositive", x, y);
+					fmod_event_one_shot_3d("event:/modded-sfx/voice/noiseisactuallyhappy", x, y)
 					with (create_debris(obj_noisebosscrate.x, obj_noisebosscrate.y, 3738))
 					{
 						vsp = -6;
@@ -1313,20 +1390,22 @@ function scr_noise_finale()
 			}
 			if ((floor(image_index) == image_number - 1 || _end) && minigunbuffer <= 0)
 			{
-				if !doise
-					sprite_index = spr_playerN_minigunidle;
+				if ((!doise) || global.doisemode)
+				{
+					sprite_index = obj_player1.character == "E" ? spr_playerW_minigunidle : spr_playerN_minigunidle;
+				}
 				substate = states.shotgunshoot;
 				with obj_player1
 				{
-					if ispeppino && !other.doise
+					if ((ispeppino && (!other.doise)) || (ispeppino && global.swapmode && global.doisemode))
 					{
-						sprite_index = spr_player_gnomecutscene3;
+						sprite_index = character == "E" ? spr_playerE_gnomecutscene3 : spr_player_gnomecutscene3;
 						image_index = 0;
-						fmod_event_one_shot("event:/sfx/pep/screamboss");
+						fmod_event_one_shot("event:/modded-sfx/pep/screamer")
 					}
 				}
 				layer_set_visible(layer_get_id("Assets_2"), true);
-				if !doise
+				if ((!doise) || global.doisemode)
 					instance_create(room_width + 100, y, obj_noisettefinale);
 				else
 					instance_create(-100, y, obj_peddito);
@@ -1337,35 +1416,45 @@ function scr_noise_finale()
 			{
 				if (floor(image_index) == image_number - 1)
 				{
-					if ispeppino && !other.doise
-						sprite_index = spr_player_gnomecutscene4;
+					if ((ispeppino && (!other.doise)) || (ispeppino && global.swapmode && global.doisemode))
+					{
+						sprite_index = character == "E" ? spr_playerE_gnomecutscene4 : spr_player_gnomecutscene4;
+						if !ispeppino
+							sprite_index = spr_playerN_bosscutscene1
+					}
 				}
 			}
-			if !doise && obj_noisettefinale.x <= x
+			if (((!doise) || global.doisemode) && obj_noisettefinale.x <= x)
 			{
-				create_debris(x, y, spr_minigunfall);
+				create_debris(x, y, obj_player1.character == "E" ? spr_playerW_noisebomb : spr_minigunfall);
 				substate = states.ending;
-				sprite_index = spr_playerN_bump;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_bump : spr_playerN_bump;
 				with obj_player1
 				{
 					if ispeppino && !other.doise
 						sprite_index = spr_idle;
+					else
+                    {
+                        sprite_index = spr_playerN_bosscutscene2
+                        if (ispeppino && global.swapmode)
+                            sprite_index = spr_idle
+                    }
 				}
 			}
 			break;
 		case states.ending:
-			if !doise
+			if ((!doise) || global.doisemode)
 			{
 				x = obj_noisettefinale.x + 20;
-				if (x < (room_width / 5) && sprite_index != spr_playerN_bossintro)
+				if (x < (room_width / 5) && sprite_index != spr_playerN_bossintro && sprite_index != spr_playerW_bossintro)
 				{
-					fmod_event_one_shot("event:/sfx/voice/noisescream");
-					sprite_index = spr_playerN_bossintro;
+					fmod_event_one_shot("event:/modded-sfx/voice/screamingnoise")
+					sprite_index = obj_player1.character == "E" ? spr_playerW_bossintro : spr_playerN_bossintro;
 					image_index = 0;
 					image_xscale = 1;
 				}
 			}
-			if (sprite_index == spr_playerN_bossintro && floor(image_index) >= 9)
+			if ((sprite_index == spr_playerN_bossintro || sprite_index == spr_playerW_bossintro) && floor(image_index) >= 9)
 				image_index = 7;
 			with obj_player1
 			{
@@ -1384,7 +1473,7 @@ function scr_noise_finale()
 }
 function scr_noise_phase1hurt()
 {
-	sprite_index = spr_playerN_hurt;
+	sprite_index = obj_player1.character == "E" ? spr_playerW_hurt : spr_playerN_hurt;
 	image_index = 0.35;
 	scr_boss_phase1hurt(function()
 	{
@@ -1402,15 +1491,20 @@ function scr_noise_phase1hurt()
 		layer_vspeed(lay2, -0.7);
 		with obj_doisecreature
 		{
-			movespeed = 1;
-			sprite_index = bg_doisewalk;
+			if ( !global.doisemode)
+				instance_destroy()
+			else
+			{
+				movespeed = 1;
+				sprite_index = bg_doisewalk;
+			}
 		}
 		if !doise
 		{
 			with (instance_create(0, 0, obj_introprop))
 			{
 				depth = layer_get_depth("Backgrounds_scroll");
-				sprite_index = bg_noisebossBG3;
+				sprite_index = obj_player1.character == "E" ? bg_wobbuffetbossBG3 : bg_noisebossBG3;
 				image_speed = 1;
 			}
 			var ix = obj_player1.xscale;
@@ -1421,7 +1515,7 @@ function scr_noise_phase1hurt()
 				state = states.actor;
 				xscale = ix;
 				image_speed = 0.35;
-				sprite_index = spr_player_fightball;
+				sprite_index = character == "E" ? spr_playerE_fightball : spr_player_fightball;
 				image_index = 0;
 				if !ispeppino
 				{
@@ -1450,7 +1544,7 @@ function scr_noise_phase1hurt()
 				fightballcount = 0;
 				image_xscale = ix;
 				image_speed = 0.35;
-				sprite_index = spr_playerN_fightball;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_fightball : spr_playerN_fightball;
 				image_index = 0;
 				substate = states.fightball;
 			}

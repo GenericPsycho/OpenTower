@@ -18,6 +18,8 @@ if !fadein
 					other.state++;
 					other.cutscenebuffer = 100;
 					sprite_index = spr_player_idle;
+					if obj_player1.character == "E"
+						sprite_index = spr_playerE_idle;
 					if !ispeppino
 						sprite_index = spr_playerN_doiseintro1;
 					image_speed = 0.35;
@@ -35,6 +37,8 @@ if !fadein
 				with obj_johnresurrection_peppino
 				{
 					sprite_index = spr_player_idlefrown;
+					if obj_player1.character == "E"
+						sprite_index = spr_playerE_idlefrown
 					if !ispeppino
 					{
 						sprite_index = spr_playerN_doiseintro2;
@@ -145,7 +149,11 @@ if !fadein
 						sprite_index = spr_johnresurrected_pillar2;
 					}
 					with obj_johnresurrection_peppino
+					{
 						sprite_index = spr_player_idle;
+						if obj_player1.character == "E"
+							sprite_index = spr_playerE_idle
+					}
 				}
 				else
 				{
@@ -175,11 +183,11 @@ if !fadein
 			{
 				with obj_johnresurrection_pizzahead
 				{
-					if sprite_index != spr_pizzahead_phase3_intro2
+					if sprite_index != spr_pizzahead_phase3_intro2 && sprite_index != spr_meowth_phase3_intro2
 					{
 						image_xscale *= -1;
-						sprite_index = spr_pizzahead_phase3_intro2;
-						image_index = 15;
+						sprite_index = obj_player1.character == "E" ? spr_meowth_phase3_intro2 : spr_pizzahead_phase3_intro2;
+						image_index = obj_player1.character == "E" ? 19 : 15;
 					}
 				}
 			}
@@ -242,7 +250,7 @@ if !fadein
 						}
 						with (instance_create(x, y, obj_explosioneffect))
 							sprite_index = spr_bombexplosion;
-						sprite_index = spr_pizzahead_phase3stunned;
+						sprite_index = obj_player1.character == "E" ? spr_meowth_phase3stunned : spr_pizzahead_phase3stunned;
 						x = other.x + 64;
 						y = other.y - 128;
 						depth = 0;
@@ -266,7 +274,7 @@ if !fadein
 					y = -40;
 					vsp = 0;
 					hsp = 8;
-					sprite_index = spr_johnresurrected_pizzaheaddark;
+					sprite_index = obj_player1.character == "E" ? spr_johnresurrected_meowthdark : spr_johnresurrected_pizzaheaddark;
 					other.state++;
 				}
 			}
@@ -287,7 +295,7 @@ if !fadein
 					image_yscale = image_xscale;
 					if (image_xscale <= 0 || y >= ((room_height / 2) + 120))
 					{
-						fmod_event_one_shot("event:/sfx/ending/star");
+						fmod_event_one_shot("event:/modded-sfx/ending/shootingstar")
 						image_xscale = 1;
 						image_yscale = 1;
 						sprite_index = spr_glint;
@@ -327,7 +335,11 @@ if !fadein
 					fmod_event_one_shot("event:/sfx/misc/cheers");
 				}
 				with obj_johnresurrection_peppino
+				{
 					sprite_index = spr_player_smirk;
+					if obj_player1.character == "E"
+						sprite_index = spr_playerE_smirk
+				}
 			}
 			break;
 		

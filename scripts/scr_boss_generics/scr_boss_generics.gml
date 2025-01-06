@@ -42,6 +42,8 @@ function scr_boss_grabbed()
 			state = states.supergrab;
 			supergrabstate = states.punch;
 			sprite_index = choose(spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_player_suplexmash5, spr_player_suplexmash6, spr_player_suplexmash7);
+			if obj_player1.character == "E"
+				sprite_index = choose(spr_suplexmash1, spr_suplexmash2, spr_suplexmash3, spr_suplexmash4, spr_playerE_suplexmash5, spr_playerE_suplexmash6, spr_playerE_suplexmash7);
 			image_index = sprite_get_number(sprite_index) - 1;
 			other.camzoom = 1;
 			if !ispeppino
@@ -81,18 +83,30 @@ function scr_boss_pizzaheadjump()
 			case spr_lonegustavo_jumpstart:
 				sprite_index = spr_lonegustavo_jump;
 				break;
+			case spr_lonepika_jumpstart:
+				sprite_index = spr_lonepika_jump;
+				break;
 			case spr_player_ratmountgroundpound:
 				sprite_index = spr_player_ratmountgroundpoundfall;
+				break;
+			case spr_playerK_ratmountgroundpound:
+				sprite_index = spr_playerK_ratmountgroundpoundfall;
 				break;
 			case spr_playerN_jump:
 				sprite_index = spr_playerN_fall;
 				break;
+			case spr_playerW_jump:
+				sprite_index = spr_playerW_fall;
+				break;
 			case spr_fakepeppino_jump:
 				sprite_index = spr_fakepeppino_fall;
 				break;
+			case spr_ditto_jump:
+				sprite_index = spr_ditto_fall;
+				break;
 		}
 	}
-	if object_index == obj_noiseboss && doise
+	if (object_index == obj_noiseboss && !global.doisemode && (fmod_get_parameter("isnoise") == 1 || global.swapmode))
 		sprite_index = spr_doise_deadair;
 	if grounded && vsp > 0
 	{
@@ -107,12 +121,18 @@ function scr_boss_pizzaheadjump()
 				break;
 			case obj_noiseboss:
 				if obj_player1.ispeppino
+				{
 					sprite_index = spr_playerN_idle;
+					if obj_player1.character == "E"
+						sprite_index = spr_playerW_idle;
+				}
 				else
 					sprite_index = spr_playerN_animatronic;
 				break;
 			case obj_fakepepboss:
 				sprite_index = spr_fakepeppino_idle;
+				if obj_player1.character == "E"
+					sprite_index = spr_ditto_idle;
 				break;
 		}
 		if object_index == obj_noisey
@@ -190,9 +210,13 @@ function scr_boss_pizzaheadKO()
 			break;
 		case obj_noiseboss:
 			sprite_index = spr_playerN_hurt;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerW_hurt;
 			break;
 		case obj_fakepepboss:
 			sprite_index = spr_fakepeppino_vulnerable;
+			if obj_player1.character == "E"
+				sprite_index = spr_ditto_vulnerable;
 			break;
 	}
 	if pizzaheadKO_buffer > 0
@@ -386,7 +410,7 @@ function scr_boss_phase1hurt(func = noone)
 			with (instance_create(x - (xscale * 61), y - 21, obj_explosioneffect))
 			{
 				depth = -12;
-				fmod_event_one_shot("event:/sfx/ending/star");
+				fmod_event_one_shot("event:/modded-sfx/ending/shootingstar");
 				sprite_index = choose(spr_bossfight_blackoutpunch1, spr_bossfight_blackoutpunch2);
 				image_speed = 0.3;
 			}

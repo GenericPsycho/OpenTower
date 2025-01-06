@@ -12,5 +12,9 @@ else if sprite_index == spr_pizzaportal_outline
 else
 {
 	draw_self();
-	lang_draw_sprite(spr_lap2warning, 0, x, y + Wave(-5, 5, 0.5, 5));
+	if global.lapcount <= 1
+		lang_draw_sprite(spr_lap2warning, 0, x, y + Wave(-5, 5, 0.5, 5));
+	else if global.lapcount >= 2
+		lang_draw_sprite(spr_lappluswarning, 0, x, y + Wave(-5, 5, 0.5, 5));
+	
 }

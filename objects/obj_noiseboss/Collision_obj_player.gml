@@ -1,4 +1,4 @@
-if ((state == states.mach2 && hsp != 0) || (state == states.pizzahead_spinningkick && image_index > 3) || (state == states.freefall && !grounded) || state == states.machslide || state == states.pogo || state == states.jetpack || state == states.bounce)
+if ((state == states.mach2 && hsp != 0) || (state == states.pizzahead_spinningkick && image_index > 3) || (state == states.freefall && !grounded) || state == states.machslide || state == states.pogo || state == states.jetpack2 || state == states.bounce)
 {
 	if other.flash
 		other.flash = false;
@@ -16,12 +16,12 @@ else if (((state == states.walk || (state == states.stun && !savedthrown)) && fl
 		fightballcount = 0;
 		substate = states.fightball;
 		state = states.ending;
-		sprite_index = spr_playerN_fightball;
+		sprite_index = obj_player1.character == "E" ? spr_playerW_fightball : spr_playerN_fightball;
 		image_index = 0;
 		image_speed = 0.35;
 		other.state = states.actor;
 		other.image_speed = 0.35;
-		other.sprite_index = spr_player_fightball;
+		other.sprite_index = obj_player1.character == "E" ? spr_playerE_fightball : spr_player_fightball;
 		other.image_index = 0;
 		if doise
 			scr_doise_end_start();

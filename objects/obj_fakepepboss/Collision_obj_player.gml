@@ -1,4 +1,4 @@
-if (staggerbuffer <= 0 && flickertime <= 0 && ((other.state == states.handstandjump || other.instakillmove) && visible && (state == states.walk || (state == states.jump && sprite_index == spr_fakepeppino_bodyslamstart) || (state == states.freefall && sprite_index == spr_fakepeppino_bodyslamland) || (state == states.mach2 && attackspeed < 18) || state == states.Sjumpprep || (state == states.throwing && sprite_index != spr_fakepeppino_flailing))))
+if (staggerbuffer <= 0 && flickertime <= 0 && ((other.state == states.handstandjump || other.instakillmove) && visible && (state == states.walk || (state == states.jump && (sprite_index == spr_fakepeppino_bodyslamstart || sprite_index == spr_ditto_bodyslamstart)) || (state == states.freefall && (sprite_index == spr_fakepeppino_bodyslamland || sprite_index == spr_ditto_bodyslamland)) || (state == states.mach2 && attackspeed < 18) || state == states.Sjumpprep || (state == states.throwing && (sprite_index != spr_fakepeppino_flailing && sprite_index != spr_ditto_flailing)))))
 {
 	if subhp > 0
 	{
@@ -8,7 +8,7 @@ if (staggerbuffer <= 0 && flickertime <= 0 && ((other.state == states.handstandj
 			image_xscale = -other.xscale;
 			hsp = -image_xscale * 20;
 			vsp = 0;
-			sprite_index = spr_fakepeppino_stagger;
+			sprite_index = obj_player1.character == "E" ? spr_ditto_stagger : spr_fakepeppino_stagger;
 			image_index = 0;
 		}
 		else
@@ -32,7 +32,7 @@ if (staggerbuffer <= 0 && flickertime <= 0 && ((other.state == states.handstandj
 		vsp = -6;
 		thrown = false;
 		linethrown = false;
-		sprite_index = spr_fakepeppino_vulnerable;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_vulnerable : spr_fakepeppino_vulnerable;
 		stunned = 200;
 		flash = true;
 		repeat 4
@@ -44,7 +44,7 @@ if (staggerbuffer <= 0 && flickertime <= 0 && ((other.state == states.handstandj
 		image_index = 0;
 		movespeed = 4;
 		if ispeppino
-			sprite_index = choose(spr_player_lungehit, spr_player_kungfu1, spr_player_kungfu2, spr_player_kungfu3);
+			sprite_index = obj_player1.character == "E" ? choose(spr_playerE_lungehit, spr_playerE_kungfu1, spr_playerE_kungfu2, spr_playerE_kungfu3) : choose(spr_player_lungehit, spr_player_kungfu1, spr_player_kungfu2, spr_player_kungfu3);
 		else
 		{
 			if state == states.machcancel && hsp != 0

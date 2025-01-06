@@ -10,14 +10,16 @@ function scr_player_thrown()
 	if grounded && vsp > -1
 	{
 		hsp = 0;
-		if sprite_index == spr_player_outofpizza2
+		if sprite_index == spr_player_outofpizza2 || sprite_index == spr_playerE_outofpizza2
 		{
 			fmod_event_one_shot("event:/sfx/misc/bossdefeattonk");
 			sprite_index = spr_player_outofpizza3;
+			if character == "E"
+				sprite_index = spr_playerE_outofpizza3;
 			image_index = 0;
 		}
 	}
-	if grounded && vsp > 0 && sprite_index != spr_player_outofpizza1 && sprite_index != spr_player_outofpizza2 && sprite_index != spr_player_outofpizza3 && sprite_index != spr_player_outofpizza4
+	if grounded && vsp > 0 && sprite_index != spr_player_outofpizza1 && sprite_index != spr_player_outofpizza2 && sprite_index != spr_player_outofpizza3 && sprite_index != spr_player_outofpizza4 && sprite_index != spr_playerE_outofpizza1 && sprite_index != spr_playerE_outofpizza2 && sprite_index != spr_playerE_outofpizza3 && sprite_index != spr_playerE_outofpizza4
 	{
 		state = states.normal;
 		movespeed = 0;
@@ -36,6 +38,14 @@ function scr_player_thrown()
 				break;
 			case spr_player_outofpizza3:
 				sprite_index = spr_player_outofpizza4;
+				image_index = 0;
+				break;
+			case spr_playerE_outofpizza1:
+				sprite_index = spr_playerE_outofpizza2;
+				image_index = 0;
+				break;
+			case spr_playerE_outofpizza3:
+				sprite_index = spr_playerE_outofpizza4;
 				image_index = 0;
 				break;
 		}

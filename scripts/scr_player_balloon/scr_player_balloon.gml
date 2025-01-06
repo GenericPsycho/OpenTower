@@ -1,6 +1,6 @@
 function scr_player_balloon()
 {
-	if !ispeppino
+	if !ispeppino && !global.doisemode
 	{
 		image_speed = 0.35;
 		hsp = movespeed;
@@ -68,7 +68,7 @@ function scr_player_balloon()
 				if !shot
 				{
 					shot = true;
-					fmod_event_one_shot_3d("event:/sfx/playerN/balloonflap", x, y);
+					fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/balloonflap", x, y);
 				}
 			}
 			else
@@ -76,7 +76,23 @@ function scr_player_balloon()
 		}
 		exit;
 	}
+	else if !ispeppino && global.doisemode
+	{
+		state = states.jump
+        vsp = -21
+        movespeed = hsp * xscale
+        image_index = 0
+		sprite_index = spr_playerN_ratballoonbounce
+        with (instance_create(x, y, obj_highjumpcloud2))
+            sprite_index = spr_player_firemouthjumpdust
+        fmod_event_one_shot_3d("event:/sfx/noise/noisecrusher", x, y)
+        particle_set_scale((4 << 0), xscale, 1)
+        create_particle(x, y, (4 << 0), 0)
+		exit;
+	}
 	sprite_index = spr_player_ratballoon;
+	if character == "E"
+		sprite_index = spr_playerE_ratballoon;
 	hsp = movespeed;
 	move = key_left + key_right;
 	vsp = -5;

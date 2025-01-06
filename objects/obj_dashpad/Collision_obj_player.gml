@@ -23,7 +23,7 @@ with other
 				y = other.y - 14;
 			vsp = 0;
 			create_particle(x, y, particle.jumpdust, 0);
-			if character == "P"
+			if character == "P" || character == "E"
 			{
 				if sprite_index != spr_dashpadmach
 				{

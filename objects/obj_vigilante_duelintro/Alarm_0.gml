@@ -48,6 +48,8 @@ with obj_player
 {
 	pistolanim = -4;
 	sprite_index = spr_peppino_duel;
+	if character == "E"
+		sprite_index = spr_plume_duel
 	if !ispeppino
 		sprite_index = spr_noise_duel;
 	image_speed = 0.35;

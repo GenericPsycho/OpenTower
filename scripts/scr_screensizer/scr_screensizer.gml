@@ -146,6 +146,8 @@ function get_options()
 	global.option_master_volume = ini_read_real("Option", "master_volume", 1);
 	global.option_music_volume = ini_read_real("Option", "music_volume", 0.85);
 	global.option_sfx_volume = ini_read_real("Option", "sfx_volume", 1);
+	global.option_mute_beatbox = ini_read_real("Option", "mute_beatbox", 0);
+	global.option_datoggle = ini_read_real("Option", "datoggle", 1);
 	global.option_vibration = ini_read_real("Option", "vibration", 1);
 	global.option_scale_mode = ini_read_real("Option", "scale_mode", 0);
 	global.option_hud = ini_read_real("Option", "hud", 1);
@@ -155,6 +157,22 @@ function get_options()
 	global.option_unfocus_mute = ini_read_real("Option", "unfocus_mute", 0);
 	global.option_texfilter = ini_read_real("Option", "texfilter", 1);
 	global.option_vsync = ini_read_real("Option", "vsync", 0);
+	
+	global.togglehalloween = ini_read_real("Extras", "hardoween", 0)
+	global.extras_jesus = ini_read_real("Extras", "jesus", 0);
+	global.extras_inflap = ini_read_real("Extras", "inflap", 0);
+	global.extras_anchovies = ini_read_real("Extras", "anchovies", 0);
+	global.extras_toppinswap = ini_read_real("Extras", "toppinswap", 0);
+	global.extras_scream = ini_read_real("Extras", "scream", 0);
+	global.extras_sendoff = ini_read_real("Extras", "sendoff", 0);
+	global.extras_randomrat = ini_read_real("Extras", "randomrat", 0);
+	global.extras_betternoise = ini_read_real("Extras", "betternoise", 0);
+	global.extras_lario = ini_read_real("Extras", "lario", 0);
+	global.extras_griffin = ini_read_real("Extras", "griffin", 0);
+	global.extras_cum = ini_read_real("Extras", "cum", 0);
+	
+	global.triedtocheat = ini_read_real("GrannyQuest", "triedtocheat", 0);
+	global.doisedebug = false;
 	
 	var lang = ini_read_string("Option", "lang", "none");
 	if lang == "none"

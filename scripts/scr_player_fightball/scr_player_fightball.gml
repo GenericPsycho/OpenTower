@@ -16,7 +16,7 @@ function scr_player_fightball()
 	{
 		instance_create(x + (10 * xscale), y + 10, obj_bumpeffect);
 		fmod_event_one_shot_3d("event:/sfx/pep/bumpwall", x, y);
-		fmod_event_one_shot_3d("event:/sfx/playerN/fightball", x, y);
+		fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/fightball", x, y);
 		xscale *= -1;
 		if key_jump2_p2 || key_jump2
 		{
@@ -99,7 +99,7 @@ function scr_player_fightball()
 	else
 	{
 		fightball_snd_buffer = 15;
-		fmod_event_one_shot_3d("event:/sfx/playerN/fightball", x, y);
+		fmod_event_one_shot_3d("event:/modded-sfx/playerNfix/fightball", x, y);
 	}
 	if fightball_buffer1 > 0
 		fightball_buffer1--;

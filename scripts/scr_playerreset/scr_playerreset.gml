@@ -15,9 +15,18 @@ function textures_offload(texturegroup_array)
 }
 function scr_playerreset(stopmusic = true)
 {
+	if (fmod_get_parameter("doiseisdead") >= 1)
+        fmod_set_parameter("doiseisdead", 0, true)
+	if instance_exists(obj_peddito)
+		instance_destroy(obj_peddito)
 	trace("playerreset");
 	
+	global.leavinglevel = false
+	global.deduction = false
+	global.lapcount = 0;
+	global.laprecord = false
 	global.lap = false;
+	global.escapetimer = 0
 	if room != boss_pizzaface && room != boss_noise && room != boss_pepperman && room != boss_fakepep && room != boss_vigilante
 		global.bossintro = false;
 	global.bossplayerhurt = false;
@@ -43,6 +52,8 @@ function scr_playerreset(stopmusic = true)
 	global.level_minutes = 0;
 	global.level_seconds = 0;
 	global.pistol = false;
+	global.pedditosprite = spr_peddito;
+	global.jumped = 0;
 	
 	with obj_screensizer
 		camzoom = 1;
@@ -134,6 +145,8 @@ function scr_playerreset(stopmusic = true)
 			{
 				sprite_index = spr_tv_off;
 				tvsprite = spr_tv_idle;
+				if character == "E"
+					tvsprite = spr_tv_idleE;
 				state = states.normal;
 				tv_set_idle();
 			}
@@ -162,6 +175,7 @@ function scr_playerreset(stopmusic = true)
 		global.pizzasdelivered = 0;
 		global.spaceblockswitch = true;
 		global.fill = 500;
+		global.escapetimer = 500;
 		global.chunk = 5;
 		global.hasfarmer = array_create(3, false);
 		global.checkpoint_room = -4;
@@ -266,7 +280,7 @@ function scr_playerreset(stopmusic = true)
 		goblinkey = false;
 		transformationsnd = false;
 		fmod_event_instance_release(snd_voiceok);
-		snd_voiceok = fmod_event_create_instance("event:/sfx/voice/ok");
+		snd_voiceok = fmod_event_create_instance("event:/modded-sfx/voice/okydoky")
 		image_alpha = 1;
 		hallway = false;
 		verticalhallway = false;

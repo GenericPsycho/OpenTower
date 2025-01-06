@@ -5,12 +5,16 @@ function scr_player_ratmountpunch()
 	move = key_left + key_right;
 	landAnim = false;
 	sprite_index = spr_lonegustavo_punch;
+	if obj_player1.character == "E"
+		sprite_index = spr_lonepika_punch;
 	if grounded
 		movespeed = Approach(movespeed, xscale * 4, 0.1);
 	ratmountpunchtimer--;
 	if (ratmountpunchtimer < 0 && (!key_slap || gustavohitwall))
 	{
 		sprite_index = spr_lonegustavo_walk;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_walk;
 		state = states.ratmount;
 		if hsp != 0
 		{
@@ -36,6 +40,8 @@ function scr_player_ratmountpunch()
 		state = states.ratmountgroundpound;
 		image_index = 0;
 		sprite_index = spr_lonegustavo_groundpoundstart;
+		if obj_player1.character == "E"
+			sprite_index = spr_lonepika_groundpoundstart;
 	}
 	if punch_afterimage > 0
 		punch_afterimage--;

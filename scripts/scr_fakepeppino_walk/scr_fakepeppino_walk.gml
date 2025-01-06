@@ -8,20 +8,20 @@ function scr_fakepeppino_walk()
 	}
 	else
 	{
-		sprite_index = spr_fakepeppino_walk;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_walk : spr_fakepeppino_walk;
 		movespeed = 6;
 	}
-	if (place_meeting(x + (hsp * 2), y - 1, obj_solid) && place_meeting(x + hsp, y, obj_solid) && !place_meeting(x, y + 1, obj_slope) && !place_meeting(x + hsp, y, obj_destructibles) && sprite_index == spr_fakepeppino_walk)
+	if (place_meeting(x + (hsp * 2), y - 1, obj_solid) && place_meeting(x + hsp, y, obj_solid) && !place_meeting(x, y + 1, obj_slope) && !place_meeting(x + hsp, y, obj_destructibles) && (sprite_index == spr_fakepeppino_walk || sprite_index == spr_ditto_walk))
 	{
 		image_index = 0;
 		state = states.jump;
 		sprite_index = spr_fakepeppino_jumpstart;
 		movespeed = 0;
 	}
-	if (image_xscale != -sign(x - obj_player.x) && sprite_index == spr_fakepeppino_walk)
+	if (image_xscale != -sign(x - obj_player.x) && (sprite_index == spr_fakepeppino_walk || sprite_index == spr_ditto_walk))
 	{
 		movespeed = 0;
-		sprite_index = spr_fakepeppino_idle;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_idle : spr_fakepeppino_idle;
 		image_index = 0;
 		state = states.idle;
 	}

@@ -21,8 +21,13 @@ with obj_player1
 	x = backtohubstartx;
 	y = backtohubstarty - (SCREEN_HEIGHT * 2);
 	state = states.backtohub;
-	sprite_index = spr_slipbanan1;
-	image_index = 10;
+	if global.doisemode && !global.swapmode
+		sprite_index = global.iced ? spr_doise_deadice : spr_doise_deadair
+	else
+	{
+		sprite_index = spr_slipbanan1;
+		image_index = 10;
+	}
 }
 global.level_minutes = 0;
 global.level_seconds = 0;

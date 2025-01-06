@@ -28,6 +28,8 @@ if (place_meeting(x, y - s, obj_player))
 			if isgustavo
 			{
 				sprite_index = spr_player_ratmountwalljump;
+				if character == "E"
+					sprite_index = spr_playerK_ratmountwalljump;
 				state = states.ratmounttrickjump;
 			}
 			else

@@ -1,6 +1,6 @@
 if thrown
 {
-	sprite_index = spr_headprojectile;
+	sprite_index = obj_player1.character == "E" ? spr_eggprojectile : spr_headprojectile;
 	hsp = hithsp;
 	vsp = hitvsp;
 	if (place_meeting(x + sign(hsp), y, obj_solid))
@@ -16,7 +16,7 @@ else
 	if grounded
 	{
 		hsp = Approach(hsp, 0, 0.5);
-		sprite_index = spr_headprojectile_idle;
+		sprite_index = obj_player1.character == "E" ? spr_eggprojectile_idle : spr_headprojectile_idle;
 	}
 	if (((grounded && vsp > 0) || place_meeting(x, y + 1, obj_solid)) && destroy)
 		instance_destroy();

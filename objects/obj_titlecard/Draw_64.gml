@@ -13,7 +13,7 @@ if start
 		else
 		{
 			head.visual_scale = Approach(head.visual_scale, 1, 0.25);
-			draw_sprite_ext(spr_titlecard_noise, head.image_index, head.x, head.y, head.scale * head.visual_scale, head.scale * head.visual_scale, 0, c_white, 1);
+			draw_sprite_ext(global.solitude ? spr_titlecard_solitude : (global.doisemode ? spr_titlecard_doise : spr_titlecard_noise), head.image_index, head.x, head.y, head.scale * head.visual_scale, head.scale * head.visual_scale, 0, c_white, 1);
 		}
 	}
 }

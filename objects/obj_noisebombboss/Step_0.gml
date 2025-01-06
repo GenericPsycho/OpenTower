@@ -5,7 +5,7 @@ switch state
 		if grounded && vsp > 0
 		{
 			fmod_event_one_shot_3d("event:/sfx/noise/bombbounce", x, y);
-			sprite_index = spr_playerN_noisebombland;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombland : spr_playerN_noisebombland;
 			image_index = 0;
 			state = states.land;
 		}
@@ -14,15 +14,15 @@ switch state
 		hsp = image_xscale * 6;
 		if floor(image_index) == image_number - 1
 		{
-			if sprite_index == spr_playerN_noisebombland
-				sprite_index = spr_playerN_noisebomb;
+			if sprite_index == spr_playerN_noisebombland || sprite_index == spr_playerW_noisebombland
+				sprite_index = obj_player1.character == "E" ? spr_playerW_noisebomb : spr_playerN_noisebomb;
 			if sprite_index == spr_playerN_noisebombhitwall
-				sprite_index = spr_playerN_noisebomb;
+				sprite_index = obj_player1.character == "E" ? spr_playerW_noisebomb : spr_playerN_noisebomb;
 		}
 		if grounded && vsp > 0
 		{
 			fmod_event_one_shot_3d("event:/sfx/noise/bombbounce", x, y);
-			sprite_index = spr_playerN_noisebombland;
+			sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombland : spr_playerN_noisebombland;
 			image_index = 0;
 			state = states.land;
 		}
@@ -43,8 +43,10 @@ switch state
 		}
 		break;
 }
-if sprite_index == spr_playerN_noisebomb && cooldown <= 60
-	sprite_index = spr_playerN_noisebombflash;
+if (sprite_index == spr_playerN_noisebomb || sprite_index == spr_playerW_noisebomb) && cooldown <= 60
+{
+	sprite_index = obj_player1.character == "E" ? spr_playerW_noisebombflash : spr_playerN_noisebombflash;
+}
 if state != states.fall
 {
 	if cooldown > 0

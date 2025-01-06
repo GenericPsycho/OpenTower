@@ -1,6 +1,8 @@
 depth = 50;
 event_inherited();
 tv_do_expression(spr_tv_exprcollect, true);
+if obj_player1.character == "E"
+	tv_do_expression(spr_tv_exprcollectE, true);
 image_speed = 0.35;
 yoffset = 0;
 hsp = 0;

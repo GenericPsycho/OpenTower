@@ -94,16 +94,16 @@ function scr_pepperman_arenaintro()
 			if other.sprite_index == spr_pepperman_intro1
 			{
 				if ispeppino
-					sprite_index = spr_player_gnomecutscene1;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene1 : spr_player_gnomecutscene1;
 				else
 					sprite_index = spr_playerN_bosscutscene1;
 			}
 			if floor(image_index) == image_number - 1
 			{
-				if (sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerN_bosscutscene2 || sprite_index == spr_playerN_bosscutscene3)
+				if (sprite_index == spr_player_gnomecutscene2 || sprite_index == spr_playerE_gnomecutscene2 || sprite_index == spr_playerN_bosscutscene2 || sprite_index == spr_playerN_bosscutscene3)
 					image_index = image_number - 1;
-				else if sprite_index == spr_player_gnomecutscene3
-					sprite_index = spr_player_gnomecutscene4;
+				else if sprite_index == spr_player_gnomecutscene3 || sprite_index == spr_playerE_gnomecutscene3
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene4 : spr_player_gnomecutscene4;
 				else if sprite_index == spr_noise_vulnerable1
 					sprite_index = spr_noise_vulnerable1loop;
 			}
@@ -123,7 +123,7 @@ function scr_pepperman_arenaintro()
 			{
 				image_index = 0;
 				if ispeppino
-					sprite_index = spr_player_gnomecutscene2;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene2 : spr_player_gnomecutscene2;
 				else
 					sprite_index = spr_playerN_bosscutscene2;
 			}
@@ -137,14 +137,23 @@ function scr_pepperman_arenaintro()
 			{
 				if ispeppino
 				{
-					fmod_event_one_shot("event:/sfx/pep/screamboss");
-					sprite_index = spr_player_gnomecutscene3;
+					fmod_event_one_shot("event:/modded-sfx/pep/screamer")
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene3 : spr_player_gnomecutscene3;
 					image_index = 0;
 				}
 				else
 				{
-					sprite_index = spr_playerN_bosscutscene3;
-					image_index = 0;
+					if global.doisemode
+					{
+						fmod_event_one_shot_3d("event:/modded-sfx/voice/doisewoah", x, y)
+						sprite_index = spr_noise_vulnerable1
+						image_index = 0;
+					}
+					else
+					{
+						sprite_index = spr_playerN_bosscutscene3
+						image_index = 0;
+					}
 				}
 			}
 		}
@@ -166,7 +175,7 @@ function scr_pepperman_arenaintro()
 					{
 						if ispeppino
 						{
-							sprite_index = spr_player_screamtransition;
+							sprite_index = character == "E" ? spr_playerE_screamtransition : spr_player_screamtransition;
 							image_index = 0;
 							image_speed = 0.35;
 						}

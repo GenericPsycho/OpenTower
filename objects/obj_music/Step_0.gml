@@ -11,6 +11,7 @@ if (fmod_event_instance_is_playing(kidspartychaseID) && instance_exists(obj_paus
 	}
 	fmod_event_instance_set_paused(pillarmusicID, savedpillarpause);
 	fmod_event_instance_set_paused(panicmusicID, savedpanicpause);
+	fmod_event_instance_set_paused(escapeID, savedpanicpause);
 }
 if (instance_exists(obj_hungrypillar))
 {
@@ -44,6 +45,14 @@ if global.panic
 			fmod_event_instance_play(panicmusicID);
 			fmod_event_instance_set_paused(panicmusicID, false);
 			fmod_event_instance_set_parameter(panicmusicID, "state", 0, true);
+			fmod_event_instance_set_parameter(panicmusicID, "remix", 0, true);
+			fmod_event_instance_set_parameter(panicmusicID, "inflap", 0, true);
+		}
+		else
+		{
+			fmod_event_instance_play(escapeID);
+			fmod_event_instance_set_paused(escapeID, false);
+			fmod_event_instance_set_parameter(escapeID, "inflap", 0, false)
 		}
 		if music != -4
 		{
@@ -54,7 +63,6 @@ if global.panic
 		{
 			exitmusic = true;
 			fmod_event_instance_stop(panicmusicID);
-			fmod_event_instance_play(music.event);
 		}
 		fmod_event_instance_stop(pillarmusicID, true);
 		fmod_set_parameter("pillarfade", 0, true);
@@ -72,12 +80,17 @@ if global.panic
 		}
 		else
 			fmod_event_instance_set_parameter(panicmusicID, "state", 2, true);
+		if (irandom(100) <= 25)
+            fmod_event_instance_set_parameter(panicmusicID, "remix", 1, true)
+        else
+            fmod_event_instance_set_parameter(panicmusicID, "remix", 0, true)
 	}
 }
 else
 {
 	panicstart = false;
 	fmod_event_instance_stop(panicmusicID, true);
+	fmod_event_instance_stop(escapeID, true);
 }
 var _found = false;
 with obj_totem
@@ -106,4 +119,7 @@ else
 		fmod_set_parameter("totem", 2, false);
 }
 if (exitmusic && fmod_event_instance_is_playing(panicmusicID))
+{
 	fmod_event_instance_stop(panicmusicID, true);
+	fmod_event_instance_play(escapeID, true);
+}

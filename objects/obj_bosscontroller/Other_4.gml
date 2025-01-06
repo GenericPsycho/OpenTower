@@ -1,3 +1,4 @@
+
 boss_maxhp = boss_hp;
 boss_prevhp = boss_maxhp;
 player_maxhp = player_hp;
@@ -5,7 +6,7 @@ persistent = false;
 if boss_func != -4
 	boss_func();
 boss_prevhp = boss_hp;
-if (bossspr == spr_vsnoise && (!obj_player1.ispeppino || global.swapmode))
+if (bossspr == spr_vsnoise && ((!obj_player1.ispeppino) || global.swapmode) && !global.doisemode)
 {
 	bossspr = spr_vsdoise;
 	vstitle = spr_vstitle_doise;

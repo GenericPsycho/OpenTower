@@ -15,3 +15,17 @@ platformid = -4;
 hsp_carry = 0;
 vsp_carry = 0;
 hamspotted = false;
+if global.extras_anchovies
+{
+	sprite_index = spr_ancho;
+	instance_change(obj_ancho, 0)
+	idlespr = spr_ancho;
+	stunfallspr = spr_anchobounce;
+	walkspr = spr_ancho;
+	grabbedspr = spr_anchobounce;
+	scaredspr = spr_ancho_scared;
+	spr_dead = spr_anchodead;
+	spr_palette = palette_anchovie;
+	paletteselect = 0;
+	snotty = false
+}

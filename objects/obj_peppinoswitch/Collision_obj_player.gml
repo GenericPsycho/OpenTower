@@ -20,7 +20,14 @@ if global.switchbuffer == 0 && global.panic == escape
 	with (instance_create(0, 0, obj_charswitch_intro))
 	{
 		spr = spr_gustavo_intro;
+		if obj_player1.character == "E"
+			spr = spr_pika_intro;
 		if !obj_player1.ispeppino
-			spr = spr_noise_intro;
+		{
+			if ( global.doisemode)
+                spr = spr_doise_intro;
+            else
+                spr = spr_noise_intro;
+		}
 	}
 }

@@ -15,6 +15,12 @@ function scr_player_grabbing()
 	var attackdash = spr_player_suplexdash;
 	var airattackdash = spr_player_suplexgrabjump;
 	var airattackdashstart = spr_player_suplexgrabjumpstart;
+	if character == "E"
+	{
+		attackdash = spr_playerE_suplexdash;
+		airattackdash = spr_playerE_suplexgrabjump;
+		airattackdashstart = spr_playerE_suplexgrabjumpstart;
+	}
 	if sprite_index == attackdash && !grounded
 	{
 		image_index = 0;
@@ -27,6 +33,10 @@ function scr_player_grabbing()
 		image_index = 0;
 		vsp = 0;
 		sprite_index = spr_player_suplexdash;
+		if character == "E"
+		{
+			sprite_index = spr_playerE_suplexdash;
+		}
 		movespeed = 8;
 		with (instance_create(x, y, obj_superdashcloud))
 			image_xscale = other.xscale;
@@ -83,6 +93,8 @@ function scr_player_grabbing()
 		if !grounded
 		{
 			sprite_index = spr_player_suplexcancel;
+			if character == "E"
+				sprite_index = spr_playerE_suplexcancel;
 			grav = 0.5;
 			state = states.jump;
 		}

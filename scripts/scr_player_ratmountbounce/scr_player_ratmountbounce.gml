@@ -6,7 +6,7 @@ function scr_player_ratmountbounce()
 		scr_player_noisecrusher();
 		exit;
 	}
-	if sprite_index == spr_player_ratmountwalljump && vsp > 0
+	if (sprite_index == spr_player_ratmountwalljump || sprite_index == spr_playerK_ratmountwalljump) && vsp > 0
 	{
 		vsp += 0.5;
 		image_speed = abs(vsp) / 10;
@@ -21,7 +21,7 @@ function scr_player_ratmountbounce()
 	}
 	else
 		image_speed = 0.35;
-	if sprite_index == spr_player_ratmountbounce
+	if sprite_index == spr_player_ratmountbounce ||  sprite_index == spr_playerK_ratmountbounce
 	{
 		move = key_left + key_right;
 		hsp = movespeed;
@@ -65,6 +65,8 @@ function scr_player_ratmountbounce()
 				xscale = move;
 			movespeed = xscale * 12;
 			sprite_index = spr_lonegustavo_punch;
+			if character == "E"
+				sprite_index = spr_lonepika_punch;
 		}
 		ratmount_fallingspeed += 0.5;
 		if (brick && scr_solid(x + sign(hsp), y) && (!place_meeting(x + sign(hsp), y, obj_slope) || scr_solid_slope(x + sign(hsp), y)))
@@ -111,6 +113,8 @@ function scr_player_ratmountbounce()
 			}
 			fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 			sprite_index = spr_player_ratmountbounce;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountbounce;
 			image_index = 0;
 		}
 	}

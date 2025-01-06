@@ -33,11 +33,21 @@ function scr_player_ratmountcrouch()
 		state = states.ratmountjump;
 		jumpAnim = false;
 		sprite_index = spr_player_ratmountgroundpoundfall;
+		if character == "E"
+			sprite_index = spr_playerK_ratmountgroundpoundfall;
 	}
 	if (((grounded && !key_down) || brick) && !scr_solid(x, y - 16) && !scr_solid(x, y - 32))
 		state = states.ratmount
 	if hsp != 0
+	{
 		sprite_index = spr_lonegustavo_crouchwalk;
+		if character == "E"
+			sprite_index = spr_lonepika_crouchwalk;
+	}
 	else
+	{
 		sprite_index = spr_lonegustavo_crouch;
+		if character == "E"
+			sprite_index = spr_lonepika_crouch;
+	}
 }

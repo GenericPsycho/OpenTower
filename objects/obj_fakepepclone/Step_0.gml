@@ -48,7 +48,7 @@ if state == states.Sjump
 		}
 	}
 }
-if ((state == states.grabdash || (state == states.mach2 && attackspeed >= 10) || (state == states.throwing && sprite_index == spr_fakepeppino_flailing) || state == states.freefall) && alarm[0] == -1)
+if ((state == states.grabdash || (state == states.mach2 && attackspeed >= 10) || (state == states.throwing && (sprite_index == spr_fakepeppino_flailing || sprite_index == spr_ditto_flailing)) || state == states.freefall) && alarm[0] == -1)
 {
 	alarm[0] = 10;
 	if state == states.freefall

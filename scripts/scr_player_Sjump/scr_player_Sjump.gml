@@ -32,7 +32,7 @@ function scr_player_Sjump()
 			piledrivereffect = 15;
 		}
 	}
-	if ((sprite_index == spr_superjump || sprite_index == spr_superspringplayer) && (character == "N" || character == "P"))
+	if ((sprite_index == spr_superjump || sprite_index == spr_superspringplayer) && (character == "N" || character == "P" || character == "E"))
 		vsp = sjumpvsp;
 	sjumpvsp -= 0.1;
 	if character == "V" && image_index > 3
@@ -71,7 +71,7 @@ function scr_player_Sjump()
 		state = states.Sjumpland;
 		machhitAnim = false;
 	}
-	else if ((key_attack2 || input_buffer_slap > 0) && character == "P" && sprite_index != spr_superspringplayer && sprite_index != spr_player_Sjumpcancelstart)
+	else if ((key_attack2 || input_buffer_slap > 0) && (character == "P" || character == "E") && sprite_index != spr_superspringplayer && sprite_index != spr_player_Sjumpcancelstart && sprite_index != spr_playerE_Sjumpcancelstart && sprite_index != spr_playerN_trash)
 	{
 		if ispeppino
 		{
@@ -79,31 +79,47 @@ function scr_player_Sjump()
 			input_buffer_slap = 0;
 			image_index = 0;
 			sprite_index = spr_player_Sjumpcancelstart;
+			if character == "E"
+				sprite_index = spr_playerE_Sjumpcancelstart;
 			fmod_event_one_shot_3d("event:/sfx/pep/superjumpcancel", x, y);
 		}
 		else
 		{
-			image_speed = 0.5;
-			input_buffer_shoot = 0;
-			if move != 0
-				xscale = move;
-			input_buffer_slap = 0;
-			key_slap = false;
-			key_slap2 = false;
-			jumpstop = true;
-			vsp = -5;
-			state = states.mach2;
-			movespeed = 12;
-			sprite_index = spr_playerN_sidewayspin;
-			image_index = 0;
-			with (instance_create(x, y, obj_crazyrunothereffect))
-				image_xscale = other.xscale;
-			particle_set_scale(particle.jumpdust, xscale, 1);
-			create_particle(x, y, particle.jumpdust, 0);
-			return true;
+			if global.doisemode
+			{
+				fmod_event_instance_stop(snd_noiseSjumprelease)
+				sprite_index = spr_playerN_jetpackstart
+		        image_index = 0
+		        image_speed = 0.45
+				fmod_event_one_shot_3d("event:/sfx/noise/jetpackstart", x, y)
+		        state = states.machcancelstart
+			    hsp = 0
+				vsp = 0
+			}
+			else
+			{
+				image_speed = 0.5;
+				input_buffer_shoot = 0;
+				if move != 0
+					xscale = move;
+				input_buffer_slap = 0;
+				key_slap = false;
+				key_slap2 = false;
+				jumpstop = true;
+				vsp = -5;
+				state = states.mach2;
+				movespeed = 12;
+				sprite_index = spr_playerN_sidewayspin;
+				image_index = 0;
+				with (instance_create(x, y, obj_crazyrunothereffect))
+					image_xscale = other.xscale;
+				particle_set_scale(particle.jumpdust, xscale, 1);
+				create_particle(x, y, particle.jumpdust, 0);
+				return true;
+			}
 		}
 	}
-	if sprite_index == spr_player_Sjumpcancelstart
+	if sprite_index == spr_player_Sjumpcancelstart || sprite_index == spr_playerE_Sjumpcancelstart
 	{
 		vsp = 0;
 		if move != 0
@@ -116,6 +132,8 @@ function scr_player_Sjump()
 			movespeed = 13;
 			image_index = 0;
 			sprite_index = spr_player_Sjumpcancel;
+			if character == "E"
+				sprite_index = spr_playerE_Sjumpcancel;
 			state = states.mach3;
 			with (instance_create(x, y, obj_crazyrunothereffect))
 				image_xscale = other.xscale;

@@ -1,9 +1,9 @@
 instance_destroy();
-if obj_player1.ispeppino
+if (obj_player1.ispeppino || global.doisemode)
 	fmod_event_one_shot("event:/sfx/noise/giantballoon2");
 fmod_event_instance_stop(snd, false);
 fmod_event_instance_release(snd);
-if !obj_player1.ispeppino
+if ((!obj_player1.ispeppino) && !global.doisemode)
 	exit;
 with obj_camera
 {
@@ -14,8 +14,15 @@ var layid = layer_get_id("Backgrounds_3");
 layer_set_visible(layid, true);
 with obj_micnoise
 {
-	with (instance_create(x, y, obj_sausageman_dead))
-		sprite_index = spr_noisey_dead;
-	instance_create(x, y, obj_bangeffect);
+	if obj_player1.character == "E"
+	{
+		instance_create(x, y, obj_canonexplosion)
+	}
+	else
+	{
+		with (instance_create(x, y, obj_sausageman_dead))
+			sprite_index = spr_noisey_dead;
+		instance_create(x, y, obj_bangeffect);
+	}
 	instance_destroy();
 }

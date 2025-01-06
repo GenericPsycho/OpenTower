@@ -1,9 +1,10 @@
 event_inherited();
-spr_intro = spr_toppincheese_intro;
-spr_idle = spr_toppincheese;
-spr_run = spr_toppincheese_run;
-spr_panic = spr_toppincheese_panic;
-spr_taunt = spr_toppincheese_taunt;
+var toppin = "cheese";
+spr_intro = scr_get_toppin_sprite(toppin, "intro");
+spr_idle = scr_get_toppin_sprite(toppin, "idle");
+spr_run = scr_get_toppin_sprite(toppin, "run");
+spr_panic = scr_get_toppin_sprite(toppin, "panic");
+spr_taunt = scr_get_toppin_sprite(toppin, "taunt");
 spr_intro_strongcold = spr_xmascheesetoppin_intro;
 spr_idle_strongcold = spr_xmascheesetoppin_idle;
 spr_run_strongcold = spr_xmascheesetoppin_walk;

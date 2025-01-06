@@ -6,7 +6,7 @@ if hp <= 0 && state != states.arenaround
 }
 if chooseparry_buffer > 0
 	chooseparry_buffer--;
-if ((state == states.handstandjump || state == states.crouchslide || state == states.skateboardturn || state == states.jetpack || state == states.jetpackspin || (state == states.pogo && pogochargeactive) || state == states.skateboard) && alarm[0] <= 0)
+if ((state == states.handstandjump || state == states.crouchslide || state == states.skateboardturn || state == states.jetpack2 || state == states.jetpackspin || (state == states.pogo && pogochargeactive) || state == states.skateboard) && alarm[0] <= 0)
 	alarm[0] = 6;
 switch state
 {
@@ -57,7 +57,7 @@ switch state
 		grav = 0.5;
 		boss_noise_jetpackstart();
 		break;
-	case states.jetpack:
+	case states.jetpack2:
 		grav = 0.5;
 		boss_noise_jetpack();
 		break;
@@ -98,4 +98,4 @@ switch state
 		break;
 }
 angry = phase > 6;
-attacking = state == states.handstandjump || state == states.crouchslide || state == states.skateboard || state == states.skateboardturn || state == states.pogo || state == states.jetpackstart || state == states.jetpack || state == states.jetpackspin || state == states.throwing;
+attacking = state == states.handstandjump || state == states.crouchslide || state == states.skateboard || state == states.skateboardturn || state == states.pogo || state == states.jetpackstart || state == states.jetpack2 || state == states.jetpackspin || state == states.throwing;

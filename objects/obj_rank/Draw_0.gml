@@ -1,5 +1,5 @@
 if (sprite_index == spr_rankNP || sprite_index == spr_rankNPend)
-	draw_sprite(spr_rankNPbg, 0, x, y);
+	draw_sprite(global.rank == "pp" ? spr_rankNPplusbg : spr_rankNPbg, 0, x, y);
 if brownfade < 1
 {
 	shader_set(global.Pal_Shader);
@@ -55,7 +55,7 @@ if toppinvisible
 			}
 			var _x = xx + (sep * i);
 			var _y = toppin_y[i] + cash_y;
-			draw_sprite_ext(spr_ranktoppins_cash, 0, _x, _y, 1, toppin_yscale[i], 0, c, 1);
+			draw_sprite_ext(obj_player1.character == "E" ? spr_ranktoppins_gimmighoul : spr_ranktoppins_cash, 0, _x, _y, 1, toppin_yscale[i], 0, c, 1);
 			if createmoney[i]
 			{
 				global.pigtotal_add += 10;
@@ -67,7 +67,7 @@ if toppinvisible
 				}
 			}
 		}
-		draw_sprite_ext(spr_ranktoppins, i, xx + (sep * i), toppin_y[i], 1, toppin_yscale[i], 0, c, 1);
+		draw_sprite_ext(scr_get_toppin_sprite("", "rank"), i, xx + (sep * i), toppin_y[i], 1, toppin_yscale[i], 0, c, 1);
 	}
 }
 draw_set_font(lang_get_font("bigfont"));
@@ -84,6 +84,6 @@ if global.swapmode && scorewins_show
 {
 	var spr = spr_scorewinsP;
 	if scorewins == "N"
-		spr = spr_scorewinsN;
+        spr = global.doisemode ? spr_scorewinsD : spr_scorewinsN
 	draw_sprite(spr, 0, scorepos_x, scorepos_y + floor(Wave(-1, 1, 0.2, 0)));
 }

@@ -47,7 +47,11 @@ if (active && sprite_index != spr_secretportal_open && !instance_exists(obj_jump
 			if !other.isgustavo
 				other.sprite_index = other.spr_hurt;
 			else
+			{
 				other.sprite_index = spr_player_ratmounthurt;
+				if obj_player1.character == "E"
+					other.sprite_index = spr_playerK_ratmounthurt;
+			}
 			other.image_speed = 0.35;
 		}
 		if other.state == states.knightpepslopes

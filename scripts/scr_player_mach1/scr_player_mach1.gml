@@ -22,6 +22,7 @@ function scr_player_mach1()
 	if xscale != move && move != 0
 	{
 		sprite_index = spr_mach1;
+		notification_push(notifs.player_ismoving, [room])
 		image_index = 0;
 		momemtum = false;
 		mach2 = 0;
@@ -51,6 +52,7 @@ function scr_player_mach1()
 		if sprite_index != spr_mach1 && vsp > 0
 		{
 			sprite_index = spr_mach1;
+			notification_push(notifs.player_ismoving, [room])
 			image_index = 0;
 		}
 		if input_buffer_jump > 0
@@ -127,6 +129,8 @@ function scr_player_mach1()
 		else
 		{
 			sprite_index = spr_player_shotgunjump1;
+			if character == "E"
+				sprite_index = spr_playerE_shotgunjump1;
 			image_index = 0;
 			state = states.freefallprep;
 			vsp = -5;

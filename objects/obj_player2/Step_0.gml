@@ -3,13 +3,13 @@ if room == rm_editor
 	visible = 0;
 	exit;
 }
-visible = false;
+visible = 0;
 x = -10000;
 y = -10000;
 scr_getinput2();
 if !global.coop
 {
-	obj_player1.spotlight = true;
+	obj_player1.spotlight = 1;
 	x = -1000;
 	y = -1000;
 	state = states.titlescreen;
@@ -26,7 +26,7 @@ if !visible && state == states.comingoutdoor
 	image_index = 0;
 	if coopdelay == 50
 	{
-		visible = true;
+		visible = 1;
 		coopdelay = 0;
 	}
 }

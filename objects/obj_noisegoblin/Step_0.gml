@@ -73,7 +73,7 @@ if x != targetplayer.x && targetplayer.state != states.bombpep && state != state
 			if x != targetplayer.x
 				image_xscale = -sign(x - targetplayer.x);
 			state = states.pizzagoblinthrow;
-			if !obj_player1.ispeppino && !provoked
+			if !obj_player1.ispeppino && !provoked && !global.doisemode
 			{
 				sprite_index = spr_archergoblin_wave;
 				state = states.actor;

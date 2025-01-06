@@ -26,6 +26,8 @@ if visible == 1
 				state = states.jetpackjump;
 			vsp = -14;
 			sprite_index = spr_player_jetpackstart;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerE_jetpackstart;
 			doublejump = false;
 			with (instance_create(x, y, obj_highjumpcloud2))
 				sprite_index = spr_player_firemouthjumpdust;

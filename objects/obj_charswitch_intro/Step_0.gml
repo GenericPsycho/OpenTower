@@ -18,12 +18,12 @@ switch state
 			obj_camera.lock = false;
 			with obj_player1
 			{
-				if (other.spr == spr_backtopeppino || other.spr == spr_backtonoise)
+				if (other.spr == spr_backtopeppino || other.spr == spr_backtoplume || other.spr == spr_backtonoise || other.spr == spr_backtodoise)
 				{
 					x = obj_peppinoswitch.x;
 					y = obj_peppinoswitch.y;
 				}
-				else if other.spr == spr_noise_intro
+				else if other.spr == spr_noise_intro || other.spr == spr_doise_intro
 				{
 					if noisecrusher
 					{

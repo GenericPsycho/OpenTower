@@ -68,7 +68,7 @@ function scr_player_knightpepslopes()
 		sprite_index = spr_knightpepcharge;
 	if (scr_solid(x + sign(hsp), y) && (!scr_slope() || place_meeting(x + sign(hsp), y - 2, obj_solid)) && !place_meeting(x + sign(hsp), y, obj_slope) && !place_meeting(x + sign(hsp), y, obj_destructibles))
 	{
-		if ispeppino
+		if ispeppino || (!ispeppino && global.doisemode)
 		{
 			instance_create(x + (xscale * 40), y, obj_bumpeffect);
 			movespeed = 0;

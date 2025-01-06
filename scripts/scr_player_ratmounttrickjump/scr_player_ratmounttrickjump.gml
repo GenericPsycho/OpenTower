@@ -7,7 +7,11 @@ function scr_player_ratmounttrickjump()
 	{
 		image_speed = 0.5;
 		if floor(image_index) == image_number - 1
+		{
 			sprite_index = spr_player_ratmountwalljump;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountwalljump;
+		}
 	}
 	if ramp_buffer > 0
 		ramp_buffer--;
@@ -26,6 +30,8 @@ function scr_player_ratmounttrickjump()
 			fmod_event_one_shot_3d("event:/sfx/pep/groundpound", x, y);
 			state = states.ratmount;
 			sprite_index = spr_player_ratmountland;
+			if character == "E"
+				sprite_index = spr_playerK_ratmountland;
 			image_index = 0;
 			landAnim = true;
 		}

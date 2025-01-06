@@ -8,7 +8,7 @@ stickpressed = false;
 key_back = false;
 startbuffer = 2;
 addbuffer = 0;
-draw_set_font(lang_get_font("creditsfont"));
+draw_set_font(lang_get_font(global.solitude ? "tutorialfont" : "creditsfont"));
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
 tip = scr_compile_icon_text(lang_get_value_newline("option_binding_tip"));

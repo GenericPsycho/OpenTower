@@ -23,7 +23,7 @@ if (key_jump || key_back) && startbuffer <= 0
 {
     if key_jump
     {
-        fmod_event_one_shot("event:/sfx/ui/select");
+        fmod_event_one_shot(global.solitude ? "event:/modded-sfx/ui/nostradoreterminalChoose" : "event:/sfx/ui/select");
         ini_open_from_string(obj_savesystem.ini_str_options);
         global.offload_lang = global.option_lang;
         global.option_lang = lang[select].ID;

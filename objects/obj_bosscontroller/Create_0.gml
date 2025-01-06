@@ -65,10 +65,28 @@ vstitleplayer = spr_vstitle_player;
 playerspr = spr_vspeppino;
 playersprshadow = spr_vspeppinoshadow;
 bossspr = spr_vsnoise;
+if obj_player1.character == "E"
+{
+	playerspr = spr_vsplume;
+	playersprshadow = spr_vsplumeshadow;
+	vstitleplayer = spr_vstitle_playerE;
+	player_hpsprite = spr_bossfight_plumehp;
+	if obj_player1.paletteselect == 12
+		player_hpsprite = spr_bossfight_plumehp_alt
+}
 if !obj_player1.ispeppino
 {
-	playerspr = spr_vsnoiseplayer;
-	playersprshadow = spr_vsnoiseplayershadow;
-	vstitleplayer = spr_vstitle_playerN;
+	if global.doisemode
+    {
+        playerspr = spr_vsdoiseplayer;
+		playersprshadow = spr_vsdoiseplayershadow;
+		vstitleplayer = spr_vstitle_playerD;
+    }
+    else
+    {
+		playerspr = spr_vsnoiseplayer;
+		playersprshadow = spr_vsnoiseplayershadow;
+		vstitleplayer = spr_vstitle_playerN;
+	}
 	player_hpsprite = spr_bossfight_noiseHP;
 }

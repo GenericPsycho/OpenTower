@@ -12,7 +12,11 @@ if !unlocked && stickunlocked
 		{
 			sprite_index = spr_mrmooney_notification;
 			if (!obj_player1.ispeppino || global.swapmode)
+			{
 				sprite_index = spr_noisetterabbitTV;
+				if ( global.doisemode)
+					sprite_index = spr_doisetterabbitTV;
+			}
 		}
 	}
 }

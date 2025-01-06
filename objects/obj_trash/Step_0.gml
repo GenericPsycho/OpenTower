@@ -11,6 +11,8 @@ switch state
 				scr_fmod_soundeffect(global.snd_trashjump1, other.x, other.y);
 				state = states.trashjumpprep;
 				sprite_index = spr_player_trashstart;
+				if character == "E"
+					sprite_index = spr_playerE_trashstart;
 				gravesurfingjumpbuffer = 0;
 				image_index = 0;
 				xscale = other.image_xscale;
@@ -67,6 +69,8 @@ switch state
 					x = other.x;
 					y = other.y;
 					sprite_index = spr_player_trashjump;
+					if obj_player1.character == "E"
+						sprite_index = spr_playerE_trashjump;	
 					image_index = 0;
 					movespeed = 0;
 					state = states.trashjump;

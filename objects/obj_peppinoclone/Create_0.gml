@@ -42,3 +42,33 @@ grabbedby = 0;
 stuntouchbuffer = 0;
 scaredbuffer = 0;
 snd = fmod_event_create_instance("event:/sfx/enemies/cloneattack");
+
+if obj_player1.character == "E"
+{
+	landspr = spr_playerE_land;
+	idlespr = spr_playerE_idle;
+	fallspr = spr_playerE_fall;
+	stunfallspr = spr_pluclone_stun;
+	walkspr = spr_playerE_move;
+	turnspr = spr_playerE_move;
+	recoveryspr = spr_playerE_land;
+	grabbedspr = spr_pluclone_stun;
+	scaredspr = spr_playerE_hurt;
+	spr_dead = spr_pluclone_death;
+	sprite_index = idlespr
+}
+
+if global.extras_anchovies
+{
+	instance_change(obj_ancho, 0)
+	idlespr = spr_ancho;
+	stunfallspr = spr_anchobounce;
+	walkspr = spr_ancho;
+	grabbedspr = spr_anchobounce;
+	scaredspr = spr_ancho_scared;
+	spr_dead = spr_anchodead;
+	spr_palette = palette_anchovie;
+	paletteselect = 0;
+	snotty = false
+	sprite_index = idlespr
+}

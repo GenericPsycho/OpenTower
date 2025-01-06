@@ -16,10 +16,10 @@ if pizzahead && elitehit <= 0 && destroyable
 		state = states.pizzaheadjump;
 		vsp = -26;
 		hsp = 0;
-		sprite_index = spr_pizzahead_intro3;
+		sprite_index = obj_player1.character == "E" ? spr_pizzahead_intro3E : spr_pizzahead_intro3;
 		with obj_bosscontroller
 		{
-			boss_hpsprite = spr_bossfight_pizzaheadHP;
+			boss_hpsprite = obj_player1.character == "E" ? spr_bossfight_meowthHP : spr_bossfight_pizzaheadHP;
 			boss_palette = spr_bossfight_pizzaheadpalette
 		}
 	}

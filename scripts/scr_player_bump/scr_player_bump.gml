@@ -4,7 +4,7 @@ function scr_player_bump()
 	{
 		movespeed = 0;
 		mach2 = 0;
-		var _gus = sprite_index == spr_player_ratmountbump || sprite_index == spr_lonegustavo_bump;
+		var _gus = sprite_index == spr_player_ratmountbump || sprite_index == spr_lonegustavo_bump || sprite_index == spr_playerK_ratmountbump || sprite_index == spr_lonepika_bump;
 		start_running = true;
 		alarm[4] = 14;
 		if grounded && vsp > 0
@@ -20,7 +20,7 @@ function scr_player_bump()
 			image_index = 3;
 		if sprite_index == spr_rockethitwall && grounded && vsp > 0
 			image_index = image_number - 1;
-		if (floor(image_index) == image_number - 1 && sprite_index != spr_player_catched && sprite_index != spr_boxxedpep_air && !_gus)
+		if (floor(image_index) == image_number - 1 && sprite_index != spr_player_catched && sprite_index != spr_playerE_catched && sprite_index != spr_boxxedpep_air && sprite_index != spr_boxxedplu_air && !_gus)
 		{
 			if !skateboarding
 			{
@@ -32,7 +32,7 @@ function scr_player_bump()
 		}
 		if grounded && vsp > 0 && _gus
 			state = states.ratmount;
-		if sprite_index != spr_player_catched && sprite_index != spr_boxxedpep_air && sprite_index != spr_rockethitwall && sprite_index != spr_tumbleend && sprite_index != spr_hitwall && !_gus && sprite_index != spr_mach && sprite_index != spr_mach4
+		if sprite_index != spr_player_catched && sprite_index != spr_playerE_catched && sprite_index != spr_boxxedpep_air && sprite_index != spr_boxxedplu_air && sprite_index != spr_rockethitwall && sprite_index != spr_tumbleend && sprite_index != spr_hitwall && !_gus && sprite_index != spr_mach && sprite_index != spr_mach4
 			sprite_index = !skateboarding ? spr_bump : spr_clownbump;
 	}
 	else

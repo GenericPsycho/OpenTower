@@ -8,17 +8,17 @@ if (((obj_player1.ispeppino && !global.swapmode) || (object_index == obj_gustavo
 		walkspr = other.walkspr;
 		idlespr = other.idlespr;
 		if other.object_index == obj_noisettefollower
-			fmod_event_one_shot_3d("event:/sfx/noisette/collect", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/noisette/woagwife1", x, y)
 		if other.object_index == obj_gustavofollower
 			fmod_event_one_shot_3d("event:/sfx/voice/gusok", x, y);
 		if other.object_index == obj_stickfollower && obj_player1.ispeppino && !global.swapmode
 			fmod_event_one_shot_3d("event:/sfx/voice/mrstick", x, y);
 		if other.object_index == obj_snottyexit
-			fmod_event_one_shot_3d("event:/sfx/voice/enemyrarescream", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/voice/snotty", x, y)
 		if other.object_index == obj_fakepepfollower
 			fmod_event_one_shot_3d("event:/sfx/voice/fakepeppositive", x, y);
 		if other.object_index == obj_noisefollower && obj_player1.ispeppino
-			fmod_event_one_shot_3d("event:/sfx/voice/noisepositive", x, y);
+			fmod_event_one_shot_3d("event:/modded-sfx/voice/noiseisactuallyhappy", x, y)
 		if other.object_index == obj_vigilantefollower
 			fmod_event_one_shot_3d("event:/sfx/voice/vigiintro", x, y);
 		if other.object_index == obj_mortfollowerexit

@@ -10,5 +10,7 @@ start = false;
 time = 0;
 fadein = true;
 fmod_event_one_shot("event:/sfx/misc/escaperumble");
+if obj_player1.character == "E"
+	sprite_index = spr_spacetravelcutsceneE
 if !obj_player1.ispeppino
 	sprite_index = spr_spacetravelcutsceneN;

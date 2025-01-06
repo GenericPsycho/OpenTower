@@ -25,7 +25,7 @@ function scr_player_jetpackjump()
 			}
 		}
 	}
-	if global.noisejetpack && !ispeppino && noisepizzapepper
+	if global.noisejetpack && !ispeppino && noisepizzapepper && !global.doisemode
 	{
 		if noisepeppermissile > 0
 			noisepeppermissile--;
@@ -114,13 +114,19 @@ function scr_player_jetpackjump()
 		}
 		else
 			image_speed = Approach(image_speed, 0.4, 0.1);
-		if sprite_index == spr_player_jetpackstart && vsp > 0
+		if (sprite_index == spr_player_jetpackstart || sprite_index == spr_playerE_jetpackstart) && vsp > 0
 		{
 			sprite_index = spr_player_jetpackmid;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerE_jetpackmid;
 			image_index = 0;
 		}
-		else if (sprite_index == spr_player_jetpackmid && floor(image_index) == image_number - 1)
+		else if ((sprite_index == spr_player_jetpackmid || sprite_index == spr_playerE_jetpackmid) && floor(image_index) == image_number - 1)
+		{
 			sprite_index = spr_player_jetpackend;
+			if obj_player1.character == "E"
+				sprite_index = spr_playerE_jetpackend;
+		}
 		if move != 0
 		{
 			if move != xscale

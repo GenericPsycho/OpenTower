@@ -59,7 +59,7 @@ function scr_pizzaface_arenaintro()
 		{
 			case 0: // not an enum
 				y = ystart;
-				sprite_index = spr_pizzaface;
+				sprite_index = global.extras_sendoff ? spr_woon : spr_pizzaface;
 				with obj_player1
 				{
 					sprite_index = spr_rockethitwall;
@@ -123,6 +123,8 @@ function scr_pizzaface_arenaintro()
 					with obj_player1
 					{
 						sprite_index = spr_pepbossintro1;
+						if character == "E"
+							sprite_index = spr_plubossintro1
 						if !ispeppino
 							sprite_index = spr_noisebossintro1;
 						image_index = 0;
@@ -152,9 +154,11 @@ function scr_pizzaface_arenaintro()
 				{
 					with obj_player1
 					{
-						if sprite_index != spr_pepbossintro2 && sprite_index != spr_noisebossintro2
+						if sprite_index != spr_pepbossintro2 && sprite_index != spr_plubossintro2 && sprite_index != spr_noisebossintro2
 						{
 							sprite_index = spr_pepbossintro2;
+							if character == "E"
+								sprite_index = spr_plubossintro2;
 							if !ispeppino
 								sprite_index = spr_noisebossintro2;
 							image_index = 0;
@@ -167,10 +171,19 @@ function scr_pizzaface_arenaintro()
 					with obj_player1
 					{
 						if ispeppino
-							fmod_event_one_shot_3d("event:/sfx/voice/peppinoangryscream", x, y);
+							fmod_event_one_shot_3d("event:/modded-sfx/voice/pepscream1", x, y);
 						else
-							fmod_event_one_shot_3d("event:/sfx/voice/woag", x, y);
+						{
+							if global.doisemode
+								fmod_event_one_shot_3d("event:/modded-sfx/voice/doisewoah", x, y)
+							else
+								fmod_event_one_shot_3d("event:/sfx/voice/woag", x, y);
+
+
+						}
 						sprite_index = spr_pepbossintro3;
+						if character == "E"
+							sprite_index = spr_plubossintro3;
 						if !ispeppino
 							sprite_index = spr_noisebossintro3;
 						image_index = 0;
@@ -188,7 +201,7 @@ function scr_pizzaface_arenaintro()
 					image_index = 0;
 				}
 				else if (floor(image_index) == image_number - 1 && sprite_index == spr_pizzaface_intro2)
-					sprite_index = spr_pizzaface;
+					sprite_index = global.extras_sendoff ? spr_woon : spr_pizzaface;
 				with obj_player1
 				{
 					if floor(image_index) == image_number - 1
@@ -197,7 +210,7 @@ function scr_pizzaface_arenaintro()
 						image_index = image_number - 3;
 					}
 				}
-				if sprite_index == spr_pizzaface && _finish
+				if (sprite_index == spr_pizzaface || sprite_index == spr_woon) && _finish
 				{
 					state = states.walk;
 					with obj_player1
@@ -214,7 +227,7 @@ function scr_pizzaface_arenaintro()
 		x = room_width * 0.75;
 		y = (room_height / 2) - 100;
 		vsp = 0;
-		scr_boss_genericintro(spr_pizzaface);
+		scr_boss_genericintro(global.extras_sendoff ? spr_woon : spr_pizzaface);
 		with obj_player
 		{
 			sprite_index = spr_3hpidle;
@@ -262,7 +275,7 @@ function scr_pizzaface_normal()
 				exit;
 			}
 			else
-				sprite_index = spr_pizzaface;
+				sprite_index = global.extras_sendoff ? spr_woon : spr_pizzaface;
 			if on_y
 			{
 				if attackbuffer > 0
@@ -320,7 +333,7 @@ function scr_pizzaface_normal()
 					sprite_index = spr_pizzaface_nosespit1;
 				}
 				else
-					sprite_index = spr_pizzaface;
+					sprite_index = global.extras_sendoff ? spr_woon : spr_pizzaface;
 			}
 		}
 	}
@@ -438,11 +451,11 @@ function scr_pizzaface_transitioncutscene()
 	{
 		if floor(image_index) == image_number - 1
 		{
-			if sprite_index == spr_pepbossintro2
+			if sprite_index == spr_pepbossintro2 || sprite_index == spr_plubossintro2
 				image_index = image_number - 2;
-			else if sprite_index == spr_pepbossintro1
+			else if sprite_index == spr_pepbossintro1 || sprite_index == spr_plubossintro1
 				image_index = image_number - 2;
-			else if sprite_index == spr_pepbossintro2
+			else if sprite_index == spr_pepbossintro2 || sprite_index == spr_plubossintro2
 				image_index = image_number - 3;
 			else if sprite_index == spr_noisebossintro1
 				image_index = image_number - 3;
@@ -465,10 +478,10 @@ function scr_pizzaface_transitioncutscene()
 				movespeed = 0;
 				x = roomstartx;
 				y = 402;
-				if sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_noisebossintro1
+				if sprite_index != spr_player_gnomecutscene1 && sprite_index != spr_noisebossintro1 && sprite_index != spr_playerE_gnomecutscene1
 				{
 					image_index = 0;
-					sprite_index = spr_player_gnomecutscene1;
+					sprite_index = character == "E" ? spr_playerE_gnomecutscene1 : spr_player_gnomecutscene1;
 					if !ispeppino
 						sprite_index = spr_noisebossintro1;
 				}
@@ -489,6 +502,8 @@ function scr_pizzaface_transitioncutscene()
 				with obj_player1
 				{
 					sprite_index = spr_pepbossintro2;
+					if character == "E"
+						sprite_index = spr_plubossintro2
 					if !ispeppino
 						sprite_index = spr_noisebossintro2;
 					image_index = 0;
@@ -496,7 +511,7 @@ function scr_pizzaface_transitioncutscene()
 				x = tx;
 				y = ty;
 				substate = states.hit;
-				sprite_index = spr_pizzahead_intro2;
+				sprite_index = obj_player1.character == "E" ? spr_pizzahead_intro2E : spr_pizzahead_intro2;
 				image_index = 0;
 				fmod_event_one_shot_3d("event:/sfx/pizzaface/open", x, y);
 			}
@@ -513,7 +528,7 @@ function scr_pizzaface_transitioncutscene()
 					hsp = 0;
 					state = states.fall;
 					substate = states.jump;
-					sprite_index = spr_pizzahead_intro3;
+					sprite_index = obj_player1.character == "E" ? spr_pizzahead_intro3E : spr_pizzahead_intro3;
 					if x != obj_player1.x
 						image_xscale = sign(obj_player1.x - x);
 					with obj_bosscontroller

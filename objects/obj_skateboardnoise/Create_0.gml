@@ -8,3 +8,4 @@ spd = 18;
 playerid = -4;
 snd = fmod_event_create_instance("event:/sfx/noise/skatealone");
 fmod_event_instance_play(snd);
+palselect = !global.doisemode ? 1 : (obj_player1.character == "E" ? 3 : 2)

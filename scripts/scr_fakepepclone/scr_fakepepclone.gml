@@ -4,14 +4,14 @@ function scr_fakepepclone_transitioncutscene()
 	vsp = 0;
 	if ((floor(image_index) div 5) == 0)
 	{
-		if sprite_index != spr_fakepeppino_deformdown
-			create_debris(x + irandom_range(-20, 20), y + 43, spr_fakepepdebris);
+		if sprite_index != spr_fakepeppino_deformdown && sprite_index != spr_ditto_deformdown
+			create_debris(x + irandom_range(-20, 20), y + 43, obj_player1.character == "E" ? spr_dittodebris : spr_fakepepdebris);
 		else
-			create_debris(x + irandom_range(-20, 20), y, spr_fakepepdebris);
+			create_debris(x + irandom_range(-20, 20), y, obj_player1.character == "E" ? spr_dittodebris : spr_fakepepdebris);
 	}
 	if floor(image_index) == image_number - 1
 	{
-		if sprite_index == spr_fakepeppino_reform
+		if sprite_index == spr_fakepeppino_reform || sprite_index == spr_ditto_reform
 		{
 			attacked = false;
 			state = states.walk;
@@ -22,7 +22,7 @@ function scr_fakepepclone_transitioncutscene()
 			{
 				state = states.Sjumpprep;
 				hsp = 0;
-				sprite_index = spr_fakepeppino_superjumpstart;
+				sprite_index = obj_player1.character == "E" ? spr_ditto_superjumpstart : spr_fakepeppino_superjumpstart;
 				image_index = 0;
 				image_speed = 0;
 			}
@@ -33,7 +33,7 @@ function scr_fakepepclone_transitioncutscene()
 				attacked = true;
 				taunted = false;
 				state = states.backbreaker;
-				sprite_index = spr_fakepeppino_jump;
+				sprite_index = obj_player1.character == "E" ? spr_ditto_jump : spr_fakepeppino_jump;
 				image_index = 0;
 				hsp = 0;
 				if image_xscale > 0
@@ -54,10 +54,10 @@ function scr_fakepepclone_walk()
 	if hsp != 0
 	{
 		image_xscale = sign(hsp);
-		sprite_index = spr_fakepeppino_walk;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_walk : spr_fakepeppino_walk;
 	}
 	else
-		sprite_index = spr_fakepeppino_idle;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_idle : spr_fakepeppino_idle;
 	if !attacked
 	{
 		if cooldown > 0
@@ -75,19 +75,31 @@ function scr_fakepepclone_walk()
 						grabstart = 10;
 						if ix != 0
 							image_xscale = ix;
-						sprite_index = spr_fakepeppino_grabdashstart;
+						sprite_index = obj_player1.character == "E" ? spr_ditto_grabdashstart : spr_fakepeppino_grabdashstart;
 						image_index = 0;
 						attackspeed = 12;
 					}
 					break;
 				
 				case fakepep_attacks.bodyslamclone:
-					attacked = true;
-					if x != targetplayer.x
-						image_xscale = sign(targetplayer.x - x);
-					sprite_index = spr_fakepeppino_bodyslamstart;
-					image_index = 0;
-					state = states.jump;
+					if obj_player1.character == "E"
+					{
+						attacked = true;
+						if x != targetplayer.x
+							image_xscale = sign(targetplayer.x - x);
+						sprite_index = spr_ditto_bodyslamstart;
+						image_index = 0;
+						state = states.jump;
+					}
+					else
+					{
+						attacked = true;
+						if x != targetplayer.x
+							image_xscale = sign(targetplayer.x - x);
+						sprite_index = spr_fakepeppino_bodyslamstart;
+						image_index = 0;
+						state = states.jump;
+					}
 					break;
 				
 				case fakepep_attacks.machclone:
@@ -109,15 +121,18 @@ function scr_fakepepclone_walk()
 					hsp = 0;
 					if !throwing
 					{
-						with (instance_create(x, y, obj_fakepepheaddebris))
+						if obj_player1.character != "E"
 						{
-							clone = true;
-							image_speed = 0.35;
+							with (instance_create(x, y, obj_fakepepheaddebris))
+							{
+								clone = true;
+								image_speed = 0.35;
+							}
 						}
-						sprite_index = spr_fakepeppino_flailing;
+						sprite_index = obj_player1.character == "E" ? spr_ditto_flailing : spr_fakepeppino_flailing;
 					}
 					else
-						sprite_index = spr_fakepeppino_throwhead;
+						sprite_index = obj_player1.character == "E" ? spr_ditto_throwhead : spr_fakepeppino_throwhead;
 					image_index = 0;
 					break;
 			}
@@ -127,10 +142,10 @@ function scr_fakepepclone_walk()
 	{
 		fmod_event_one_shot_3d("event:/sfx/fakepep/deform", x, y);
 		state = states.transition;
-		sprite_index = spr_fakepeppino_deform;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_deform : spr_fakepeppino_deform;
 		image_index = 0;
 		if attack.attack == fakepep_attacks.superjumpclone
-			sprite_index = spr_fakepeppino_deformdown;
+			sprite_index = obj_player1.character == "E" ? spr_ditto_deformdown : spr_fakepeppino_deformdown;
 	}
 }
 function scr_fakepepclone_Sjumpprep()
@@ -143,7 +158,7 @@ function scr_fakepepclone_Sjumpprep()
 		piledrivereffect = 0;
 		sjumpbuffer = 0;
 		state = states.Sjump;
-		sprite_index = spr_fakepeppino_superjump;
+		sprite_index = obj_player1.character == "E" ? spr_ditto_superjump : spr_fakepeppino_superjump;
 		fmod_event_one_shot_3d("event:/sfx/fakepep/superjumpclonerelease", x, y);
 	}
 }
@@ -183,7 +198,7 @@ function scr_fakepepclone_Sjump()
 		attacked = true;
 		with (instance_create(x, y + 20, obj_explosioneffect))
 		{
-			sprite_index = spr_fakepepsplasheffect;
+			sprite_index = obj_player1.character == "E" ? spr_dittosplasheffect : spr_fakepepsplasheffect;
 			image_speed = 0.35;
 			image_yscale = -1;
 			depth = -20;
@@ -192,7 +207,7 @@ function scr_fakepepclone_Sjump()
 }
 function scr_fakepepclone_throwing()
 {
-	if sprite_index == spr_fakepeppino_throwhead
+	if sprite_index == spr_fakepeppino_throwhead || sprite_index == spr_ditto_throwhead
 	{
 		if x != targetplayer.x
 			image_xscale = sign(targetplayer.x - x);
@@ -215,7 +230,7 @@ function scr_fakepepclone_throwing()
 			}
 		}
 	}
-	else if sprite_index == spr_fakepeppino_flailing
+	else if sprite_index == spr_fakepeppino_flailing || sprite_index == spr_ditto_flailing
 	{
 		if attackspeed < 14
 			attackspeed += 0.1;

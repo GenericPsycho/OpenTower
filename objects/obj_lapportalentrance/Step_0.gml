@@ -14,12 +14,13 @@ if floor(image_index) == image_number - 1
 	{
 		case spr_pizzaportal_appear:
 			fmod_event_one_shot_3d("event:/sfx/misc/secretexit", x, y);
-			sprite_index = spr_pizzaportalentrancestart;
+			sprite_index = obj_player1.character == "E" ? spr_pizzaportalentrancestartE : spr_pizzaportalentrancestart;
 			if !obj_player1.ispeppino
 				sprite_index = spr_pizzaportalentrancestartN;
 			break;
 		case spr_pizzaportalentrancestart:
 		case spr_pizzaportalentrancestartN:
+		case spr_pizzaportalentrancestartE:
 			sprite_index = spr_pizzaportal_disappear;
 			with obj_player
 			{

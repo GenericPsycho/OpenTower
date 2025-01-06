@@ -7,6 +7,8 @@ enum menus
 	resolution,
 	unused_1, // 5, related to video.
 	game,
+	extras1,
+	extras2,
 	controls,
 	controller,
 	keyboard,
@@ -33,10 +35,20 @@ optionselected = 0;
 backbuffer = 0;
 
 pause_icons = array_create(0);
-scr_pauseicon_add(spr_pauseicons, 4);
-scr_pauseicon_add(spr_pauseicons, 5);
-scr_pauseicon_add(spr_pauseicons, 6);
-scr_pauseicon_add(spr_pauseicons, 7, 8, 8);
+if global.solitude
+{
+	scr_pauseicon_add(spr_pauseicons_EFTB, 0);
+	scr_pauseicon_add(spr_pauseicons_EFTB, 1);
+	scr_pauseicon_add(spr_pauseicons_EFTB, 2);
+	scr_pauseicon_add(spr_pauseicons_EFTB, 3, 8, 8);
+}
+else
+{
+	scr_pauseicon_add(spr_pauseicons, 4);
+	scr_pauseicon_add(spr_pauseicons, 5);
+	scr_pauseicon_add(spr_pauseicons, 6);
+	scr_pauseicon_add(spr_pauseicons, 7, 8, 8);
+}
 
 #region categories
 
@@ -113,6 +125,26 @@ add_option_toggle(audio_menu, 4, "option_unfocus", function(val)
 	obj_savesystem.ini_str_options = ini_close();
 	global.option_unfocus_mute = val;
 }).value = global.option_unfocus_mute;
+
+add_option_toggle(audio_menu, 5, "option_mute_beatbox", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Option", "unfocus_mute", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.option_mute_beatbox = val;
+}).value = global.option_mute_beatbox;
+
+if (room == Mainmenu)
+{
+	add_option_toggle(audio_menu, 6, "option_datoggle", function(val)
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options);
+		ini_write_real("Option", "datoggle", val);
+		obj_savesystem.ini_str_options = ini_close();
+		global.option_datoggle = val;
+		fmod_set_parameter("datoggle", val, true)
+	}).value = global.option_datoggle;
+}
 array_push(menus, audio_menu);
 
 #endregion
@@ -285,7 +317,141 @@ add_option_toggle(game_menu, 6, "option_timer_speedrun", function(val)
 	global.option_speedrun_timer = val;
 }).value = global.option_speedrun_timer;
 
+add_option_press(game_menu, 7, "option_extras", function()
+{
+	menu_goto(menus.extras1);
+});
+
 array_push(menus, game_menu);
+
+#endregion
+#region extras 1 menu
+
+var extras1_menu = create_menu_fixed(menus.extras1, anchor.left, 150, 40);
+add_option_press(extras1_menu, 0, "option_back", function()
+{
+	menu_goto(menus.game);
+});
+
+if room == Mainmenu && global.cantoggle
+{
+	add_option_toggle(extras1_menu, 1, "extras_hardoween", function(val)
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options);
+		ini_write_real("Extras", "hardoween", val);
+		obj_savesystem.ini_str_options = ini_close();
+		global.togglehalloween = val;
+	}).value = global.togglehalloween;
+}
+
+add_option_toggle(extras1_menu, 2, "extras_jesus", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "jesus", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_jesus = val;
+}).value = global.extras_jesus;
+
+add_option_multiple(extras1_menu, 3, "extras_inflap", [create_option_value("extras_inflap_off", 0), create_option_value("extras_inflap_on", 1), create_option_value("extras_inflap_onextra", 2)], function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "inflap", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_inflap = val;
+}).value = global.extras_inflap;
+
+add_option_toggle(extras1_menu, 4, "extras_anchovies", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "anchovies", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_anchovies = val;
+}).value = global.extras_anchovies;
+
+add_option_multiple(extras1_menu, 5, "extras_toppinswap", [create_option_value("extras_toppinswap_off", 0), create_option_value("extras_toppinswap_gals", 1), create_option_value("extras_toppinswap_cookies", 2), create_option_value("extras_toppinswap_xmas", 3), create_option_value("extras_toppinswap_warrior", 4)], function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "toppinswap", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_toppinswap = val;
+}).value = global.extras_toppinswap;
+
+add_option_multiple(extras1_menu, 6, "extras_scream", [create_option_value("extras_scream_off", 0), create_option_value("extras_scream_on", 1), create_option_value("extras_scream_earrape", 2)], function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "scream", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_scream = val;
+}).value = global.extras_scream;
+
+add_option_press(extras1_menu, 7, "option_next", function()
+{
+	menu_goto(menus.extras2);
+});
+
+array_push(menus, extras1_menu);
+
+#endregion
+#region extras 2 menu
+
+var extras2_menu = create_menu_fixed(menus.extras2, anchor.left, 150, 40);
+add_option_press(extras2_menu, 0, "option_back", function()
+{
+	menu_goto(menus.extras1);
+});
+
+add_option_toggle(extras2_menu, 1, "extras_sendoff", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "sendoff", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_sendoff = val;
+}).value = global.extras_sendoff;
+
+add_option_toggle(extras2_menu, 2, "extras_randomrat", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "randomrat", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_randomrat = val;
+}).value = global.extras_randomrat;
+
+add_option_toggle(extras2_menu, 3, "extras_betternoise", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "sendoff", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_betternoise = val;
+}).value = global.extras_betternoise;
+
+add_option_toggle(extras2_menu, 4, "extras_lario", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "lario", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_lario = val;
+}).value = global.extras_lario;
+
+if room == Mainmenu
+{
+	add_option_toggle(extras2_menu, 5, "extras_griffin", function(val)
+	{
+		ini_open_from_string(obj_savesystem.ini_str_options);
+		ini_write_real("Extras", "griffin", val);
+		obj_savesystem.ini_str_options = ini_close();
+		global.extras_griffin = val;
+	}).value = global.extras_griffin;
+}
+
+add_option_toggle(extras2_menu, 6, "extras_cum", function(val)
+{
+	ini_open_from_string(obj_savesystem.ini_str_options);
+	ini_write_real("Extras", "cum", val);
+	obj_savesystem.ini_str_options = ini_close();
+	global.extras_cum = val;
+}).value = global.extras_cum;
+
+array_push(menus, extras2_menu);
 
 #endregion
 #region controls menu

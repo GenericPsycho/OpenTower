@@ -6,6 +6,8 @@ function scr_player_slap()
 		if fallinganimation >= 40 && fallinganimation < 80
 		{
 			sprite_index = spr_player_facestomp;
+			if character == "E"
+				sprite_index = spr_playerE_facestomp;
 			state = states.jump;
 		}
 	}
@@ -45,9 +47,17 @@ function scr_player_slap()
 			if grounded && move == 0
 			{
 				if slaphand == 1
+				{
 					sprite_index = spr_player_slap1;
+					if character == "E"
+						sprite_index = spr_playerE_slap1;
+				}
 				if slaphand == -1
+				{
 					sprite_index = spr_player_slap2;
+					if character == "E"
+						sprite_index = spr_playerE_slap2;
+				}
 			}
 			else if grounded && move != 0
 			{
@@ -69,9 +79,17 @@ function scr_player_slap()
 		if grounded && move == 0
 		{
 			if slaphand == 1
+			{
 				sprite_index = spr_player_slap1;
+				if character == "E"
+					sprite_index = spr_playerE_slap1;
+			}
 			if slaphand == -1
+			{
 				sprite_index = spr_player_slap2;
+				if character == "E"
+					sprite_index = spr_playerE_slap2;
+			}
 		}
 		else if grounded && move != 0
 		{
@@ -115,6 +133,8 @@ function scr_player_slap()
 			if move != 0
 				dir = move;
 			sprite_index = spr_player_fall;
+			if character == "E"
+				sprite_index = spr_playerE_fall;
 			state = states.jump;
 		}
 	}

@@ -44,6 +44,8 @@ switch sprite_index
 						state = states.freefallprep;
 						freefallsmash = 0;
 						vsp = (character == "P") ? -5 : -7;
+						if character == "E"
+							vsp = -5
 					}
 					else if isgustavo
 						state = states.ratmount;
@@ -92,6 +94,8 @@ switch sprite_index
 								state = states.freefallprep;
 								freefallsmash = 0;
 								vsp = (character == "P") ? -5 : -7;
+								if character == "E"
+									vsp = -5
 							}
 							if state == states.knightpep
 							{

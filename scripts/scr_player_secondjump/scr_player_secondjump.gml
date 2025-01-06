@@ -57,11 +57,17 @@ function scr_player_secondjump()
 	if jumpAnim == 1
 	{
 		sprite_index = spr_player_secondjump1;
+		if character == "E"
+			sprite_index = spr_playerE_secondjump1;
 		if floor(image_index) == image_number - 1
 			jumpAnim = false;
 	}
 	if jumpAnim == 0
+	{
 		sprite_index = spr_player_secondjump2;
+		if character == "E"
+			sprite_index = spr_playerE_secondjump2;
+	}
 	if move != 0
 		xscale = move;
 	image_speed = 0.35;

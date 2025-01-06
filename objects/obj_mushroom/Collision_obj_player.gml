@@ -28,14 +28,26 @@ if other.cutscene == 0 && sprite_index != spr_bigmushroom_bounce && other.state 
 		if other.ratmount_movespeed < 12
 		{
 			other.sprite_index = spr_player_ratmountmushroombounce;
+			if other.character == "E"
+				other.sprite_index = spr_playerK_ratmountmushroombounce;
 			if !other.brick
+			{
 				other.sprite_index = spr_lonegustavo_jumpstart;
+				if other.character == "E"
+					other.sprite_index = spr_lonepika_jumpstart;
+			}
 		}
 		else
 		{
 			other.sprite_index = spr_player_ratmountdashjump;
+			if other.character == "E"
+				other.sprite_index = spr_playerK_ratmountdashjump;
 			if !other.brick
+			{
 				other.sprite_index = spr_lonegustavo_dashjump;
+				if other.character == "E"
+					other.sprite_index = spr_lonepika_dashjump;
+			}
 		}
 		other.jumpAnim = true;
 		other.state = states.ratmountjump;

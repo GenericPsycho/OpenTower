@@ -3,7 +3,7 @@ if state == states.normal
 	if ((hsp > 0 && x > obj_bucketdestination.x) || (hsp <= 0 && x <= obj_bucketdestination.x))
 	{
 		state++
-		fmod_event_one_shot_3d("event:/sfx/playerN/bucket", x, y)
+		fmod_event_one_shot_3d("event:/modded-sfx/playerN/bucket", x, y)
 		instance_create(x, y, obj_bucketsplash)
 		repeat 3
 		{

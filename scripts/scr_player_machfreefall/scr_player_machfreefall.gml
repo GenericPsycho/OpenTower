@@ -15,6 +15,8 @@ function scr_player_machfreefall()
 	move = key_right + key_left;
 	crouchslideAnim = true;
 	sprite_index = spr_player_machfreefall;
+	if character == "E"
+		sprite_index = spr_playerE_machfreefall;
 	if (scr_solid(x + 1, y) && image_xscale == 1)
 	{
 		machhitAnim = false;

@@ -104,12 +104,12 @@ function draw_enemy(healthbar, palette, color = c_white)
 		if object_index == obj_peppinoclone
 		{
 			shader_set(global.Pal_Shader);
-			pal_swap_set(spr_peppalette, 1, false);
+			pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 1, false);
 		}
 		else if usepalette && palette
 		{
 			shader_set(global.Pal_Shader);
-			pal_swap_set(spr_peppalette, 0);
+			pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 0);
 			if !global.swapmode
 			{
 				if (object_index == obj_fakepepboss || object_index == obj_gustavograbbable) && obj_player1.ispeppino
@@ -142,7 +142,7 @@ function draw_enemy(healthbar, palette, color = c_white)
 		{
 			if miniflash
 			{
-				pal_swap_set(spr_peppalette, 14, false);
+				pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 14, false);
 				draw_sprite_ext(sprite_index, image_index, x, y + _stun, xscale * image_xscale, yscale * _ys, angle, b, image_alpha);
 			}
 		}
@@ -231,9 +231,13 @@ function draw_player()
 		pattern_set(global.Base_Pattern_Color, _sprite_index, _image_index, xscale * scale_xs, yscale * scale_ys, pattern);
 	
 	if isgustavo
-		spr = spr_ratmountpalette;
+	{
+		spr = global.option_datoggle ? spr_ratmountpalette : spr_ratmountpaletteOG;
+		if obj_player1.character == "E"
+			spr = spr_ratpikapalette;
+	}
 	if (!ispeppino && instance_exists(obj_pizzaface_thunderdark))
-		spr = spr_noisepalette_rage;
+		spr = global.option_datoggle ? spr_noisepalette_rage : spr_noisepalette_rageOG;
 	
 	pal_swap_set(spr, ps, false);
 	draw_sprite_ext(_sprite_index, _image_index, x, y, xscale * scale_xs, yscale * scale_ys, angle, b, image_alpha);
@@ -245,7 +249,7 @@ function draw_player()
 	draw_superslam_enemy();
 	if global.pistol
 	{
-		pal_swap_set(spr_peppalette, 0, false);
+		pal_swap_set(obj_player1.character == "E" ? spr_plupalette : (global.option_datoggle ? spr_peppalette : spr_peppaletteOG), 0, false);
 		if pistolcharge >= 4
 			draw_sprite(spr_revolvercharge, pistolcharge, x, y - 70);
 	}

@@ -29,7 +29,7 @@ function scr_pistolhit(object, damage)
 					alarm[2] = 3
 					if other.object_index == obj_pistolbullet
 					{
-						if other.sprite_index == spr_peppinobulletGIANT
+						if other.sprite_index == spr_peppinobulletGIANT || other.sprite_index == spr_plumebulletGIANT
 						{
 							with obj_camera
 							{
@@ -105,7 +105,7 @@ function scr_pistolhit(object, damage)
 					alarm[2] = 3
 					if other.object_index == obj_pistolbullet
 					{
-						if other.sprite_index == spr_peppinobulletGIANT
+						if other.sprite_index == spr_peppinobulletGIANT || other.sprite_index == spr_plumebulletGIANT
 						{
 							with obj_camera
 							{
@@ -135,7 +135,7 @@ function scr_pistolhit(object, damage)
 							instance_create_unique(0, 0, obj_superattackeffect)
 							instance_create_unique(0, 0, obj_blackoutline)
 							state = states.phase1hurt
-							sprite_index = spr_pizzahead_hurt
+							sprite_index = obj_player1.character == "E" ? spr_meowth_hurt : spr_pizzahead_hurt
 							hsp = 0
 							vsp = 0
 							buildup = 100
@@ -164,7 +164,7 @@ function scr_pistolhit(object, damage)
 				_result = true
 				flash = true
 				flashbuffer = 8
-				if sprite_index == spr_peppinobulletGIANT
+				if sprite_index == spr_peppinobulletGIANT || sprite_index == spr_plumebulletGIANT
 				{
 					with obj_camera
 					{
